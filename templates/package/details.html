@@ -27,7 +27,7 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
+            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
             padding: 24px 20px 32px;
             margin: -20px -20px 24px -20px;
             border-bottom-left-radius: 28px;
@@ -84,7 +84,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #0B3D2E, #1F8A70);
+            background: linear-gradient(90deg, #4DB8FF, #1E90FF);
         }
 
         .package-name {
@@ -98,7 +98,7 @@
         .package-price {
             font-size: 40px;
             font-weight: 900;
-            color: #0B3D2E;
+            color: #1E90FF;
             margin-bottom: 28px;
             letter-spacing: -0.02em;
         }
@@ -112,7 +112,7 @@
         }
 
         .stat-item {
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
             border-radius: 18px;
             padding: 20px 16px;
             text-align: center;
@@ -131,7 +131,7 @@
         .stat-value {
             font-size: 18px;
             font-weight: 900;
-            color: #0B3D2E;
+            color: #1E90FF;
             letter-spacing: -0.02em;
         }
 
@@ -151,7 +151,7 @@
         }
 
         .description-title i {
-            color: #0B6B4E;
+            color: #4DB8FF;
         }
 
         .description-text {
@@ -176,7 +176,7 @@
         }
 
         .features-title i {
-            color: #0B6B4E;
+            color: #4DB8FF;
         }
 
         .features-list {
@@ -195,11 +195,11 @@
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%);
+            background: linear-gradient(135deg, #BEEAFF 0%, #8FD8FF 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0B3D2E;
+            color: #1E90FF;
             font-size: 18px;
             flex-shrink: 0;
         }
@@ -211,32 +211,8 @@
         }
 
         /* Invest Button */
-        .invest-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(11,61,46,0.25);
-            letter-spacing: -0.01em;
-        }
-
-        .invest-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(11,61,46,0.35);
-        }
-
-        .invest-btn:active {
-            transform: translateY(0);
-        }
+        .invest-btn{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+        .btn.btn-primary.invest-btn{background:linear-gradient(135deg,#4DB8FF 0%,#1E90FF 100%);color:#fff;border:none;box-shadow:0 12px 30px rgba(30,144,255,0.12)}
 
         /* Bottom Navigation */
         .bottom-nav {
@@ -246,7 +222,7 @@
             right: 0;
             background: white;
             padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(7,30,22,0.12);
+            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
             z-index: 1000;
             border-top: 1px solid rgba(7,30,22,0.08);
         }
@@ -271,8 +247,8 @@
         }
 
         .nav-item.active {
-            color: #0B3D2E;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            color: #1E90FF;
+            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
         }
 
         .nav-icon {
@@ -367,8 +343,9 @@
 
             <!-- Invest Form -->
             <form action="{{ url_for('buy_package', package_id=package.id) }}" method="POST">
-                <button type="submit" class="invest-btn">
-                    <i class="fas fa-rocket"></i> Invest Now
+                <button type="submit" class="btn btn-primary invest-btn">
+                    <i class="fas fa-rocket"></i>
+                    Invest Now
                 </button>
             </form>
         </div>

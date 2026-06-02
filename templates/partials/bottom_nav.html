@@ -1,0 +1,24 @@
+<style>
+    .bottom-spacer{height:110px;width:100%;display:block}
+    .bottom{position:fixed;left:0;right:0;bottom:12px;padding:8px;display:flex;justify-content:center;pointer-events:auto;z-index:1200}
+    .bwrap{width:100%;max-width:520px;padding:8px;background:linear-gradient(180deg,rgba(255,255,255,0.9),#fff);border-radius:16px;display:flex;justify-content:space-around;box-shadow:0 12px 40px rgba(8,60,120,0.08);border:1px solid rgba(7,30,22,0.04)}
+    .bitem{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--muted, #6B7A7A);gap:6px;padding:8px;border-radius:10px}
+    .bitem.active{color:var(--sky-600, #1EA7FF);background:linear-gradient(180deg,var(--sky-50, #F0F8FF),#fff)}
+    .bitem i{font-size:18px}
+    @media(min-width:720px){.bwrap{padding:10px}}
+    @supports (padding: env(safe-area-inset-bottom)) {
+        .bottom{bottom:calc(12px + env(safe-area-inset-bottom));}
+        .bottom-spacer{height:calc(110px + env(safe-area-inset-bottom));}
+    }
+</style>
+
+<!-- spacer prevents the fixed nav from covering last-page content -->
+<div class="bottom-spacer" aria-hidden="true"></div>
+<div class="bottom">
+    <nav class="bwrap">
+        <a href="{{ url_for('dashboard') }}" class="bitem {% if active=='dashboard' %}active{% endif %}"><i class="fas fa-home"></i><small>Home</small></a>
+        <a href="{{ url_for('packages') }}" class="bitem {% if active=='packages' %}active{% endif %}"><i class="fas fa-box"></i><small>Plans</small></a>
+        <a href="{{ url_for('referral') }}" class="bitem {% if active=='referral' %}active{% endif %}"><i class="fas fa-users"></i><small>Team</small></a>
+        <a href="{{ url_for('profile') }}" class="bitem {% if active=='profile' %}active{% endif %}"><i class="fas fa-user"></i><small>Profile</small></a>
+    </nav>
+</div>

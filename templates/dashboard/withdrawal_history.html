@@ -7,217 +7,43 @@
     <title>Withdrawal History - SONICVEST</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #efe4e7 0%, #f6efef 100%);
-            color: #142744;
-            min-height: 100vh;
-            padding: 16px 12px 90px;
-        }
+        :root{--brand-500:#1EA7FF;--brand-600:#1E90FF;--muted:#6B7A7A}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#f5fbff 0%,#eef9ff 60%);color:#0f1720;min-height:100vh;padding:18px 14px 110px}
+        .wrap{max-width:720px;margin:0 auto}
+        .header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+        .back-btn{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid rgba(7,30,22,0.04);display:inline-flex;align-items:center;justify-content:center;color:var(--brand-600);text-decoration:none}
+        .title{font-size:20px;font-weight:900;margin:0}
 
-        .wrap {
-            max-width: 460px;
-            margin: 0 auto;
-        }
+        .summary{display:flex;gap:12px;margin:14px 0 18px;flex-wrap:wrap}
+        .summary .tile{flex:1;min-width:160px;background:#fff;border-radius:14px;padding:14px;border:1px solid rgba(7,30,22,0.04);box-shadow:0 8px 26px rgba(8,60,120,0.04)}
+        .tile .val{font-weight:900;color:var(--brand-600);font-size:18px}
+        .tile .lbl{font-size:12px;color:var(--muted);margin-top:6px;font-weight:700}
 
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
+        .controls{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+        .filters{display:flex;gap:8px}
+        .pill{background:#fff;border:1px solid rgba(7,30,22,0.04);padding:8px 12px;border-radius:999px;font-weight:800;color:var(--brand-600);cursor:pointer}
+        .pill.active{background:linear-gradient(135deg,rgba(77,184,255,0.12),#eef9ff);box-shadow:0 8px 20px rgba(30,144,255,0.06)}
 
-        .back-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            border: 1px solid #f1d6d7;
-            background: rgba(255, 255, 255, 0.92);
-            color: #d1182f;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 8px 18px rgba(17, 38, 64, 0.08);
-        }
+        .list{display:flex;flex-direction:column;gap:12px}
+        .withdrawal-card{background:linear-gradient(180deg,#fff, #fbfeff);border-radius:14px;padding:14px;border:1px solid rgba(7,30,22,0.04);box-shadow:0 12px 40px rgba(8,60,120,0.04);display:flex;flex-direction:column}
+        .card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+        .amount{font-weight:900;color:var(--brand-600);font-size:18px}
+        .status-chip{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;text-transform:uppercase}
+        .status-completed{background:#eafaf1;color:#05683b;border:1px solid rgba(5,104,59,0.08)}
+        .status-pending{background:#fff8e6;color:#6a4b00;border:1px solid rgba(255,193,7,0.08)}
+        .status-failed{background:#fff0f2;color:#9b1f2d;border:1px solid rgba(155,31,45,0.06)}
 
-        .title {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 800;
-            color: #1a2f4e;
-        }
+        .meta{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:10px;color:var(--muted);font-size:13px}
+        .meta .label{font-weight:700;color:#374151}
+        .meta .value{text-align:right;font-weight:800;color:#0f1720}
 
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
+        .receipt-btn{align-self:flex-end;margin-top:10px;background:linear-gradient(135deg,var(--brand-500),var(--brand-600));color:#071018;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-flex;gap:8px}
 
-        .stat-card {
-            background: #fff;
-            border: 1px solid #f1d6d7;
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(17, 38, 64, 0.1);
-            padding: 14px;
-            text-align: center;
-        }
+        .empty{background:#fff;border-radius:14px;padding:28px;text-align:center;border:1px solid rgba(7,30,22,0.04)}
+        .empty i{font-size:44px;color:var(--brand-600);margin-bottom:8px}
 
-        .stat-value {
-            color: #d1182f;
-            font-size: 20px;
-            font-weight: 900;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            color: #5e738d;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 10px 2px 10px;
-            color: #1a2f4e;
-            font-size: 16px;
-            font-weight: 800;
-        }
-
-        .withdrawal-card {
-            background: #fff;
-            border: 1px solid #f1d6d7;
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(17, 38, 64, 0.1);
-            padding: 14px;
-            margin-bottom: 10px;
-        }
-
-        .card-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .amount {
-            color: #d1182f;
-            font-size: 20px;
-            font-weight: 900;
-        }
-
-        .status {
-            padding: 5px 10px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .status-completed,
-        .status-approved,
-        .status-processed {
-            background: #e3f7e8;
-            color: #1a7a1a;
-            border: 1px solid #91d8a0;
-        }
-
-        .status-pending {
-            background: #fff4db;
-            color: #986f00;
-            border: 1px solid #f4d27b;
-        }
-
-        .status-failed,
-        .status-rejected,
-        .status-cancelled {
-            background: #ffe8ec;
-            color: #a31f34;
-            border: 1px solid #f2a9b3;
-        }
-
-        .meta {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            color: #5e738d;
-            font-size: 13px;
-            margin-top: 6px;
-            line-height: 1.45;
-        }
-
-        .meta .value {
-            color: #1a2f4e;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        .receipt-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            border: none;
-            border-radius: 999px;
-            padding: 10px 14px;
-            margin-top: 10px;
-            background: linear-gradient(135deg, #f02424 0%, #cb1833 100%);
-            color: #fff;
-            font-weight: 800;
-            font-size: 12px;
-            box-shadow: 0 8px 16px rgba(213, 23, 43, 0.25);
-        }
-
-        .empty {
-            text-align: center;
-            background: #fff;
-            border: 1px solid #f1d6d7;
-            border-radius: 18px;
-            box-shadow: 0 12px 24px rgba(17, 38, 64, 0.08);
-            padding: 32px 14px;
-        }
-
-        .empty i {
-            font-size: 48px;
-            color: #d1182f;
-            margin-bottom: 10px;
-        }
-
-        .empty h3 {
-            margin: 0 0 8px;
-            color: #1a2f4e;
-        }
-
-        .empty p {
-            margin: 0 0 14px;
-            color: #5e738d;
-            font-size: 14px;
-        }
-
-        .primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            border: none;
-            border-radius: 999px;
-            padding: 11px 16px;
-            background: linear-gradient(135deg, #f02424 0%, #cb1833 100%);
-            color: #fff;
-            font-weight: 800;
-            font-size: 13px;
-            box-shadow: 0 8px 16px rgba(213, 23, 43, 0.25);
-        }
-
-        @media (max-width: 420px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media(max-width:720px){.wrap{padding:0 8px}.summary{flex-direction:column}}
     </style>
 </head>
 
@@ -230,39 +56,48 @@
             <h1 class="title">Withdraw Record</h1>
         </div>
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-value">NGN{{ total_withdrawals | format_number }}</div>
-                <div class="stat-label">Total Withdrawn</div>
+        <div class="summary">
+            <div class="tile">
+                <div class="val">NGN{{ total_withdrawals | format_number }}</div>
+                <div class="lbl">Total Withdrawn</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value">NGN{{ pending_withdrawals | format_number }}</div>
-                <div class="stat-label">Pending</div>
+            <div class="tile">
+                <div class="val">NGN{{ pending_withdrawals | format_number }}</div>
+                <div class="lbl">Pending</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value">{{ successful_withdrawals }}</div>
-                <div class="stat-label">Successful</div>
+            <div class="tile">
+                <div class="val">{{ successful_withdrawals }}</div>
+                <div class="lbl">Successful</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value">NGN{{ total_fees_paid | format_number }}</div>
-                <div class="stat-label">Fees Paid</div>
+            <div class="tile">
+                <div class="val">NGN{{ total_fees_paid | format_number }}</div>
+                <div class="lbl">Fees Paid</div>
             </div>
         </div>
 
-        <div class="section-title">
-            <i class="fas fa-clock-rotate-left"></i>
-            Recent Withdrawals
+        <div class="controls">
+            <div></div>
+            <div class="filters" role="tablist" aria-label="Filter withdrawals">
+                <button type="button" class="pill active" data-filter="all">All</button>
+                <button type="button" class="pill" data-filter="pending">Pending</button>
+                <button type="button" class="pill" data-filter="completed">Completed</button>
+                <button type="button" class="pill" data-filter="failed">Failed</button>
+            </div>
         </div>
 
         {% if withdrawals %}
         {% for withdrawal in withdrawals %}
         {% set is_completed = withdrawal.status in ['completed', 'approved', 'processed'] %}
-        <div class="withdrawal-card">
+        <div class="withdrawal-card" data-status="{{ 'completed' if is_completed else withdrawal.status }}">
             <div class="card-top">
                 <span class="amount">-NGN{{ withdrawal.amount | format_number }}</span>
-                <span class="status status-{{ 'completed' if is_completed else withdrawal.status }}">
-                    {{ 'completed' if is_completed else withdrawal.status }}
-                </span>
+                {% if is_completed %}
+                <span class="status-chip status-completed">Completed</span>
+                {% elif withdrawal.status == 'pending' %}
+                <span class="status-chip status-pending">Pending</span>
+                {% else %}
+                <span class="status-chip status-failed">{{ withdrawal.status|title }}</span>
+                {% endif %}
             </div>
 
             <div class="meta">
@@ -300,13 +135,31 @@
             <i class="fas fa-money-bill-wave"></i>
             <h3>No Withdrawal Records</h3>
             <p>You have not made any withdrawal requests yet.</p>
-            <a href="{{ url_for('withdrawal') }}" class="primary">
+            <a href="{{ url_for('request_withdrawal') }}" class="receipt-btn">
                 <i class="fas fa-plus"></i>
                 Make Withdrawal
             </a>
         </div>
         {% endif %}
     </div>
+    <script>
+        (function(){
+            const pills = document.querySelectorAll('.pill');
+            const cards = document.querySelectorAll('.withdrawal-card');
+            function setActive(el){ pills.forEach(p=>p.classList.toggle('active', p===el)); }
+            function applyFilter(filter){
+                cards.forEach(card=>{
+                    const status = (card.dataset.status||'').toLowerCase();
+                    if(filter==='all'){ card.style.display = ''; return; }
+                    if(filter==='completed' && status==='completed'){ card.style.display = ''; return; }
+                    if(filter==='pending' && status==='pending'){ card.style.display = ''; return; }
+                    if(filter==='failed' && (status==='failed' || status==='rejected' || status==='cancelled')){ card.style.display = ''; return; }
+                    card.style.display = 'none';
+                });
+            }
+            pills.forEach(p=>p.addEventListener('click', e=>{ e.preventDefault(); setActive(p); applyFilter(p.dataset.filter); }));
+        })();
+    </script>
 </body>
 
 </html>

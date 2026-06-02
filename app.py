@@ -1244,7 +1244,7 @@ def dashboard():
 
     recent_transactions = Transaction.query.filter_by(user_id=user.id).order_by(Transaction.created_at.desc()).limit(5).all()
     
-    return render_template('dashboard/index.html', 
+    return render_template('dashboard/mobile_design.html', 
                          user=user, 
                          packages=packages,
                          featured_package=featured_package,
@@ -1620,15 +1620,13 @@ def withdrawal():
         UserPackage.is_active == True,
         UserPackage.end_date > utc_now()
     ).first() is None
-    # Require at least one active package before showing withdrawal page
+    # Check if user has an active (non-expired) package
     active_pkg = UserPackage.query.filter(
         UserPackage.user_id == user.id,
         UserPackage.is_active == True,
         UserPackage.end_date > utc_now()
     ).first()
-    if not active_pkg:
-        flash('You must buy an active package before you can withdraw.', 'error')
-        return redirect(url_for('packages'))
+    require_package = active_pkg is None
     
     # Use system settings for withdrawal parameters
     minimum_withdrawal = SYSTEM_SETTINGS['MINIMUM_WITHDRAWAL']
@@ -1685,15 +1683,13 @@ def request_withdrawal():
         UserPackage.is_active == True,
         UserPackage.end_date > utc_now()
     ).first() is None
-    # Require at least one active package before opening withdrawal form
+    # Check if user has an active (non-expired) package
     active_pkg = UserPackage.query.filter(
         UserPackage.user_id == user.id,
         UserPackage.is_active == True,
         UserPackage.end_date > utc_now()
     ).first()
-    if not active_pkg:
-        flash('You must buy an active package before you can withdraw.', 'error')
-        return redirect(url_for('packages'))
+    require_package = active_pkg is None
     
     # Use system settings for withdrawal parameters
     minimum_withdrawal = SYSTEM_SETTINGS['MINIMUM_WITHDRAWAL']
@@ -1974,36 +1970,25 @@ def invite_friends():
 @require_login
 def profile():
     user = get_current_user()
-    return render_template('dashboard/profile.html', user=user)
+    # Include recent withdrawals for the profile summary (last 5)
+    recent_withdrawals = Withdrawal.query.filter_by(user_id=user.id).order_by(Withdrawal.created_at.desc()).limit(5).all()
+    return render_template('dashboard/profile.html', user=user, recent_withdrawals=recent_withdrawals)
 
-@app.route('/my-packages')
-@require_login
-def my_packages():
-    """Show user's active packages with remaining days and income"""
-    user = get_current_user()
-    
-    # Get user's active packages with detailed information
-    user_packages = UserPackage.query.filter_by(user_id=user.id, is_active=True).all()
-    
+
+def build_package_details(user_packages):
+    """Helper to construct package detail dicts for templates."""
     package_details = []
     for user_package in user_packages:
-        # Calculate remaining days
         days_since_purchase = (utc_now() - user_package.start_date).days
         remaining_days = max(0, (user_package.end_date - utc_now()).days)
-        
-        # Calculate total income from this package
-        total_income = user_package.total_earned or 0.0  # Use actual earned amount, default to 0 if None
-        
-        # Calculate daily return for display purposes
-        daily_return = user_package.amount_invested * (user_package.package.daily_return_rate / 100)
-        
-        # Calculate progress percentage
-        total_duration = (user_package.end_date - user_package.start_date).days
+        total_income = user_package.total_earned or 0.0
+        daily_return = user_package.amount_invested * (user_package.package.daily_return_rate / 100) if getattr(user_package.package, 'daily_return_rate', None) is not None else user_package.daily_return
+        total_duration = (user_package.end_date - user_package.start_date).days if user_package.end_date and user_package.start_date else 0
         if total_duration > 0:
             progress_percentage = min(100, (days_since_purchase / total_duration) * 100)
         else:
             progress_percentage = 0
-        
+
         package_details.append({
             'user_package': user_package,
             'package': user_package.package,
@@ -2014,10 +1999,54 @@ def my_packages():
             'progress_percentage': progress_percentage,
             'is_completed': remaining_days == 0
         })
-    
+
+    return package_details
+
+@app.route('/my-packages')
+@require_login
+def my_packages():
+    """Show user's active packages with remaining days and income"""
+    user = get_current_user()
+    # Get user's active packages
+    user_packages = UserPackage.query.filter_by(user_id=user.id).all()
+
+    # Filter for only active packages
+    active_packages = [up for up in user_packages if up.status == 'active']
+    package_details = build_package_details(active_packages)
+
     return render_template('package/my_packages.html', 
                          current_user=user,
                          package_details=package_details)
+
+
+@app.route('/my-packages/active')
+@require_login
+def my_packages_active():
+    user = get_current_user()
+    user_packages = UserPackage.query.filter_by(user_id=user.id).all()
+    active_packages = [up for up in user_packages if up.status == 'active']
+    package_details = build_package_details(active_packages)
+    return render_template('package/my_packages.html', current_user=user, package_details=package_details)
+
+
+@app.route('/my-packages/completed')
+@require_login
+def my_packages_completed():
+    user = get_current_user()
+    user_packages = UserPackage.query.filter_by(user_id=user.id).all()
+    completed_packages = [up for up in user_packages if up.status == 'completed']
+    package_details = build_package_details(completed_packages)
+    return render_template('package/my_packages.html', current_user=user, package_details=package_details)
+
+
+@app.route('/my-packages/expired')
+@require_login
+def my_packages_expired():
+    user = get_current_user()
+    user_packages = UserPackage.query.filter_by(user_id=user.id).all()
+    expired_packages = [up for up in user_packages if up.status == 'expired']
+    package_details = build_package_details(expired_packages)
+    return render_template('package/my_packages.html', current_user=user, package_details=package_details)
 
 @app.route('/bank-details')
 @require_login

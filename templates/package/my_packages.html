@@ -277,6 +277,16 @@
         </h1>
     </div>
 
+    <div style="max-width:800px;margin:12px auto;padding:0 20px">
+        <div class="filter-pills" role="tablist" aria-label="Filters">
+            {% set p = request.path %}
+            <a class="filter-pill {% if p.endswith('/my-packages') or p == '/my-packages' %}active{% endif %}" href="{{ url_for('my_packages') }}">All</a>
+            <a class="filter-pill {% if p.endswith('/active') %}active{% endif %}" href="{{ url_for('my_packages_active') }}">Active</a>
+            <a class="filter-pill {% if p.endswith('/completed') %}active{% endif %}" href="{{ url_for('my_packages_completed') }}">Completed</a>
+            <a class="filter-pill {% if p.endswith('/expired') %}active{% endif %}" href="{{ url_for('my_packages_expired') }}">Expired</a>
+        </div>
+    </div>
+
     <div class="container">
         {% if package_details %}
         <!-- Packages Summary -->

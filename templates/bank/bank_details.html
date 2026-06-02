@@ -9,20 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .bank-container {
-            max-width: 460px;
+            max-width: 520px;
             margin: 0 auto;
-            padding: 16px 12px 90px;
-            background: linear-gradient(180deg, #efe4e7 0%, #f6efef 100%);
+            padding: 18px 14px 110px;
+            background: linear-gradient(180deg, #f5fbff 0%, #eef9ff 60%);
             min-height: 100vh;
         }
 
         .bank-header {
-            background: linear-gradient(135deg, #ed1c24 0%, #d41832 58%, #bc1532 100%);
+            background: linear-gradient(135deg, #66C6FF 0%, #1EA7FF 100%);
             color: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 14px;
-            box-shadow: 0 16px 28px rgba(209, 28, 45, 0.28);
+            padding: 20px 16px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 20px 60px rgba(30,120,200,0.08);
         }
 
         .bank-header h1 {
@@ -35,11 +35,12 @@
         }
 
         .bank-card {
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 14px;
-            box-shadow: 0 12px 24px rgba(17, 38, 64, 0.1);
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(240,248,255,0.98));
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 14px 40px rgba(8,60,120,0.06);
+            border: 1px solid rgba(30,144,255,0.06);
         }
 
         .current-bank-details {
@@ -64,9 +65,10 @@
         }
 
         .bank-info-item {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
+            background: white;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(30,144,255,0.04);
         }
 
         .bank-info-label {
@@ -97,20 +99,16 @@
 
         .form-input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 2px solid rgba(30,144,255,0.06);
+            border-radius: 12px;
             font-size: 14px;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
             background: white;
             box-sizing: border-box;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: #d1182f;
-            box-shadow: 0 0 0 3px rgba(209, 24, 47, 0.15);
-        }
+        .form-input:focus { outline: none; border-color: #4DB8FF; box-shadow: 0 0 0 6px rgba(77,184,255,0.06); }
 
         .form-input.error {
             border-color: #ef4444;
@@ -124,40 +122,32 @@
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 8px;
-            font-weight: 500;
+            border-radius: 12px;
+            font-weight: 800;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.16s ease, box-shadow 0.16s ease;
             font-size: 14px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #f02424 0%, #cb1833 100%);
-            color: white;
+            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 100%);
+            color: #071018;
+            box-shadow: 0 12px 30px rgba(30,144,255,0.12);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 20px rgba(213, 23, 43, 0.25);
-            background: linear-gradient(135deg, #df1b27 0%, #b9152f 100%);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(30,144,255,0.14); }
 
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #374151;
-            border: 1px solid #d1d5db;
-        }
+        .btn-secondary { background: white; color: #374151; border: 1px solid rgba(7,30,22,0.04); }
 
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
+        .btn-secondary:hover { transform: translateY(-1px); }
+
+        .btn-danger { background: linear-gradient(135deg,#FFB5B5 0%,#EF4444 100%); color: white; }
 
         .back-button {
             position: fixed;
@@ -592,6 +582,9 @@
                 });
         });
     </script>
+
+    {% set active = 'profile' %}
+    {% include 'partials/bottom_nav.html' %}
 </body>
 
 </html>

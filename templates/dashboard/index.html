@@ -4,372 +4,470 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SONICVEST</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --bg: #eaf6ff;
+            --bg-2: #dff1ff;
+            --surface: rgba(255, 255, 255, 0.86);
+            --surface-strong: rgba(240, 248, 255, 0.98);
+            --border: rgba(30, 144, 255, 0.14);
+            --text: #07304f;
+            --muted: #55708b;
+            --accent: #1E90FF;
+            --accent-2: #4DB8FF;
+            --accent-3: #BEEAFF;
+            --shadow: 0 24px 70px rgba(30, 144, 255, 0.18);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(180deg, #071E16 0%, #0B3D2E 40%, #F8FAF8 40%);
             min-height: 100vh;
-            padding-bottom: 140px;
+            color: var(--text);
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(77, 184, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 80% 10%, rgba(30, 144, 255, 0.16), transparent 24%),
+                radial-gradient(circle at 80% 85%, rgba(190, 234, 255, 0.72), transparent 26%),
+                linear-gradient(180deg, #f5fbff 0%, #eaf6ff 46%, #dff1ff 100%);
+            overflow-x: hidden;
+            padding-bottom: 120px;
         }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            color: white;
+        body::before {
+            background-image: linear-gradient(rgba(30, 144, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(30, 144, 255, 0.06) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.06));
         }
 
-        .header-left {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+        body::after {
+            background: radial-gradient(circle at 50% 0%, rgba(77, 184, 255, 0.2), transparent 42%);
+            opacity: 0.7;
         }
 
-        .header-greeting {
-            font-size: 14px;
-            opacity: 0.85;
-            color: rgba(255,255,255,0.8);
+        a {
+            color: inherit;
         }
 
-        .header-username {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 12px;
-        }
-
-        .header-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Card */
-        .hero-card {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 60px rgba(7,30,22,0.15);
-        }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            border-radius: 18px;
-            padding: 28px;
-            color: white;
-            margin-bottom: 24px;
+        .page {
             position: relative;
-            overflow: hidden;
+            z-index: 1;
+            width: min(100%, 1140px);
+            margin: 0 auto;
+            padding: 18px 16px 28px;
         }
 
-        .hero-gradient::before {
+        .shell {
+            position: relative;
+            overflow: clip;
+            border-radius: 30px;
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(232, 245, 255, 0.92));
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .shell::before,
+        .shell::after {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(167,243,208,0.2) 0%, transparent 70%);
             border-radius: 999px;
+            filter: blur(18px);
+            pointer-events: none;
         }
 
-        .hero-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
+        .shell::before {
+            width: 220px;
+            height: 220px;
+            top: -70px;
+            right: -60px;
+            background: rgba(77, 184, 255, 0.16);
+        }
+
+        .shell::after {
+            width: 260px;
+            height: 260px;
+            bottom: 130px;
+            left: -120px;
+            background: rgba(30, 144, 255, 0.16);
+        }
+
+        .content {
             position: relative;
-            z-index: 2;
+            z-index: 1;
+            padding: 18px;
         }
 
-        .hero-title {
-            font-size: 13px;
-            opacity: 0.85;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-        }
-
-        .hero-subtitle {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-label {
-            font-size: 13px;
-            opacity: 0.85;
-        }
-
-        .hero-price {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-
-        .hero-price-currency {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .hero-price-value {
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: #F8FAF8;
-            border-radius: 16px;
-            padding: 18px 14px;
-            text-align: center;
-            border: 1px solid #E4EBE4;
-            transition: all 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(7,30,22,0.08);
-        }
-
-        .stat-value {
-            font-size: 18px;
-            font-weight: 900;
-            color: #0B3D2E;
-            margin-bottom: 4px;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #6B7A6B;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        @media (max-width: 420px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Action Buttons */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .action-icon {
-            width: 58px;
-            height: 58px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            transition: all 0.2s;
-            box-shadow: 0 8px 24px rgba(11,61,46,0.25);
-        }
-
-        .action-item:hover .action-icon {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(11,61,46,0.35);
-        }
-
-        .action-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #142114;
-        }
-
-        /* Section Title */
-        .section-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #142114;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .section-link {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0B6B4E;
-            text-decoration: none;
-        }
-
-        /* Package Card */
-        .package-card {
-            background: white;
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 16px rgba(7,30,22,0.06);
-            border: 1px solid #E4EBE4;
-        }
-
-        .package-header {
-            display: flex;
-            align-items: center;
             gap: 14px;
             margin-bottom: 18px;
         }
 
-        .package-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%);
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .brand-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: #0B3D2E;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
         }
 
-        .package-info h4 {
-            font-size: 16px;
+        .eyebrow {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--accent);
+            border: 1px solid rgba(30, 144, 255, 0.18);
+            font-size: 11px;
             font-weight: 800;
-            color: #142114;
-            margin-bottom: 2px;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
         }
 
-        .package-info p {
-            font-size: 13px;
-            color: #6B7A6B;
+        .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(24px, 4vw, 38px);
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -0.05em;
         }
 
-        .package-meta {
+        .subtitle {
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .icon-button {
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text);
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            backdrop-filter: blur(14px);
+        }
+
+        .icon-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(30, 144, 255, 0.2);
+        }
+
+        .hamburger {
+            background: linear-gradient(135deg, rgba(190, 234, 255, 0.9), rgba(126, 199, 255, 0.9));
+            border-color: rgba(30, 144, 255, 0.2);
+        }
+
+        .hero-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 16px;
             margin-bottom: 16px;
         }
 
-        .package-meta-item {
-            text-align: center;
-            padding: 12px;
-            background: #F8FAF8;
+        .card {
+            border-radius: 26px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: 0 16px 40px rgba(30, 144, 255, 0.12);
+            backdrop-filter: blur(16px);
+        }
+
+        .hero-card {
+            padding: 24px;
+            min-height: 260px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            inset: auto -30px -40px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.2), transparent 68%);
+            pointer-events: none;
+        }
+
+        /* Dark balance hero that mirrors the mobile mock */
+        .balance-hero {
+            padding: 20px;
+            min-height: 160px;
+            background: linear-gradient(135deg, rgba(6,18,38,0.95), rgba(26,38,64,0.95));
+            color: #fff;
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 24px 60px rgba(2,10,30,0.36);
+        }
+
+        .start-btn {
+            display: inline-block;
+            padding: 10px 18px;
             border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent));
+            color: #071018;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 12px 30px rgba(30,144,255,0.18);
         }
 
-        .package-meta-value {
-            font-size: 15px;
-            font-weight: 900;
-            color: #0B3D2E;
-            margin-bottom: 2px;
+        .action-tiles {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0,1fr));
+            gap: 12px;
         }
 
-        .package-meta-label {
+        .action-tile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 12px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.96);
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid rgba(30,144,255,0.08);
+        }
+
+        .action-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .section-label {
+            color: #2f6fa1;
             font-size: 11px;
-            color: #6B7A6B;
+            font-weight: 800;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            margin-bottom: 10px;
         }
 
-        .package-btn {
-            width: 100%;
+        .balance-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .currency {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .balance-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(38px, 7vw, 66px);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+            font-weight: 700;
+        }
+
+        .support-text {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 440px;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cashback-card {
+            display: grid;
+            align-content: space-between;
+            gap: 18px;
+            padding: 22px;
+            min-height: 260px;
+            background: linear-gradient(180deg, rgba(240, 248, 255, 0.98), rgba(220, 240, 255, 0.96));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cashback-card::after {
+            content: '';
+            position: absolute;
+            inset: auto -28px -28px auto;
+            width: 180px;
+            height: 180px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.24), transparent 68%);
+            pointer-events: none;
+        }
+
+        .cashback-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(34px, 6vw, 58px);
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             padding: 14px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
+            border-radius: 18px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            color: var(--text);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .quick-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+        }
+
+        .quick-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .quick-title {
             font-size: 14px;
             font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(11,61,46,0.2);
         }
 
-        .package-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(11,61,46,0.3);
+        .quick-desc {
+            font-size: 12px;
+            color: var(--muted);
         }
 
-        /* Notifications */
+        .section {
+            margin-top: 18px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .section-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .activity-card,
+        .wallet-card {
+            padding: 20px;
+            border-radius: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: 0 16px 40px rgba(30, 144, 255, 0.08);
+        }
+
         .notifications-list {
             display: flex;
             flex-direction: column;
@@ -377,11 +475,10 @@
         }
 
         .notification-item {
-            background: white;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
             padding: 16px;
-            box-shadow: 0 2px 8px rgba(7,30,22,0.04);
-            border: 1px solid #E4EBE4;
+            border: 1px solid rgba(30, 144, 255, 0.12);
             display: flex;
             gap: 14px;
         }
@@ -389,12 +486,12 @@
         .notification-icon {
             width: 44px;
             height: 44px;
-            border-radius: 12px;
-            background: #ECFDF3;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(190, 234, 255, 0.96), rgba(77, 184, 255, 0.96));
+            color: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #059669;
             font-size: 18px;
             flex-shrink: 0;
         }
@@ -404,120 +501,537 @@
         }
 
         .notification-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #142114;
-            margin-bottom: 4px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 5px;
         }
 
-        .notification-message {
+        .notification-message,
+        .wallet-text {
+            color: var(--muted);
             font-size: 13px;
-            color: #6B7A6B;
+            line-height: 1.6;
         }
 
-        /* Bottom Navigation */
+        .notification-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .notification-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(190, 234, 255, 0.32);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .empty-state {
+            padding: 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 2200;
+            background: rgba(4, 10, 16, 0.64);
+            backdrop-filter: blur(8px);
+        }
+
+        .drawer-overlay.is-open {
+            display: flex;
+        }
+
+        .drawer-panel {
+            width: min(380px, 88vw);
+            background: linear-gradient(180deg, rgba(245, 251, 255, 0.98), rgba(224, 241, 255, 0.98));
+            border-right: 1px solid rgba(30, 144, 255, 0.14);
+            box-shadow: 24px 0 64px rgba(0, 0, 0, 0.36);
+            padding: 22px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .drawer-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin-top: 2px;
+        }
+
+        .drawer-subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .drawer-links {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 15px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            color: var(--text);
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .drawer-link:hover,
+        .drawer-link.active {
+            background: linear-gradient(135deg, rgba(190, 234, 255, 0.92), rgba(126, 199, 255, 0.92));
+            border-color: rgba(30, 144, 255, 0.2);
+        }
+
+        .drawer-link i {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .drawer-link span {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .drawer-footer {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            gap: 10px;
+        }
+
+        .drawer-utility {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .drawer-utility i {
+            color: var(--accent);
+        }
+
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(4, 10, 16, 0.66);
+            backdrop-filter: blur(6px);
+        }
+
+        .popup-card {
+            width: min(100%, 470px);
+            padding: 24px;
+            border-radius: 26px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(234, 246, 255, 0.98));
+            border: 1px solid rgba(30, 144, 255, 0.14);
+            box-shadow: var(--shadow);
+        }
+
+        .popup-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin-bottom: 10px;
+        }
+
+        .popup-text {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .popup-actions {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .popup-btn {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .popup-btn-secondary {
+            background: rgba(255, 255, 255, 0.96);
+            color: var(--text);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+        }
+
+        .popup-btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            color: #071018;
+        }
+
+        /* Daily check-in styles removed */
+
+        .notification-item,
+        .quick-link,
+        .drawer-link,
+        .drawer-utility {
+            min-width: 0;
+        }
+
+        /* checkin icon removed */
+
+        @media (max-width: 960px) {
+            .page {
+                padding: 14px 12px 22px;
+            }
+
+            .content {
+                padding: 14px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .pill-row {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .pill {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .top-actions {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .top-actions .icon-button {
+                flex: 0 0 auto;
+            }
+
+            .title {
+                font-size: clamp(22px, 5vw, 34px);
+            }
+
+            .hero-card,
+            .cashback-card,
+            .activity-card,
+            .wallet-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 620px) {
+            body {
+                padding-bottom: 190px;
+            }
+
+            .page {
+                padding: 8px 6px 14px;
+            }
+
+            .content {
+                padding: 8px;
+            }
+
+            .shell {
+                border-radius: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            .top-actions {
+                width: 100%;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            .top-actions .icon-button {
+                flex: 1 1 0;
+                min-width: 0;
+            }
+
+            .brand {
+                gap: 8px;
+            }
+
+            .icon-button {
+                width: 42px;
+                height: 42px;
+                border-radius: 14px;
+            }
+
+            .hero-card,
+            .cashback-card {
+                min-height: unset;
+                padding: 16px;
+            }
+
+            .hero-grid,
+            .quick-links,
+            .pill-row,
+            .notifications-list {
+                gap: 10px;
+            }
+
+            .balance-row,
+            .pill-row {
+                gap: 8px;
+            }
+
+            .balance-value {
+                font-size: clamp(30px, 12vw, 44px);
+            }
+
+            .cashback-value {
+                font-size: clamp(28px, 11vw, 40px);
+            }
+
+            .support-text {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .pill {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 9px 11px;
+            }
+
+            .pill-row {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-link {
+                padding: 13px;
+            }
+
+            .quick-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 13px;
+                font-size: 17px;
+            }
+
+            .notification-item {
+                padding: 14px;
+                flex-direction: column;
+            }
+
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 13px;
+                font-size: 16px;
+            }
+
+            .notification-content {
+                width: 100%;
+            }
+
+            .notification-title {
+                font-size: 15px;
+            }
+
+            /* Removed checkin-fab responsive rules */
+
+            .popup-actions {
+                justify-content: stretch;
+                flex-direction: column;
+            }
+
+            .popup-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .drawer-panel {
+                width: 100vw;
+                max-width: 100vw;
+                padding: 18px 16px;
+            }
+
+            .drawer-header {
+                gap: 10px;
+            }
+
+            .drawer-link {
+                padding: 13px 14px;
+            }
+
+            .drawer-link span {
+                font-size: 13px;
+            }
+
+            .drawer-utility {
+                padding: 13px 14px;
+            }
+
+            .drawer-links,
+            .drawer-footer {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .shell {
+                border-radius: 18px;
+            }
+
+            .page {
+                padding: 6px 4px 12px;
+            }
+
+            .content {
+                padding: 6px;
+            }
+
+            .hero-grid,
+            .quick-links {
+                gap: 10px;
+            }
+
+            .top-actions {
+                gap: 6px;
+            }
+
+            .top-actions .icon-button {
+                height: 40px;
+            }
+
+            .section {
+                margin-top: 14px;
+            }
+
+            .activity-card,
+            .wallet-card {
+                padding: 14px;
+            }
+
+            .hero-card,
+            .cashback-card {
+                padding: 14px;
+            }
+
+            .section-heading {
+                font-size: 16px;
+            }
+
+            .quick-title,
+            .notification-title {
+                font-size: 14px;
+            }
+
+            .drawer-title {
+                font-size: 22px;
+            }
+
+            .drawer-subtitle,
+            .subtitle,
+            .support-text {
+                font-size: 12px;
+            }
+
+            /* Removed small-screen checkin status rule */
+        }
+
+        /* Ensure top action icons remain visible on mobile */
+        .top-actions {
+            z-index: 12;
+        }
+
+        /* Bottom navigation (copied from package page for consistent mobile nav) */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background: white;
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(7,30,22,0.12);
+            padding: 12px 10px 20px;
+            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
             z-index: 1000;
             border-top: 1px solid rgba(7,30,22,0.08);
         }
 
-        .checkin-fab {
-            position: fixed;
-            right: 18px;
-            bottom: 118px;
-            z-index: 1100;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .checkin-status {
-            background: rgba(11, 61, 46, 0.9);
-            color: white;
-            border-radius: 999px;
-            padding: 8px 12px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            box-shadow: 0 10px 24px rgba(11, 61, 46, 0.18);
-            max-width: 150px;
-            text-align: right;
-        }
-
-        .checkin-fab button {
-            border: none;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #0B6B4E 0%, #1F8A70 100%);
-            color: white;
-            box-shadow: 0 18px 40px rgba(11, 107, 78, 0.35);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 16px;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-        }
-
-        .checkin-fab button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 22px 48px rgba(11, 107, 78, 0.42);
-        }
-
-        .checkin-fab button:disabled {
-            cursor: wait;
-            opacity: 0.75;
-            transform: none;
-        }
-
-        .checkin-fab .checkin-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.16);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        @media (max-width: 420px) {
-            .checkin-fab {
-                right: 14px;
-                bottom: 110px;
-                gap: 8px;
-                align-items: flex-end;
-            }
-
-            .checkin-status {
-                max-width: 130px;
-                padding: 7px 10px;
-                font-size: 10px;
-            }
-
-            .checkin-fab button {
-                padding: 12px 14px;
-                font-size: 12px;
-            }
-        }
-
         .nav-items {
             display: flex;
-            flex-direction: row;
             justify-content: space-around;
             max-width: 500px;
             margin: 0 auto;
-            width: 100%;
         }
 
         .nav-item {
@@ -533,89 +1047,88 @@
         }
 
         .nav-item.active {
-            color: #0B3D2E;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            color: #1E90FF;
+            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
         }
 
-        .nav-icon {
-            font-size: 22px;
-        }
+        .nav-icon { font-size: 22px; }
+        .nav-label { font-size: 12px; font-weight: 700; }
 
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .popup-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(7, 30, 22, 0.55);
-            backdrop-filter: blur(2px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .popup-card {
-            width: 100%;
-            max-width: 420px;
-            background: white;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 24px 64px rgba(7, 30, 22, 0.28);
-            border: 1px solid #E4EBE4;
-        }
-
-        .popup-title {
-            font-size: 22px;
-            font-weight: 900;
-            color: #0B3D2E;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-        }
-
-        .popup-text {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #4D5A4D;
-            margin-bottom: 18px;
-        }
-
-        .popup-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .popup-btn {
-            border: none;
-            border-radius: 10px;
-            padding: 11px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .popup-btn-secondary {
-            background: #F3F6F3;
-            color: #34503B;
-        }
-
-        .popup-btn-primary {
-            background: linear-gradient(135deg, #0B6B4E 0%, #1F8A70 100%);
-            color: white;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true">
+        <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+            <div class="drawer-header">
+                <div class="brand">
+                    <span class="eyebrow">SONICVEST</span>
+                    <div class="drawer-title" id="drawerTitle">Menu</div>
+                    <div class="drawer-subtitle">Move between your dashboard, plans, transactions, and profile tools.</div>
+                </div>
+                <button type="button" class="icon-button" id="closeDrawer" aria-label="Close menu">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="drawer-links">
+                <a href="{{ url_for('dashboard') }}" class="drawer-link active">
+                    <i class="fas fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ url_for('deposit') }}" class="drawer-link">
+                    <i class="fas fa-circle-plus"></i>
+                    <span>Deposit Funds</span>
+                </a>
+                <a href="{{ url_for('request_withdrawal') }}" class="drawer-link">
+                    <i class="fas fa-money-bill-transfer"></i>
+                    <span>Withdraw</span>
+                </a>
+                <a href="{{ url_for('packages') }}" class="drawer-link">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Investment Plans</span>
+                </a>
+                <a href="{{ url_for('referral') }}" class="drawer-link">
+                    <i class="fas fa-user-group"></i>
+                    <span>Referral Team</span>
+                </a>
+                <a href="{{ url_for('transactions') }}" class="drawer-link">
+                    <i class="fas fa-receipt"></i>
+                    <span>Transactions</span>
+                </a>
+                <a href="{{ url_for('profile') }}" class="drawer-link">
+                    <i class="fas fa-user-gear"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div class="drawer-footer">
+                <a href="{{ url_for('deposit') }}" class="drawer-utility">
+                    <span>Deposit now</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="{{ url_for('request_withdrawal') }}" class="drawer-utility">
+                    <span>Withdraw funds</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </aside>
+        <div id="drawerScrim" style="flex:1;"></div>
+    </div>
+
     {% if show_whatsapp_popup %}
     <div class="popup-overlay" id="whatsappPopup" role="dialog" aria-modal="true" aria-labelledby="whatsappPopupTitle">
         <div class="popup-card">
-            <h2 class="popup-title" id="whatsappPopupTitle">Join our community channels</h2>
-            <p class="popup-text">Stay updated with announcements, support updates, and quick investment tips in our official WhatsApp and Telegram channels.</p>
+            <div class="eyebrow" style="margin-bottom:12px;">Community channels</div>
+            <h2 class="popup-title" id="whatsappPopupTitle">Join our channels</h2>
+            <p class="popup-text">Get announcements, support updates, and platform tips from the official community channels.</p>
             <div class="popup-actions">
                 <button type="button" class="popup-btn popup-btn-secondary" id="dismissWhatsappPopup">Later</button>
                 {% if whatsapp_channel_url %}
@@ -629,199 +1142,190 @@
     </div>
     {% endif %}
 
-    <div class="container" data-claim-bonus-url="{{ url_for('claim_bonus') }}">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <span class="header-greeting">Good {{ 'Morning' if now.hour < 12 else 'Afternoon' if now.hour < 17 else 'Evening' }},</span>
-                <span class="header-username">{{ user.name or 'User' }}</span>
-            </div>
-            <div class="header-right">
-                <button class="header-btn" title="Notifications">
-                    <i class="fas fa-bell"></i>
-                </button>
-                <a href="{{ url_for('profile') }}" class="header-btn" title="Profile">
-                    <i class="fas fa-user"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Hero Card -->
-        <div class="hero-card">
-            <div class="hero-gradient">
-                <div class="hero-top">
-                    <div>
-                        <div class="hero-title">Total Balance</div>
-                        <div class="hero-subtitle">Account Overview</div>
+    <div class="page">
+        <div class="shell">
+            <div class="content">
+                <div class="topbar">
+                    <div class="brand">
+                        <div class="brand-top">
+                            <span class="eyebrow">Dashboard</span>
+                        </div>
+                        <div class="title">Welcome back, {{ user.name or 'User' }}</div>
+                        <div class="subtitle">Balance, recent income, quick deposit and withdrawal access, and daily cashback.</div>
                     </div>
-                    <div class="hero-icon">
-                        <i class="fas fa-wallet"></i>
+                    <div class="top-actions">
+                        <!-- Notifications and profile icons removed per request -->
                     </div>
                 </div>
-                <div class="hero-bottom">
-                    <span class="hero-label">Available to invest</span>
-                    <div class="hero-price">
-                        <span class="hero-price-currency">₦</span>
-                        <span class="hero-price-value">{{ (user.balance or 0) | format_number }}</span>
+
+                <div class="hero-grid">
+                    <div class="card balance-hero">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+                            <div>
+                                <div class="section-label" style="color:rgba(255,255,255,0.9);">Total Balance</div>
+                                <div class="balance-row" style="align-items:baseline;gap:8px;">
+                                    <span class="currency" style="color:rgba(255,255,255,0.92);font-size:18px;">₦</span>
+                                    <div class="balance-value" style="color:#ffffff;">{{ (user.balance or 0) | format_number }}</div>
+                                </div>
+                                <div class="support-text" style="color:rgba(255,255,255,0.86);margin-top:8px;">Available balance across all wallets.</div>
+                            </div>
+
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;min-width:120px;">
+                                <a href="{{ url_for('packages') }}" class="start-btn">Start Investing &rarr;</a>
+                                <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;">
+                                    <i class="fas fa-coins" style="color:rgba(255,255,255,0.95);font-size:20px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <div class="action-tiles">
+                            <a href="{{ url_for('deposit') }}" class="action-tile">
+                                <div class="action-icon"><i class="fas fa-arrow-down"></i></div>
+                                <div>
+                                    <div style="font-weight:800;font-size:14px;">Deposit</div>
+                                    <div style="color:var(--muted);font-size:12px;">Add funds to your wallet</div>
+                                </div>
+                            </a>
+                            <a href="{{ url_for('request_withdrawal') }}" class="action-tile">
+                                <div class="action-icon"><i class="fas fa-arrow-up"></i></div>
+                                <div>
+                                    <div style="font-weight:800;font-size:14px;">Withdraw</div>
+                                    <div style="color:var(--muted);font-size:12px;">Move funds to your bank</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">₦{{ (user.recharge_balance or 0) | format_number }}</div>
-                    <div class="stat-label">Recharge</div>
+                <div class="section">
+                    <div class="section-title">
+                        <div class="section-heading">Quick links</div>
+                        <span class="section-link">Shortcuts</span>
+                    </div>
+                    <div class="quick-links">
+                        <a href="{{ url_for('transactions') }}" class="quick-link">
+                            <div class="quick-icon"><i class="fas fa-list"></i></div>
+                            <div class="quick-text">
+                                <div class="quick-title">Transactions</div>
+                                <div class="quick-desc">View your activity history</div>
+                            </div>
+                        </a>
+                        <a href="{{ url_for('profile') }}" class="quick-link">
+                            <div class="quick-icon"><i class="fas fa-user"></i></div>
+                            <div class="quick-text">
+                                <div class="quick-title">Profile</div>
+                                <div class="quick-desc">Manage account settings</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">₦{{ (user.main_balance or 0) | format_number }}</div>
-                    <div class="stat-label">Main</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">₦{{ (user.profit or 0) | format_number }}</div>
-                    <div class="stat-label">Profit</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">₦{{ (daily_cashback or 0) | format_number }}</div>
-                    <div class="stat-label">Daily Cashback</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="actions-grid">
-            <a href="{{ url_for('deposit') }}" class="action-item">
-                <div class="action-icon">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <span class="action-label">Deposit</span>
-            </a>
-            <a href="{{ url_for('withdrawal') }}" class="action-item">
-                <div class="action-icon">
-                    <i class="fas fa-arrow-up"></i>
-                </div>
-                <span class="action-label">Withdraw</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="action-item">
-                <div class="action-icon">
-                    <i class="fas fa-box"></i>
-                </div>
-                <span class="action-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="action-item">
-                <div class="action-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <span class="action-label">Team</span>
-            </a>
-        </div>
-
-        <!-- Featured Package -->
-        {% if packages %}
-        <div class="section-title">
-            <span>Featured Plan</span>
-            <a href="{{ url_for('packages') }}" class="section-link">View all</a>
-        </div>
-        <div class="package-card">
-            <div class="package-header">
-                <div class="package-icon">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <div class="package-info">
-                    <h4>{{ packages[0].name }}</h4>
-                    <p>₦{{ packages[0].price | format_number }}</p>
-                </div>
-            </div>
-            <div class="package-meta">
-                <div class="package-meta-item">
-                    <div class="package-meta-value">{{ packages[0].duration_days }}</div>
-                    <div class="package-meta-label">Cycle</div>
-                </div>
-                <div class="package-meta-item">
-                    <div class="package-meta-value">₦{{ packages[0].daily_income | format_number }}</div>
-                    <div class="package-meta-label">Daily Income</div>
-                </div>
-                <div class="package-meta-item">
-                    <div class="package-meta-value">₦{{ packages[0].total_return | format_number }}</div>
-                    <div class="package-meta-label">Total Income</div>
-                </div>
-            </div>
-            <a href="{{ url_for('package_details', package_id=packages[0].id) }}" class="package-btn">
-                Invest Now
-            </a>
-        </div>
-        {% endif %}
-
-        <!-- Recent Transactions -->
-        {% if recent_transactions %}
-        <div class="section-title">
-            <span>Recent Activity</span>
-            <a href="{{ url_for('transactions') }}" class="section-link">View all</a>
-        </div>
-        <div class="notifications-list">
-            {% for transaction in recent_transactions[:3] %}
-            {% set is_completed = transaction.status == 'completed' %}
-            {% set is_withdrawal_success = transaction.type == 'withdrawal' and transaction.status in ['completed', 'approved', 'processed'] %}
-            {% set is_pending = transaction.status == 'pending' %}
-            <div class="notification-item">
-                <div class="notification-icon">
-                    <i class="fas fa-{{ 'arrow-down' if transaction.type in ['deposit', 'package_income', 'daily_bonus', 'referral_bonus'] else 'arrow-up' }}"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-title">{{ transaction.type.replace('_', ' ').title() }}</div>
-                    <div class="notification-message">
-                        {% if transaction.type == 'deposit' %}
-                            Deposit ₦{{ transaction.amount | format_number }}
-                            {% if is_completed %}completed{% elif is_pending %}pending confirmation{% else %}{{ transaction.status|title }}{% endif %}
-                        {% elif transaction.type == 'withdrawal' %}
-                            Withdrawal ₦{{ transaction.amount | format_number }}
-                            {% if is_withdrawal_success %}completed{% elif is_pending %}pending{% else %}{{ transaction.status|title }}{% endif %}
+                <div class="section">
+                    <div class="section-title">
+                        <div class="section-heading">Recent income</div>
+                        <a href="{{ url_for('transactions') }}" class="section-link">View history</a>
+                    </div>
+                    <div class="activity-card">
+                        {% if recent_transactions %}
+                        <div class="notifications-list">
+                            {% for transaction in recent_transactions[:3] %}
+                            {% set is_completed = transaction.status == 'completed' %}
+                            {% set is_withdrawal_success = transaction.type == 'withdrawal' and transaction.status in ['completed', 'approved', 'processed'] %}
+                            {% set is_pending = transaction.status == 'pending' %}
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-{{ 'arrow-down' if transaction.type in ['deposit', 'package_income', 'daily_bonus', 'referral_bonus'] else 'arrow-up' }}"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-title">{{ transaction.type.replace('_', ' ').title() }}</div>
+                                    <div class="notification-message">
+                                        {% if transaction.type == 'deposit' %}
+                                            Deposit ₦{{ transaction.amount | format_number }}
+                                            {% if is_completed %}completed{% elif is_pending %}pending confirmation{% else %}{{ transaction.status|title }}{% endif %}
+                                        {% elif transaction.type == 'withdrawal' %}
+                                            Withdrawal ₦{{ transaction.amount | format_number }}
+                                            {% if is_withdrawal_success %}completed{% elif is_pending %}pending{% else %}{{ transaction.status|title }}{% endif %}
+                                        {% else %}
+                                            {{ transaction.type.title() }} ₦{{ transaction.amount | format_number }}
+                                            {% if is_completed %}successfully{% elif is_pending %}pending{% else %}{{ transaction.status|title }}{% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="notification-meta">
+                                        <span class="notification-pill"><i class="fas fa-clock"></i> {{ transaction.status|title }}</span>
+                                        <span class="notification-pill"><i class="fas fa-tag"></i> {{ transaction.type.replace('_', ' ').title() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                         {% else %}
-                            {{ transaction.type.title() }} ₦{{ transaction.amount | format_number }}
-                            {% if is_completed %}successfully{% elif is_pending %}pending{% else %}{{ transaction.status|title }}{% endif %}
+                        <div class="empty-state">No recent income yet. New deposits, withdrawals, and rewards will appear here as they happen.</div>
                         {% endif %}
                     </div>
                 </div>
+
+                <!-- Income status removed per mobile design request -->
             </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item active">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
-            </a>
         </div>
     </div>
 
-    <div class="checkin-fab">
-        <div class="checkin-status">{{ income_scheduler_status }}</div>
-        <button type="button" id="checkinBtn" onclick="claimDailyBonus()">
-            <span class="checkin-icon"><i class="fas fa-bolt"></i></span>
-            <span id="checkinBtnText">Check in</span>
-        </button>
-    </div>
+    <!-- Daily check-in removed for mobile design -->
+
+    {% set active = 'dashboard' %}
+    {% include 'partials/bottom_nav.html' %}
 
     <script>
+        const drawerOverlay = document.getElementById('drawerOverlay');
+        const openDrawerButton = document.getElementById('openDrawer');
+        const closeDrawerButton = document.getElementById('closeDrawer');
+        const drawerScrim = document.getElementById('drawerScrim');
         const whatsappPopup = document.getElementById('whatsappPopup');
         const dismissWhatsappPopup = document.getElementById('dismissWhatsappPopup');
         const joinWhatsappNoUrl = document.getElementById('joinWhatsappNoUrl');
+
+        function setDrawerOpen(isOpen) {
+            if (!drawerOverlay) {
+                return;
+            }
+
+            drawerOverlay.classList.toggle('is-open', isOpen);
+            drawerOverlay.setAttribute('aria-hidden', String(!isOpen));
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        if (openDrawerButton) {
+            openDrawerButton.addEventListener('click', function () {
+                setDrawerOpen(true);
+            });
+        }
+
+        if (closeDrawerButton) {
+            closeDrawerButton.addEventListener('click', function () {
+                setDrawerOpen(false);
+            });
+        }
+
+        if (drawerScrim) {
+            drawerScrim.addEventListener('click', function () {
+                setDrawerOpen(false);
+            });
+        }
+
+        if (drawerOverlay) {
+            drawerOverlay.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    setDrawerOpen(false);
+                });
+            });
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                setDrawerOpen(false);
+            }
+        });
 
         if (dismissWhatsappPopup && whatsappPopup) {
             dismissWhatsappPopup.addEventListener('click', function () {
@@ -835,43 +1339,7 @@
             });
         }
 
-        async function claimDailyBonus() {
-            const button = document.getElementById('checkinBtn');
-            const label = document.getElementById('checkinBtnText');
-            const claimBonusUrl = document.querySelector('.container')?.dataset.claimBonusUrl;
-
-            if (!button || !label) {
-                return;
-            }
-
-            const originalLabel = label.textContent;
-            button.disabled = true;
-            label.textContent = 'Checking...';
-
-            try {
-                const response = await fetch(claimBonusUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: ''
-                });
-
-                const data = await response.json();
-
-                alert(data.message || 'Check-in complete');
-
-                if (data.success) {
-                    window.location.reload();
-                }
-            } catch (error) {
-                alert('Unable to complete check-in right now. Please try again.');
-            } finally {
-                button.disabled = false;
-                label.textContent = originalLabel;
-            }
-        }
+        /* Daily check-in JS removed */
     </script>
 </body>
 </html>

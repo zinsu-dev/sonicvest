@@ -1,521 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - SONICVEST</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #071E16 0%, #0B3D2E 50%, #0B6B4E 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .register-wrapper {
-            width: 100%;
-            max-width: 1000px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            overflow: hidden;
-            border-radius: 28px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-        }
-
-        /* Left Illustration Section */
-        .register-illustration {
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 100%);
-            padding: 48px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .illustration-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-
-        .illustration-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(167,243,208,0.15);
-            padding: 8px 16px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #A7F3D0;
-            margin-bottom: 28px;
-        }
-
-        .illustration-badge i {
-            font-size: 14px;
-        }
-
-        .illustration-title {
-            font-size: 38px;
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-
-        .illustration-title span {
-            background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .illustration-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.75);
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .features-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.85);
-        }
-
-        .feature-icon {
-            width: 28px;
-            height: 28px;
-            background: rgba(167,243,208,0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #A7F3D0;
-            font-size: 14px;
-        }
-
-        /* Decorative Elements */
-        .decorative-circle {
-            position: absolute;
-            border-radius: 999px;
-            opacity: 0.15;
-        }
-
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #A7F3D0 0%, #1F8A70 100%);
-            top: -150px;
-            right: -100px;
-        }
-
-        .circle-2 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #1F8A70 0%, #0B3D2E 100%);
-            bottom: -80px;
-            left: -60px;
-        }
-
-        /* Right Form Section */
-        .register-form-section {
-            background: white;
-            padding: 48px 40px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .register-header {
-            margin-bottom: 32px;
-        }
-
-        .register-logo {
-            width: 210px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .register-logo img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .register-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #142114;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
-
-        .register-subtitle {
-            font-size: 15px;
-            color: #6B7A6B;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #3A473A;
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #E4EBE4;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: #F8FAF8;
-            color: #142114;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #0B6B4E;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(11,107,78,0.1);
-        }
-
-        .phone-input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .country-code {
-            width: 90px;
-            padding: 14px 12px;
-            border: 2px solid #E4EBE4;
-            border-radius: 12px;
-            background: #F8FAF8;
-            font-size: 15px;
-            font-weight: 600;
-            color: #3A473A;
-            text-align: center;
-        }
-
-        .password-wrapper {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #4D5A4D;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 4px;
-            transition: color 0.2s;
-        }
-
-        .password-toggle:hover {
-            color: #0B3D2E;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(11,61,46,0.25);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(11,61,46,0.35);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .register-footer {
-            text-align: center;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid #E4EBE4;
-        }
-
-        .register-footer p {
-            color: #4D5A4D;
-            font-size: 14px;
-        }
-
-        .register-footer a {
-            color: #0B6B4E;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.2s;
-        }
-
-        .register-footer a:hover {
-            color: #0B3D2E;
-        }
-
-        .flash-messages {
-            margin-bottom: 20px;
-        }
-
-        .flash-message {
-            padding: 14px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .flash-message.success {
-            background: #ECFDF3;
-            color: #047857;
-            border: 1px solid #6EE7B7;
-        }
-
-        .flash-message.error {
-            background: #FEF2F2;
-            color: #B91C1C;
-            border: 1px solid #FCA5A5;
-        }
-
-        @media (max-width: 900px) {
-            .register-wrapper {
-                grid-template-columns: 1fr;
-                max-width: 480px;
-            }
-
-            .register-illustration {
-                display: none;
-            }
-
-            .register-form-section {
-                padding: 40px 32px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
-            }
-
-            .register-wrapper {
-                border-radius: 24px;
-            }
-
-            .register-form-section {
-                padding: 32px 24px;
-            }
-
-            .register-title {
-                font-size: 24px;
-            }
-
-            .phone-input-group {
-                flex-direction: column;
-            }
-
-            .country-code {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="register-wrapper">
-        <!-- Left Illustration Section -->
-        <div class="register-illustration">
-            <div class="decorative-circle circle-1"></div>
-            <div class="decorative-circle circle-2"></div>
-
-            <div class="illustration-content">
-                <div class="illustration-badge">
-                    <i class="fas fa-rocket"></i>
-                    Start Your Journey
-                </div>
-
-                <h1 class="illustration-title">
-                    Begin Your <span>Wealth</span> Journey Today
-                </h1>
-
-                <p class="illustration-subtitle">
-                    Create your free account and start earning passive income with our secure and reliable investment platform.
-                </p>
-
-                <div class="features-list">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <span>Secure & Encrypted Platform</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <span>Guaranteed Returns</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <span>24/7 Support</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Form Section -->
-        <div class="register-form-section">
-            <div class="register-header">
-                <div class="register-logo">
-                    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="SONICVEST">
-                </div>
-                <h1 class="register-title">Create Account</h1>
-                <p class="register-subtitle">Join SONICVEST and start earning today</p>
-            </div>
-
-            <!-- Flash Messages -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for category, message in messages %}
-                            <div class="flash-message {{ category }}">
-                                <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' if category == 'error' else 'info-circle' }}"></i>
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-
-            <form method="POST" action="{{ url_for('register') }}">
-                <div class="form-group">
-                    <label for="name" class="form-label">Full Name</label>
-                    <input type="text" id="name" name="name" class="form-input"
-                        placeholder="Enter your full name" value="{{ request.form.name or '' }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-input"
-                        placeholder="Enter your email" value="{{ request.form.email or '' }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone" class="form-label">Phone Number</label>
-                    <div class="phone-input-group">
-                        <div class="country-code">+234</div>
-                        <input type="tel" id="phone" name="phone" class="form-input"
-                            placeholder="8012345678" value="{{ request.form.phone or '' }}" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="referral_code" class="form-label">Referral Code</label>
-                    <input type="text" id="referral_code" name="referral_code" class="form-input"
-                        placeholder="Enter referral code if you have one"
-                        value="{{ request.form.referral_code or request.args.get('ref', '') or '' }}">
-                    <small style="display:block;margin-top:8px;color:#6B7A6B;font-size:12px;">
-                        Optional. Leave blank if you were not invited by someone.
-                    </small>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password" name="password" class="form-input"
-                            placeholder="Create a password" required>
-                        <button type="button" class="password-toggle" id="passwordToggle">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-input"
-                            placeholder="Confirm your password" required>
-                        <button type="button" class="password-toggle" id="confirmPasswordToggle">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    Create Account
-                </button>
-            </form>
-
-            <div class="register-footer">
-                <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const passwordToggle = document.getElementById('passwordToggle');
-        const passwordInput = document.getElementById('password');
-
-        passwordToggle.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.querySelector('i').classList.toggle('fa-eye');
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-
-        const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
-        const confirmPasswordInput = document.getElementById('confirm_password');
-
-        confirmPasswordToggle.addEventListener('click', function() {
-            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPasswordInput.setAttribute('type', type);
-            this.querySelector('i').classList.toggle('fa-eye');
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('name').focus();
-        });
-    </script>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Register - SONICVEST{% endblock %}
+
+{% block styles %}
+<style>
+  body > .modern-container:first-of-type { display: none; }
+  main { min-height: 100vh; }
+  .mobile-auth-page { display: grid; place-items: center; min-height: 100vh; background: #f7f8fa; padding: 24px; }
+  .mobile-auth-card { width:100%; max-width:420px; background:#fff; border-radius:12px; padding:22px; box-shadow:0 8px 24px rgba(12,18,22,0.06); }
+  .mobile-logo { width:88px; height:88px; margin:0 auto 12px; border-radius:999px; background:#87ceeb; display:grid; place-items:center; }
+  .mobile-logo img{ width:56px; height:56px; }
+  .mobile-field{ margin-bottom:10px; }
+  .mobile-field label{ display:block; font-size:0.82rem; color:var(--color-neutral-600); margin-bottom:6px; }
+  .modern-form-input{ width:100%; box-sizing:border-box; }
+  .mobile-btn{ display:block; width:100%; background:#87ceeb; color:#fff; border-radius:8px; padding:12px; font-weight:700; border:0; }
+  .mobile-footer{ text-align:center; margin-top:12px; color:var(--color-neutral-600); }
+  .mobile-footer a{ color:#e11d48; font-weight:700; text-decoration:none; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="mobile-auth-page">
+  <div class="mobile-auth-card">
+    <div class="mobile-logo"><img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo"></div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div style="margin-bottom:10px;">
+        {% for category, message in messages %}
+          <div class="auth-flash auth-flash-{{ category if category in ['success','error','info'] else 'info' }}" style="padding:10px;border-radius:8px;margin-bottom:8px;">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('register') }}">
+      <div class="mobile-field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" class="modern-form-input" placeholder="Enter your full name" value="{{ request.form.get('name','') }}" autocomplete="name" required>
+      </div>
+      <div class="mobile-field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" class="modern-form-input" placeholder="Enter your email" value="{{ request.form.get('email','') }}" autocomplete="email" required>
+      </div>
+      <div class="mobile-field">
+        <label for="phone">Mobile number</label>
+        <input type="tel" id="phone" name="phone" class="modern-form-input" placeholder="8012345678" value="{{ request.form.get('phone','') }}" autocomplete="tel" required>
+      </div>
+      <div class="mobile-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="modern-form-input" placeholder="Create a password" autocomplete="new-password" required>
+      </div>
+      <div class="mobile-field">
+        <label for="confirm_password">Confirm password</label>
+        <input type="password" id="confirm_password" name="confirm_password" class="modern-form-input" placeholder="Confirm your password" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="mobile-btn">Create account</button>
+    </form>
+
+    <div class="mobile-footer">Already have an account? <a href="{{ url_for('login') }}">Login</a></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function(){ document.getElementById('name')?.focus(); });
+</script>
+{% endblock %}

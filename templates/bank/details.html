@@ -9,20 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .bank-container {
-            max-width: 800px;
+            max-width: 520px;
             margin: 0 auto;
-            padding: 20px;
-            background: #f8fafc;
+            padding: 18px;
+            background: linear-gradient(180deg, #f5fbff 0%, #eaf6ff 46%, #dff1ff 100%);
             min-height: 100vh;
         }
 
         .bank-header {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #66C6FF 0%, #1EA7FF 100%);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            padding: 20px 16px;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 20px 60px rgba(30,120,200,0.08);
         }
 
         .bank-header h1 {
@@ -41,12 +41,12 @@
         }
 
         .bank-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e7eb;
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(240,248,255,0.98));
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 14px 40px rgba(8,60,120,0.06);
+            border: 1px solid rgba(30,144,255,0.06);
         }
 
         .current-bank-details {
@@ -71,10 +71,10 @@
         }
 
         .bank-info-item {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(30,144,255,0.04);
         }
 
         .bank-info-label {
@@ -100,48 +100,41 @@
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 8px;
-            font-weight: 500;
+            border-radius: 12px;
+            font-weight: 800;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.16s ease, box-shadow 0.16s ease;
             font-size: 14px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
+            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 100%);
+            color: #071018;
+            box-shadow: 0 12px 30px rgba(30,144,255,0.12);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(30,144,255,0.14); }
 
         .btn-secondary {
-            background: #f3f4f6;
+            background: white;
             color: #374151;
-            border: 1px solid #d1d5db;
+            border: 1px solid rgba(7,30,22,0.04);
         }
 
-        .btn-secondary:hover {
-            background: #e5e7eb;
-        }
+        .btn-secondary:hover { transform: translateY(-1px); }
 
         .btn-danger {
-            background: #ef4444;
+            background: linear-gradient(135deg, #FFB5B5 0%, #EF4444 100%);
             color: white;
         }
 
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-1px);
-        }
+        .btn-danger:hover { transform: translateY(-1px); }
 
         .form-section {
             border-left: 4px solid #f59e0b;
@@ -163,21 +156,18 @@
             margin-bottom: 8px;
         }
 
+
         .form-input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 2px solid rgba(30,144,255,0.06);
+            border-radius: 12px;
             font-size: 14px;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
             background: white;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
+        .form-input:focus { outline: none; border-color: #4DB8FF; box-shadow: 0 0 0 6px rgba(77,184,255,0.06); }
 
         .form-input.error {
             border-color: #ef4444;
@@ -238,9 +228,9 @@
         }
 
         .success-message {
-            background: #d1fae5;
-            border: 1px solid #a7f3d0;
-            color: #065f46;
+            background: #dff4ff;
+            border: 1px solid #8fd8ff;
+            color: #03396C;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -258,21 +248,10 @@
         }
 
         @media (max-width: 768px) {
-            .bank-container {
-                padding: 10px;
-            }
-
-            .bank-info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .bank-actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                justify-content: center;
-            }
+            .bank-container { padding: 12px; }
+            .bank-info-grid { grid-template-columns: 1fr; }
+            .bank-actions { flex-direction: column; gap:10px; }
+            .btn { justify-content: center; width:100%; }
         }
 
         .loading {
@@ -712,6 +691,9 @@
                 });
         });
     </script>
+
+    {% set active = 'profile' %}
+    {% include 'partials/bottom_nav.html' %}
 </body>
 
 </html>

@@ -27,7 +27,7 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
+            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
             padding: 24px 20px 32px;
             margin: -20px -20px 28px -20px;
             border-bottom-left-radius: 28px;
@@ -44,7 +44,7 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(167,243,208,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(135,206,235,0.15) 0%, transparent 70%);
             border-radius: 50%;
             top: -80px;
             right: -60px;
@@ -94,10 +94,10 @@
             background: white;
             border-radius: 24px;
             padding: 28px;
-            box-shadow: 0 8px 40px rgba(7,30,22,0.08);
+            box-shadow: 0 8px 40px rgba(14,72,140,0.08);
             margin-bottom: 24px;
             text-align: center;
-            border: 1px solid rgba(7,30,22,0.05);
+            border: 1px solid rgba(14,72,140,0.05);
             position: relative;
             overflow: hidden;
         }
@@ -109,7 +109,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #0B3D2E, #1F8A70);
+            background: linear-gradient(90deg, #4DB8FF, #1E90FF);
         }
 
         .balance-label {
@@ -124,7 +124,7 @@
         .balance-amount {
             font-size: 36px;
             font-weight: 900;
-            color: #0B3D2E;
+            color: #1E90FF;
             letter-spacing: -0.02em;
         }
 
@@ -166,9 +166,9 @@
         .form-input:focus,
         .form-select:focus {
             outline: none;
-            border-color: #0B3D2E;
-            background: #F0FDF4;
-            box-shadow: 0 0 0 4px rgba(11,61,46,0.1);
+            border-color: #4DB8FF;
+            background: #EEF8FF;
+            box-shadow: 0 0 0 4px rgba(30,144,255,0.1);
         }
 
         .input-group {
@@ -178,13 +178,13 @@
 
         .input-prefix {
             padding: 16px 18px;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
-            border: 2px solid #0B3D2E;
+            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+            border: 2px solid #1E90FF;
             border-right: none;
             border-radius: 16px 0 0 16px;
             font-size: 18px;
             font-weight: 800;
-            color: #0B3D2E;
+            color: #1E90FF;
         }
 
         .input-group .form-input {
@@ -243,7 +243,7 @@
             width: 22px;
             height: 22px;
             margin-top: 2px;
-            accent-color: #0B3D2E;
+            accent-color: #4DB8FF;
             cursor: pointer;
         }
 
@@ -254,36 +254,28 @@
             cursor: pointer;
         }
 
-        /* Submit Button */
+        /* Submit Button (modern) */
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--accent-2, #4DB8FF) 0%, var(--accent, #1E90FF) 100%);
+            color: #071018;
             border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 800;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 900;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
+            transition: transform 0.14s ease, box-shadow 0.14s ease;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 8px 24px rgba(11,61,46,0.25);
+            box-shadow: 0 12px 30px rgba(30,144,255,0.12);
         }
 
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(11,61,46,0.35);
-        }
+        .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(30,144,255,0.14); }
 
-        .submit-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-            transform: none;
-            box-shadow: none;
-        }
+        .submit-btn:disabled { cursor: not-allowed; opacity: 0.6; transform: none; box-shadow: none; }
 
         .lock-note {
             margin-top: 14px;
@@ -304,9 +296,9 @@
             right: 0;
             background: white;
             padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(7,30,22,0.12);
+            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
             z-index: 1000;
-            border-top: 1px solid rgba(7,30,22,0.08);
+            border-top: 1px solid rgba(14,72,140,0.06);
         }
 
         .nav-items {
@@ -329,8 +321,8 @@
         }
 
         .nav-item.active {
-            color: #0B3D2E;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            color: #1E90FF;
+            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
         }
 
         .nav-icon {
@@ -384,58 +376,25 @@
                     <div class="form-text">Minimum withdrawal: ₦{{ SYSTEM_SETTINGS.MINIMUM_WITHDRAWAL | format_number }}</div>
                 </div>
 
+                <!-- Show saved bank details and submit them as hidden fields -->
                 <div class="form-group">
-                    <label class="form-label">Bank Name</label>
-                    <select class="form-select" id="bank_name" name="bank_name" required>
-                        <option value="" selected disabled>Select your bank</option>
-                        <option value="Access Bank">Access Bank</option>
-                        <option value="First Bank">First Bank</option>
-                        <option value="GTBank">GTBank</option>
-                        <option value="UBA">UBA</option>
-                        <option value="Zenith Bank">Zenith Bank</option>
-                        <option value="Wema Bank">Wema Bank</option>
-                        <option value="Sterling Bank">Sterling Bank</option>
-                        <option value="Fidelity Bank">Fidelity Bank</option>
-                        <option value="Union Bank">Union Bank</option>
-                        <option value="FCMB">FCMB</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <label class="form-label">Withdrawal To</label>
+                    <div style="padding:12px;border-radius:12px;border:1px solid #e6eef6;background:#fbfeff">
+                        <div style="font-size:14px;font-weight:800;color:#142114">{{ current_user.account_name or 'No account on file' }}</div>
+                        <div style="color:#6b7280;margin-top:6px">{{ current_user.account_number or 'N/A' }} • {{ current_user.bank_name or current_user.other_bank or 'N/A' }}</div>
+                    </div>
+                    <input type="hidden" name="bank_name" value="{{ current_user.bank_name or '' }}">
+                    <input type="hidden" name="other_bank" value="{{ current_user.other_bank or '' }}">
+                    <input type="hidden" name="account_number" value="{{ current_user.account_number or '' }}">
+                    <input type="hidden" name="account_name" value="{{ current_user.account_name or '' }}">
                 </div>
 
-                <div class="form-group" id="other_bank_div" style="display: none;">
-                    <label class="form-label">Specify Bank Name</label>
-                    <input type="text" class="form-input" id="other_bank" name="other_bank">
-                </div>
+                <!-- confirmation removed -->
 
-                <div class="form-group">
-                    <label class="form-label">Account Number</label>
-                    <input type="text" class="form-input" id="account_number" name="account_number" maxlength="10" required>
-                    <div class="form-text">Enter a valid 10-digit account number</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Account Name</label>
-                    <input type="text" class="form-input" id="account_name" name="account_name" required>
-                </div>
             </form>
         </div>
 
-        <!-- Notice -->
-        <div class="notice">
-            <div class="notice-title">
-                <i class="fas fa-exclamation-triangle"></i>
-                Important Notice
-            </div>
-            <p class="notice-text">
-                Please ensure all bank details are correct before submission. Incorrect details may result in failed transactions or loss of funds.
-            </p>
-        </div>
-
-        <!-- Checkbox -->
-        <div class="checkbox-group">
-            <input type="checkbox" id="confirm_details" name="confirm_details" required>
-            <label for="confirm_details">I confirm that all details provided are correct</label>
-        </div>
+        <!-- Important notice and duplicate confirmation removed -->
 
         <!-- Submit -->
         <button type="submit" form="withdrawal-form" class="submit-btn" {% if withdrawal_locked %}disabled{% endif %}>
@@ -450,52 +409,24 @@
         {% endif %}
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
-            </a>
-        </div>
-    </div>
-
+    {% set active = '' %}
+    {% include 'partials/bottom_nav.html' %}
     <script>
-        const bankSelect = document.getElementById('bank_name');
-        const otherBankDiv = document.getElementById('other_bank_div');
-        const otherBankInput = document.getElementById('other_bank');
-
-        bankSelect.addEventListener('change', function() {
-            if (this.value === 'Other') {
-                otherBankDiv.style.display = 'block';
-                otherBankInput.setAttribute('required', 'required');
-            } else {
-                otherBankDiv.style.display = 'none';
-                otherBankInput.removeAttribute('required');
-            }
-        });
-
         const form = document.getElementById('withdrawal-form');
         form.addEventListener('submit', function(e) {
             const amount = parseFloat(document.getElementById('amount').value);
-            const min = {{ SYSTEM_SETTINGS.MINIMUM_WITHDRAWAL }};
-            const max = {{ current_user.main_balance or 0 }};
+            const min = {{ SYSTEM_SETTINGS.MINIMUM_WITHDRAWAL | tojson }};
+            const max = {{ (current_user.main_balance or 0) | tojson }};
+
+            if (isNaN(amount)) {
+                e.preventDefault();
+                alert('Enter a valid amount');
+                return false;
+            }
 
             if (amount < min) {
                 e.preventDefault();
-                alert('Minimum withdrawal is ₦' + min.toLocaleString());
+                alert('Minimum withdrawal is ₦' + Number(min).toLocaleString());
                 return false;
             }
 

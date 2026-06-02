@@ -23,419 +23,394 @@
             max-width: 500px;
             margin: 0 auto;
             padding: 20px;
-        }
+        <!DOCTYPE html>
+        <html lang="en">
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            padding: 32px 20px 36px;
-            margin: -20px -20px 28px -20px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Team Work - SONICVEST</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(167,243,208,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -80px;
-            right: -60px;
-        }
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                    background: #F0F9F4;
+                    min-height: 100vh;
+                    padding: 20px 12px 94px;
+                }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(167,243,208,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            bottom: -60px;
-            left: -40px;
-        }
+                .screen {
+                    max-width: 500px;
+                    margin: 0 auto;
+                }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
+                .page-title {
+                    text-align: center;
+                    margin-bottom: 22px;
+                }
 
-        .header-title {
-            color: white;
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
+                .page-title h1 {
+                    font-size: 28px;
+                    line-height: 1;
+                    margin: 0;
+                    letter-spacing: -1px;
+                    font-weight: 900;
+                    color: #1E90FF;
+                }
 
-        .header-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 15px;
-            font-weight: 500;
-        }
+                .page-title p {
+                    margin-top: 10px;
+                    font-size: 15px;
+                    color: #6B7A6B;
+                    font-weight: 500;
+                }
 
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-bottom: 28px;
-        }
+                .card {
+                    background: white;
+                    border-radius: 24px;
+                    padding: 24px;
+                    box-shadow: 0 8px 32px rgba(14,72,140,0.08);
+                    border: 1px solid rgba(14,72,140,0.05);
+                }
 
-        .stat-card {
-            background: white;
-            border-radius: 20px;
-            padding: 24px 16px;
-            box-shadow: 0 8px 32px rgba(7,30,22,0.08);
-            text-align: center;
-            border: 1px solid rgba(7,30,22,0.05);
-            transition: all 0.3s;
-        }
+                .ref-link-card h2 {
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: 800;
+                    margin-bottom: 6px;
+                    color: #142114;
+                }
 
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(7,30,22,0.12);
-        }
+                .ref-link-card p {
+                    text-align: center;
+                    color: #6B7A6B;
+                    margin-bottom: 16px;
+                    font-size: 14px;
+                }
 
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 14px;
-            color: #0B3D2E;
-            font-size: 22px;
-        }
+                .link-box {
+                    border: 2px dashed #1E90FF;
+                    background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+                    border-radius: 14px;
+                    padding: 18px;
+                    font-size: 14px;
+                    color: #142114;
+                    word-break: break-all;
+                    margin-bottom: 14px;
+                }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 900;
-            color: #142114;
-            margin-bottom: 6px;
-            letter-spacing: -0.02em;
-        }
+                .copy-btn {
+                    border: none;
+                    width: 100%;
+                    border-radius: 14px;
+                    background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+                    color: white;
+                    font-size: 16px;
+                    font-weight: 800;
+                    padding: 16px;
+                    cursor: pointer;
+                    box-shadow: 0 8px 24px rgba(30,144,255,0.2);
+                    transition: all 0.3s;
+                }
 
-        .stat-label {
-            font-size: 12px;
-            color: #6B7A6B;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 700;
-        }
+                .copy-btn:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 12px 32px rgba(11,61,46,0.3);
+                }
 
-        /* Referral Code Card */
-        .code-card {
-            background: white;
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 8px 40px rgba(7,30,22,0.08);
-            margin-bottom: 24px;
-            border: 1px solid rgba(7,30,22,0.05);
-            position: relative;
-            overflow: hidden;
-        }
+                .stats-grid {
+                    margin-top: 20px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px;
+                }
 
-        .code-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #0B3D2E, #1F8A70);
-        }
+                .stat-card {
+                    background: white;
+                    border-radius: 20px;
+                    box-shadow: 0 8px 32px rgba(14,72,140,0.08);
+                    padding: 24px 12px;
+                    text-align: center;
+                    border: 1px solid rgba(14,72,140,0.05);
+                    transition: all 0.3s;
+                }
 
-        .code-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #142114;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+                .stat-card:hover {
+                    transform: translateY(-4px);
+                }
 
-        .code-title i {
-            color: #0B6B4E;
-        }
+                .stat-value {
+                    font-size: 28px;
+                    line-height: 1;
+                    color: #1E90FF;
+                    font-weight: 900;
+                }
 
-        .code-display {
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
-            border: 2px dashed #0B3D2E;
-            border-radius: 14px;
-            padding: 22px;
-            text-align: center;
-            margin-bottom: 18px;
-        }
+                .stat-label {
+                    margin-top: 10px;
+                    font-size: 13px;
+                    color: #6B7A6B;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                }
 
-        .code-text {
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 24px;
-            font-weight: 900;
-            color: #0B3D2E;
-            letter-spacing: 4px;
-        }
+                .commission-wrap {
+                    margin-top: 20px;
+                }
 
-        .copy-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 8px 24px rgba(11,61,46,0.2);
-        }
+                .commission-wrap .heading {
+                    text-align: center;
+                    margin-bottom: 18px;
+                }
 
-        .copy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(11,61,46,0.3);
-        }
+                .commission-wrap .heading h3 {
+                    font-size: 18px;
+                    color: #142114;
+                    font-weight: 800;
+                    margin-bottom: 6px;
+                }
 
-        .copy-btn.copied {
-            background: linear-gradient(135deg, #0B6B4E 0%, #1F8A70 100%);
-        }
+                .commission-wrap .heading p {
+                    font-size: 14px;
+                    color: #6B7A6B;
+                }
 
-        /* Commission Structure */
-        .commission-section {
-            margin-bottom: 24px;
-        }
+                .commission-item {
+                    background: white;
+                    color: #142114;
+                    border-radius: 18px;
+                    padding: 18px 16px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 12px;
+                    box-shadow: 0 4px 16px rgba(7,30,22,0.06);
+                    border: 1px solid rgba(7,30,22,0.04);
+                    transition: all 0.3s;
+                }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #142114;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+                .commission-item:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 24px rgba(7,30,22,0.1);
+                }
 
-        .section-title i {
-            color: #0B6B4E;
-        }
+                .commission-item h4 {
+                    margin: 0;
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #142114;
+                }
 
-        .commission-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+                .commission-item p {
+                    margin-top: 4px;
+                    font-size: 13px;
+                    color: #6B7A6B;
+                }
 
-        .commission-item {
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 16px rgba(7,30,22,0.06);
-            border: 1px solid rgba(7,30,22,0.04);
-            transition: all 0.3s;
-        }
+                .badge {
+                    background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+                    border-radius: 999px;
+                    padding: 8px 14px;
+                    font-size: 15px;
+                    font-weight: 800;
+                    white-space: nowrap;
+                    color: white;
+                }
 
-        .commission-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(7,30,22,0.1);
-        }
+                .bottom-nav {
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: white;
+                    padding: 12px 16px 24px;
+                    box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
+                    z-index: 1000;
+                    border-top: 1px solid rgba(14,72,140,0.06);
+                }
 
-        .commission-info {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
+                .nav-items {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    max-width: 500px;
+                    margin: 0 auto;
+                    width: 100%;
+                }
 
-        .commission-level {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #0B3D2E 0%, #0B6B4E 50%, #1F8A70 100%);
-            color: white;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
+                .nav-item {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 6px;
+                    text-decoration: none;
+                    color: #9CA69C;
+                    padding: 8px 16px;
+                    border-radius: 14px;
+                    transition: all 0.2s;
+                }
 
-        .commission-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #142114;
-        }
+                .nav-item.active {
+                    color: #1E90FF;
+                    background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+                }
 
-        .commission-rate {
-            font-size: 22px;
-            font-weight: 900;
-            color: #0B3D2E;
-            letter-spacing: -0.02em;
-        }
+                .nav-icon {
+                    font-size: 22px;
+                }
 
-        /* Bottom Navigation - EXACT SAME AS HOME PAGE */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(7,30,22,0.12);
-            z-index: 1000;
-            border-top: 1px solid rgba(7,30,22,0.08);
-        }
+                .nav-label {
+                    font-size: 12px;
+                    font-weight: 700;
+                }
 
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+                @media (max-width: 420px) {
+                    .page-title h1 {
+                        font-size: 24px;
+                    }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: #9CA69C;
-            padding: 8px 16px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
+                    .stat-value {
+                        font-size: 24px;
+                    }
 
-        .nav-item.active {
-            color: #0B3D2E;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
-        }
+                    .stat-label {
+                        font-size: 11px;
+                    }
+                }
+            </style>
+        </head>
 
-        .nav-icon {
-            font-size: 22px;
-        }
+        <body>
+            {% set code = (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' %}
+            {% set ref_link = request.host_url ~ 'register?ref=' ~ code %}
 
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <h1 class="header-title">Invite & Earn</h1>
-                <p class="header-subtitle">Share your code and earn commissions</p>
-            </div>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+            <div class="screen">
+                <div class="page-title">
+                    <h1>Team Work</h1>
+                    <p>Invite friends and earn rewards</p>
                 </div>
-                <div class="stat-value">{{ total_referrals or 0 }}</div>
-                <div class="stat-label">Referrals</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-coins"></i>
+
+                <div class="card ref-link-card">
+                    <h2>Your Referral Link</h2>
+                    <p>Share this link with your friends</p>
+                    <div class="link-box" id="refLink">{{ ref_link }}</div>
+                    <button class="copy-btn" id="copyBtn" type="button">Copy Link</button>
                 </div>
-                <div class="stat-value">₦{{ total_commission | format_number if total_commission else 0 }}</div>
-                <div class="stat-label">Total Earned</div>
-            </div>
-        </div>
 
-        <!-- Referral Code Card -->
-        <div class="code-card">
-            <h3 class="code-title">
-                <i class="fas fa-code"></i>
-                Your Referral Code
-            </h3>
-            <div class="code-display">
-                <div class="code-text">{{ (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' }}</div>
-            </div>
-            <button class="copy-btn" id="copyBtn" onclick="copyCode()">
-                <i class="fas fa-copy"></i> Copy Code
-            </button>
-        </div>
-
-        <!-- Commission Structure -->
-        <div class="commission-section">
-            <h3 class="section-title">
-                <i class="fas fa-gift"></i>
-                Commission Structure
-            </h3>
-            <div class="commission-list">
-                <div class="commission-item">
-                    <div class="commission-info">
-                        <div class="commission-level">1</div>
-                        <div class="commission-text">Direct Referral</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ total_referrals or 0 }}</div>
+                        <div class="stat-label">Total Referrals</div>
                     </div>
-                    <div class="commission-rate">15%</div>
-                </div>
-                <div class="commission-item">
-                    <div class="commission-info">
-                        <div class="commission-level">2</div>
-                        <div class="commission-text">Level 2</div>
+                    <div class="stat-card">
+                        <div class="stat-value">₦{{ total_commission | format_number if total_commission else 0 }}</div>
+                        <div class="stat-label">Total Earnings</div>
                     </div>
-                    <div class="commission-rate">3%</div>
                 </div>
-                <div class="commission-item">
-                    <div class="commission-info">
-                        <div class="commission-level">3</div>
-                        <div class="commission-text">Level 3</div>
+
+                <div class="card commission-wrap">
+                    <div class="heading">
+                        <h3>Commission Structure</h3>
+                        <p>Earn from multiple levels</p>
                     </div>
-                    <div class="commission-rate">1%</div>
+
+                    <div class="commission-item">
+                        <div>
+                            <h4>Level 1 Referrals</h4>
+                            <p>Direct referrals ({{ level1_referrals|length if level1_referrals else 0 }} users)</p>
+                        </div>
+                        <div class="badge">{{ level1_rate_pct }}% Commission</div>
+                    </div>
+
+                    <div class="commission-item">
+                        <div>
+                            <h4>Level 2 Referrals</h4>
+                            <p>Your team's referrals ({{ level2_referrals|length if level2_referrals else 0 }} users)</p>
+                        </div>
+                        <div class="badge">{{ level2_rate_pct }}% Commission</div>
+                    </div>
+
+                    <div class="commission-item">
+                        <div>
+                            <h4>Level 3 Referrals</h4>
+                            <p>Extended team ({{ level3_referrals|length if level3_referrals else 0 }} users)</p>
+                        </div>
+                        <div class="badge">{{ level3_rate_pct }}% Commission</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Bottom Navigation - EXACT SAME AS HOME PAGE -->
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item active">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
-            </a>
-        </div>
-    </div>
+            <div class="bottom-nav">
+                <div class="nav-items">
+                    <a href="{{ url_for('dashboard') }}" class="nav-item">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span class="nav-label">Home</span>
+                    </a>
+                    <a href="{{ url_for('packages') }}" class="nav-item">
+                        <i class="fas fa-box nav-icon"></i>
+                        <span class="nav-label">Plans</span>
+                    </a>
+                    <a href="{{ url_for('referral') }}" class="nav-item active">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span class="nav-label">Team</span>
+                    </a>
+                    <a href="{{ url_for('profile') }}" class="nav-item">
+                        <i class="fas fa-user nav-icon"></i>
+                        <span class="nav-label">Profile</span>
+                    </a>
+                </div>
+            </div>
 
-    <script>
-        function copyCode() {
-            const code = "{{ (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' }}";
-            const btn = document.getElementById('copyBtn');
-            
-            navigator.clipboard.writeText(code).then(() => {
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                btn.classList.add('copied');
-                
+            <script>
+                const copyBtn = document.getElementById('copyBtn');
+                const refLinkEl = document.getElementById('refLink');
+
+                async function copyReferralLink() {
+                    const value = refLinkEl ? refLinkEl.textContent.trim() : '';
+                    if (!value) return;
+
+                    try {
+                        await navigator.clipboard.writeText(value);
+                    } catch (e) {
+                        const ta = document.createElement('textarea');
+                        ta.value = value;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                    }
+
+                    const original = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = original;
+                    }, 2000);
+                }
+
+                if (copyBtn) {
+                    copyBtn.addEventListener('click', copyReferralLink);
+                }
+            </script>
+        </body>
+
+        </html>
+        function copyLink() {
+            const link = "{{ request.host_url.rstrip('/') ~ url_for('auth.register') ~ '?invite=' ~ (user.referral_code if user else current_user.referral_code) }}";
+            navigator.clipboard.writeText(link).then(() => {
+                const btns = document.getElementsByClassName('small-copy');
+                for (let b of btns) {
+                    b.innerText = 'Copied';
+                }
                 setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
-                    btn.classList.remove('copied');
-                }, 2000);
+                    for (let b of btns) { b.innerText = 'Copy'; }
+                }, 1500);
             });
         }
     </script>

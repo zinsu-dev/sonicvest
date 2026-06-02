@@ -4,275 +4,103 @@
 
 {% block styles %}
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-	.receipt-page {
-		font-family: 'Inter', sans-serif;
-		background: linear-gradient(135deg, #F8FAFC 0%, #EAF7F0 100%);
-		min-height: 100vh;
-		padding: 20px;
-	}
-
-	.receipt-container {
-		max-width: 680px;
-		margin: 0 auto;
-		background: #fff;
-		border-radius: 22px;
-		box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
-		overflow: hidden;
-	}
-
-	.receipt-header {
-		background: linear-gradient(135deg, #14532D 0%, #16A34A 100%);
-		color: #fff;
-		padding: 36px 28px;
-		text-align: center;
-		position: relative;
-	}
-
-	.receipt-header .icon {
-		font-size: 58px;
-		margin-bottom: 10px;
-		animation: bounce 2s infinite;
-	}
-
-	.receipt-title {
-		font-size: 28px;
-		font-weight: 800;
-		margin: 0 0 6px;
-		letter-spacing: -.3px;
-	}
-
-	.receipt-sub {
-		opacity: .92;
-		font-size: 14px;
-	}
-
-	@keyframes bounce {
-
-		0%,
-		20%,
-		50%,
-		80%,
-		100% {
-			transform: translateY(0)
-		}
-
-		40% {
-			transform: translateY(-8px)
-		}
-
-		60% {
-			transform: translateY(-4px)
-		}
-	}
-
-	.receipt-body {
-		padding: 26px;
-		background: linear-gradient(#fff, #f8fafc);
-	}
-
-	.status {
-		text-align: center;
-		margin-bottom: 18px;
-	}
-
-	.badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		padding: 10px 16px;
-		border-radius: 999px;
-		font-weight: 700;
-		letter-spacing: .3px;
-		font-size: 12px;
-	}
-
-	.badge.success {
-		background: linear-gradient(135deg, #16A34A, #0F766E);
-		color: #fff;
-	}
-
-	.badge.pending {
-		background: linear-gradient(135deg, #22C55E, #15803D);
-		color: #fff;
-	}
-
-	.card {
-		background: #fff;
-		border: 1px solid #e5e7eb;
-		border-radius: 18px;
-		padding: 18px;
-		box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
-	}
-
-	.row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 12px 0;
-		border-bottom: 1px solid #f1f5f9;
-	}
-
-	.row:last-child {
-		border-bottom: none;
-	}
-
-	.label {
-		color: #64748b;
-		font-weight: 600;
-		font-size: 13px;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.value {
-		color: #0f172a;
-		font-weight: 700;
-		font-size: 14px;
-	}
-
-	.amount {
-		font-size: 26px;
-		font-weight: 800;
-		color: #0f172a;
-	}
-
-	.amount.negative {
-		color: #ef4444;
-	}
-
-	.note {
-		margin-top: 16px;
-		border-radius: 14px;
-		padding: 16px;
-		border: 1px solid #BBF7D0;
-		background: linear-gradient(135deg, #F7FDF9, #ECFDF3);
-		color: #0f172a;
-		font-size: 13px;
-	}
-
-	.receipt-actions {
-		margin-top: 18px;
-		display: flex;
-		gap: 10px;
-		justify-content: flex-end;
-	}
-
-	.btn {
-		appearance: none;
-		border: 0;
-		border-radius: 10px;
-		padding: 10px 14px;
-		font-weight: 800;
-		cursor: pointer;
-		font-size: 14px;
-	}
-
-	.btn.primary {
-		background: linear-gradient(135deg, #16A34A, #0F766E);
-		color: #fff;
-	}
-
-	.btn.light {
-		background: #e5e7eb;
-		color: #111827;
-	}
-
-	@media (max-width: 640px) {
-		.receipt-body {
-			padding: 18px
-		}
-
-		.row {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 4px;
-		}
-
-		.value {
-			font-size: 13px
-		}
-	}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+.receipt-wrap{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#f6fbf8,#ffffff);min-height:100vh;padding:20px}
+.receipt-card{max-width:760px;margin:18px auto;background:#fff;border-radius:16px;box-shadow:0 18px 40px rgba(2,6,23,.08);overflow:hidden}
+.receipt-top{display:flex;gap:16px;align-items:center;padding:22px;background:linear-gradient(90deg,#0ea5e9,#3b82f6);color:#fff}
+.receipt-top .meta{flex:1}
+.receipt-title{font-size:18px;font-weight:800;margin:0}
+.receipt-company{opacity:.95;font-size:13px;margin-top:4px}
+.receipt-actions-right{display:flex;gap:8px}
+.receipt-body{display:grid;grid-template-columns:1fr 320px;gap:20px;padding:22px}
+.summary{background:linear-gradient(180deg,#ffffff,#f8fafc);border-radius:12px;padding:16px;border:1px solid #eef2f7}
+.summary .big{font-weight:800;font-size:28px}
+.details{background:#fff;border-radius:12px;padding:12px;border:1px solid #eef2f7}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 4px;border-bottom:1px dashed #f1f5f9}
+.row:last-child{border-bottom:none}
+.label{color:#6b7280;font-weight:600;font-size:13px}
+.value{color:#0f172a;font-weight:700}
+.badge{padding:8px 12px;border-radius:999px;font-weight:700;font-size:12px}
+.badge.success{background:#10b981;color:#fff}
+.badge.pending{background:#f97316;color:#fff}
+.barcode-wrap{text-align:center;padding:6px}
+.info-note{font-size:13px;color:#374151;margin-top:12px}
+.receipt-footer{display:flex;justify-content:space-between;align-items:center;padding:16px;border-top:1px solid #f1f5f9}
+.btn{border:0;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn.ghost{background:#f3f4f6;color:#111827}
+.btn.primary{background:linear-gradient(90deg,#3b82f6,#06b6d4);color:#fff}
+@media(max-width:880px){.receipt-body{grid-template-columns:1fr;}.receipt-top{flex-direction:column;align-items:flex-start}.receipt-actions-right{width:100%;justify-content:flex-end}}
+@media print{.receipt-actions-right,.receipt-footer{display:none}.receipt-wrap{background:#fff}}
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="receipt-page">
-	<div class="receipt-container">
-		<div class="receipt-header">
-			<div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
-			<h1 class="receipt-title">Withdrawal Receipt</h1>
-			<div class="receipt-sub">{{ business_name or 'SONICVEST' }}</div>
-		</div>
-
-		<div class="receipt-body">
-			<div class="status">
-				{% set is_completed = withdrawal.status in ['completed','approved','processed'] %}
-				<span class="badge {{ 'success' if is_completed else 'pending' }}">
-					<i class="fas fa-{{ 'check-circle' if is_completed else 'hourglass-half' }}"></i>
-					{{ 'Completed' if is_completed else 'Pending' }}
-				</span>
-			</div>
-
-			<div class="card" style="margin-bottom:14px;">
-				<div class="row">
-					<div class="label"><i class="fas fa-hashtag"></i> Reference</div>
-					<div class="value">{{ transaction.reference }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-calendar-day"></i> Date</div>
-					<div class="value">{{ transaction.created_at.strftime('%Y-%m-%d %H:%M') if transaction.created_at
-						else current_time.strftime('%Y-%m-%d %H:%M') }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-info-circle"></i> Status</div>
-					<div class="value">{{ transaction.status|title }}</div>
-				</div>
-			</div>
-
-			<div class="card" style="margin-bottom:14px;">
-				<div class="row">
-					<div class="label"><i class="fas fa-money-bill-wave"></i> Amount</div>
-					<div class="amount negative">NGN{{ withdrawal.amount | format_number }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-percentage"></i> Fee</div>
-					<div class="value">NGN{{ withdrawal.fee | format_number }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-wallet"></i> Net Amount</div>
-					<div class="value">NGN{{ withdrawal.net_amount | format_number }}</div>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="row">
-					<div class="label"><i class="fas fa-university"></i> Bank</div>
-					<div class="value">{{ withdrawal.other_bank if withdrawal.other_bank and withdrawal.other_bank != 'Other' else withdrawal.bank_name if withdrawal.bank_name and withdrawal.bank_name != 'Other' else 'N/A' }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-id-card"></i> Account Name</div>
-					<div class="value">{{ withdrawal.account_name }}</div>
-				</div>
-				<div class="row">
-					<div class="label"><i class="fas fa-hashtag"></i> Account Number</div>
-					<div class="value">{{ withdrawal.account_number }}</div>
-				</div>
-			</div>
-
-			<div class="note">
-				<strong>Note:</strong> Withdrawals are processed within 0-2 hours. Please ensure your bank
-				details are correct. For help, contact support with your reference.
-			</div>
-
-			<div class="receipt-actions">
-				<a class="btn light" href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Home</a>
-				<a class="btn light" href="{{ url_for('withdrawal') }}"><i class="fas fa-list"></i> Records</a>
-				<button class="btn primary" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
-			</div>
-		</div>
+<div class="receipt-wrap">
+  <div class="receipt-card">
+	<div class="receipt-top">
+	  <div class="meta">
+		<div class="receipt-title">Withdrawal Receipt</div>
+		<div class="receipt-company">{{ business_name or 'SONICVEST' }}</div>
+	  </div>
+			<!-- action buttons removed per user request -->
 	</div>
+
+	<div class="receipt-body">
+	  <div class="summary">
+		{% set is_completed = withdrawal.status in ['completed','approved','processed'] %}
+		<div style="display:flex;justify-content:space-between;align-items:center">
+		  <div>
+			<div style="font-size:13px;color:#6b7280;font-weight:700">Status</div>
+			<div style="margin-top:8px"><span class="badge {{ 'success' if is_completed else 'pending' }}">{{ 'Completed' if is_completed else 'Pending' }}</span></div>
+		  </div>
+		  <div style="text-align:right">
+			<div style="font-size:13px;color:#6b7280;font-weight:700">Amount</div>
+			<div class="big" style="margin-top:6px">NGN{{ withdrawal.amount | format_number }}</div>
+			<div style="font-size:13px;color:#6b7280;margin-top:6px">Fee: NGN{{ withdrawal.fee|format_number }} &nbsp; • &nbsp; Net: NGN{{ withdrawal.net_amount|format_number }}</div>
+		  </div>
+		</div>
+
+		<div style="margin-top:14px" class="info-note">
+		  Reference: <strong>{{ transaction.reference }}</strong><br>
+		  Date: <strong>{{ transaction.created_at.strftime('%Y-%m-%d %H:%M') if transaction.created_at else current_time.strftime('%Y-%m-%d %H:%M') }}</strong>
+		</div>
+
+		<div class="barcode-wrap">
+		  <svg id="barcode"></svg>
+		  <div style="margin-top:8px;color:#6b7280;font-weight:700;font-size:13px">{{ transaction.reference }}</div>
+		</div>
+	  </div>
+
+	  <div class="details">
+		<div class="row"><div class="label">Bank</div><div class="value">{{ withdrawal.other_bank if withdrawal.other_bank and withdrawal.other_bank != 'Other' else withdrawal.bank_name if withdrawal.bank_name and withdrawal.bank_name != 'Other' else 'N/A' }}</div></div>
+		<div class="row"><div class="label">Account Name</div><div class="value">{{ withdrawal.account_name }}</div></div>
+		<div class="row"><div class="label">Account Number</div><div class="value">{{ withdrawal.account_number }}</div></div>
+		<div class="row"><div class="label">Status Details</div><div class="value">{{ transaction.status|title }}</div></div>
+		<div class="row"><div class="label">Processed By</div><div class="value">{{ transaction.processed_by or 'Automated' }}</div></div>
+		<div style="margin-top:12px;font-size:13px;color:#374151">Please keep this receipt for your records. If you need help, contact support and include the reference above.</div>
+	  </div>
+	</div>
+
+	<div class="receipt-footer">
+	  <div style="color:#6b7280;font-size:13px">Generated: {{ current_time.strftime('%Y-%m-%d %H:%M') }}</div>
+	  <div>
+		<a class="btn ghost" href="{{ url_for('dashboard') }}">Back</a>
+	  </div>
+	</div>
+  </div>
 </div>
+
+<!-- JsBarcode from CDN to render a CODE128 barcode for the transaction reference -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+	var ref = "{{ transaction.reference or ('WD' ~ (withdrawal.id if withdrawal and withdrawal.id else '')) }}";
+	try{
+	  JsBarcode('#barcode', ref, {format: 'CODE128', displayValue: false, width:2, height:60, margin:6});
+	}catch(e){
+	  console.warn('JsBarcode error', e);
+	}
+  });
+</script>
+
 {% endblock %}
