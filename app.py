@@ -1608,25 +1608,60 @@ def withdrawal_history():
                          total_fees_paid=total_fees_paid,
                          withdrawal_fee_rate=withdrawal_fee_rate)
 
+
+def _withdrawal_access_state(user):
+    """Return whether the user can access withdrawals and why not."""
+    active_package = UserPackage.query.filter(
+        UserPackage.user_id == user.id,
+        UserPackage.is_active == True,
+        UserPackage.end_date > utc_now()
+    ).first()
+
+    has_bank_details = all([
+        (user.bank_name or '').strip(),
+        (user.account_number or '').strip(),
+        (user.account_name or '').strip(),
+    ])
+
+    return active_package, has_bank_details
+
+
+def _deny_withdrawal_access(active_package, has_bank_details, *, json_mode=False):
+    """Block withdrawal access until prerequisites are met."""
+    if active_package and has_bank_details:
+        return None
+
+    if not active_package and not has_bank_details:
+        message = 'Add your bank details and buy an active package before you can access withdrawals.'
+        if json_mode:
+            return jsonify({'success': False, 'requires_bank_details': True, 'requires_package': True, 'message': message})
+        flash(message, 'error')
+        return redirect(url_for('dashboard'))
+
+    if not has_bank_details:
+        message = 'Add your bank details before you can access withdrawals.'
+        if json_mode:
+            return jsonify({'success': False, 'requires_bank_details': True, 'message': message})
+        flash(message, 'error')
+        return redirect(url_for('bank_details'))
+
+    message = 'Buy an active package before you can access withdrawals.'
+    if json_mode:
+        return jsonify({'success': False, 'requires_package': True, 'message': message})
+    flash(message, 'error')
+    return redirect(url_for('packages'))
+
 @app.route('/withdrawal')
 @require_login
 def withdrawal():
     user = get_current_user()
     global SYSTEM_SETTINGS
     SYSTEM_SETTINGS = load_system_settings()
-    # Determine if user lacks an active (non-expired) package to trigger modal instead of redirect
-    require_package = UserPackage.query.filter(
-        UserPackage.user_id == user.id,
-        UserPackage.is_active == True,
-        UserPackage.end_date > utc_now()
-    ).first() is None
-    # Check if user has an active (non-expired) package
-    active_pkg = UserPackage.query.filter(
-        UserPackage.user_id == user.id,
-        UserPackage.is_active == True,
-        UserPackage.end_date > utc_now()
-    ).first()
-    require_package = active_pkg is None
+    active_pkg, has_bank_details = _withdrawal_access_state(user)
+    access_block = _deny_withdrawal_access(active_pkg, has_bank_details)
+    if access_block:
+        return access_block
+    require_package = False
     
     # Use system settings for withdrawal parameters
     minimum_withdrawal = SYSTEM_SETTINGS['MINIMUM_WITHDRAWAL']
@@ -1677,19 +1712,11 @@ def request_withdrawal():
     user = get_current_user()
     global SYSTEM_SETTINGS
     SYSTEM_SETTINGS = load_system_settings()
-    # Determine if user lacks an active (non-expired) package to trigger modal instead of redirect
-    require_package = UserPackage.query.filter(
-        UserPackage.user_id == user.id,
-        UserPackage.is_active == True,
-        UserPackage.end_date > utc_now()
-    ).first() is None
-    # Check if user has an active (non-expired) package
-    active_pkg = UserPackage.query.filter(
-        UserPackage.user_id == user.id,
-        UserPackage.is_active == True,
-        UserPackage.end_date > utc_now()
-    ).first()
-    require_package = active_pkg is None
+    active_pkg, has_bank_details = _withdrawal_access_state(user)
+    access_block = _deny_withdrawal_access(active_pkg, has_bank_details)
+    if access_block:
+        return access_block
+    require_package = False
     
     # Use system settings for withdrawal parameters
     minimum_withdrawal = SYSTEM_SETTINGS['MINIMUM_WITHDRAWAL']
@@ -2653,18 +2680,12 @@ def test_receipt():
 def process_withdrawal():
     """Handle withdrawal requests"""
     user = get_current_user()
-    # Hard block: user must have an active (non-expired) package to withdraw
-    active_pkg = UserPackage.query.filter(
-        UserPackage.user_id == user.id,
-        UserPackage.is_active == True,
-        UserPackage.end_date > utc_now()
-    ).first()
-    if not active_pkg:
-        if request.is_json:
-            return jsonify({'success': False, 'requires_package': True, 'message': 'You must buy an active package before you can withdraw.'})
-        # For non-JSON submissions, still show a friendly page-level modal via the request page
-        flash('You must buy an active package before you can withdraw.', 'error')
-        return redirect(url_for('request_withdrawal'))
+    global SYSTEM_SETTINGS
+    SYSTEM_SETTINGS = load_system_settings()
+    active_pkg, has_bank_details = _withdrawal_access_state(user)
+    access_block = _deny_withdrawal_access(active_pkg, has_bank_details, json_mode=request.is_json)
+    if access_block:
+        return access_block
 
     if not is_withdrawal_window_open(
         SYSTEM_SETTINGS['WITHDRAWAL_START_TIME'],

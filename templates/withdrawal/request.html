@@ -366,7 +366,7 @@
 
         <!-- Form -->
         <div class="form-card">
-            <form action="{{ url_for('process_withdrawal') }}" method="post" id="withdrawal-form">
+            <form action="{{ url_for('process_withdrawal') }}" method="post" id="withdrawal-form" data-min="{{ SYSTEM_SETTINGS.MINIMUM_WITHDRAWAL | tojson }}" data-max="{{ (current_user.main_balance or 0) | tojson }}">
                 <div class="form-group">
                     <label class="form-label">Amount to Withdraw</label>
                     <div class="input-group">
@@ -397,14 +397,14 @@
         <!-- Important notice and duplicate confirmation removed -->
 
         <!-- Submit -->
-        <button type="submit" form="withdrawal-form" class="submit-btn" {% if withdrawal_locked %}disabled{% endif %}>
+        <button type="submit" form="withdrawal-form" class="submit-btn">
             <i class="fas fa-paper-plane"></i>
-            {% if withdrawal_locked %}Withdrawal Locked{% else %}Submit Withdrawal Request{% endif %}
+            Submit Withdrawal Request
         </button>
 
         {% if withdrawal_locked %}
         <div class="lock-note">
-            Withdrawals are currently locked. Requests will reopen during {{ withdrawal_hours }}.
+            Withdrawal hours are {{ withdrawal_hours }}. If you still cannot submit, refresh the page and try again.
         </div>
         {% endif %}
     </div>
@@ -413,10 +413,11 @@
     {% include 'partials/bottom_nav.html' %}
     <script>
         const form = document.getElementById('withdrawal-form');
+        const min = parseFloat(form.dataset.min || '0');
+        const max = parseFloat(form.dataset.max || '0');
+
         form.addEventListener('submit', function(e) {
             const amount = parseFloat(document.getElementById('amount').value);
-            const min = {{ SYSTEM_SETTINGS.MINIMUM_WITHDRAWAL | tojson }};
-            const max = {{ (current_user.main_balance or 0) | tojson }};
 
             if (isNaN(amount)) {
                 e.preventDefault();

@@ -113,10 +113,13 @@
             </div>
 
             <!-- Recent Withdrawals -->
-            <div class="card" style="margin-top:12px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                    <div style="font-weight:800;font-size:15px">Recent Withdrawals</div>
-                    <a href="{{ url_for('withdrawal_history') }}" style="color:var(--sky-600);font-weight:700;font-size:13px">View all</a>
+            <div class="card" style="margin-top:12px;border:1px solid rgba(56,189,248,.18);background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%);box-shadow:0 10px 28px rgba(14,116,144,.06);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+                    <div>
+                        <div style="font-weight:800;font-size:15px">Recent Withdrawals</div>
+                        <div style="font-size:12px;color:var(--muted);margin-top:3px">Track your latest payout requests</div>
+                    </div>
+                    <a href="{{ url_for('withdrawal_history') }}" style="color:var(--sky-600);font-weight:700;font-size:13px;white-space:nowrap">View all</a>
                 </div>
 
                 {% if recent_withdrawals %}
@@ -135,7 +138,23 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                <div style="color:var(--muted);padding:8px 0">No withdrawals yet. <a href="{{ url_for('request_withdrawal') }}" style="color:var(--sky-600)">Make a withdrawal</a></div>
+                <div style="border:1px dashed rgba(56,189,248,.35);background:#f8fbff;border-radius:14px;padding:16px;text-align:center;display:grid;gap:10px;">
+                    <div style="font-weight:800;color:#334155">No withdrawals yet</div>
+                    <div style="font-size:13px;color:var(--muted)">Once you request a payout, it will appear here with its status and receipt.</div>
+                    <a href="{{ url_for('request_withdrawal') }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:220px;margin:0 auto;background:var(--sky-600);color:#fff;font-weight:800;padding:12px 16px;border-radius:12px;box-shadow:0 10px 18px rgba(56,189,248,.22)">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                        Make a withdrawal
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if recent_withdrawals %}
+                <div style="margin-top:12px;display:flex;justify-content:flex-end;">
+                    <a href="{{ url_for('request_withdrawal') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--sky-600);color:#fff;font-weight:800;padding:11px 14px;border-radius:12px;box-shadow:0 10px 18px rgba(56,189,248,.22);font-size:13px;">
+                        <i class="fas fa-plus"></i>
+                        Make a withdrawal
+                    </a>
+                </div>
                 {% endif %}
             </div>
 
