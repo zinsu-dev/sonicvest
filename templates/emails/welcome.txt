@@ -1,8 +1,8 @@
-Welcome to Max Wealth
+Welcome to Brooklyn
 
 Hello {{ name }},
 
-Your Max Wealth account has been created successfully.
+Your Brooklyn account has been created successfully.
 
 Welcome bonus added: N{{ welcome_bonus }}
 

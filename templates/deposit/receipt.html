@@ -6,18 +6,17 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    /* Reset Bootstrap overrides */
     .receipt-page * {
         box-sizing: border-box;
     }
 
     .receipt-page {
         font-family: 'Inter', sans-serif !important;
-        background: linear-gradient(135deg, #FFFFFF 0%, #F5F1E8 50%, #E8D4A0 100%) !important;
+        background: #0F1115 !important;
         min-height: 100vh !important;
         margin: 0 !important;
         padding: 20px !important;
-        color: #1a202c !important;
+        color: #FFFFFF !important;
     }
 
     .receipt-page .container {
@@ -29,9 +28,9 @@
     .receipt-page .receipt-container {
         max-width: 650px;
         margin: 0 auto;
-        background: #ffffff;
+        background: #20232A;
         border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         overflow: hidden;
         position: relative;
         animation: slideUp 0.6s ease-out;
@@ -42,7 +41,6 @@
             opacity: 0;
             transform: translateY(30px);
         }
-
         to {
             opacity: 1;
             transform: translateY(0);
@@ -71,13 +69,8 @@
     }
 
     @keyframes shimmer {
-        0% {
-            transform: translateX(-100%) translateY(-100%) rotate(45deg);
-        }
-
-        100% {
-            transform: translateX(100%) translateY(100%) rotate(45deg);
-        }
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
     .receipt-page .receipt-icon {
@@ -89,22 +82,9 @@
     }
 
     @keyframes bounce {
-
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
-            transform: translateY(0);
-        }
-
-        40% {
-            transform: translateY(-10px);
-        }
-
-        60% {
-            transform: translateY(-5px);
-        }
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
     }
 
     .receipt-page .receipt-title {
@@ -129,7 +109,7 @@
 
     .receipt-body {
         padding: 40px 30px;
-        background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+        background: #20232A;
     }
 
     .receipt-status {
@@ -147,40 +127,32 @@
         text-transform: uppercase;
         font-size: 13px;
         letter-spacing: 0.5px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-        0% {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        50% {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        100% {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+        0% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+        50% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
+        100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
     }
 
     .status-success {
-        background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
         color: white;
     }
 
     .status-pending {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
         color: white;
     }
 
     .transaction-details {
-        background: white;
+        background: #181A20;
         border-radius: 20px;
         padding: 24px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        border: 1px solid #2C313A;
     }
 
     .receipt-item {
@@ -188,12 +160,12 @@
         justify-content: space-between;
         align-items: center;
         padding: 16px 0;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid #2C313A;
         transition: all 0.2s ease;
     }
 
     .receipt-item:hover {
-        background: #f8fafc;
+        background: #20232A;
         margin: 0 -12px;
         padding: 16px 12px;
         border-radius: 12px;
@@ -201,7 +173,7 @@
 
     .receipt-item:last-child {
         border-bottom: none;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%);
         margin: 16px -24px -24px -24px;
         padding: 24px;
         border-radius: 0 0 20px 20px;
@@ -209,13 +181,13 @@
     }
 
     .receipt-item:last-child:hover {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%);
+        background: linear-gradient(135deg, #E5C158 0%, #C89B3C 100%);
         margin: 16px -24px -24px -24px;
         padding: 24px;
     }
 
     .receipt-label {
-        color: #64748b;
+        color: #B3B8C4;
         font-weight: 500;
         font-size: 14px;
         display: flex;
@@ -231,7 +203,7 @@
 
     .receipt-value {
         font-weight: 600;
-        color: #1e293b;
+        color: #FFFFFF;
         font-size: 14px;
     }
 
@@ -242,7 +214,7 @@
     .receipt-amount {
         font-size: 28px;
         font-weight: 700;
-        background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+        background: linear-gradient(135deg, #FFFFFF 0%, #E5C158 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -255,8 +227,8 @@
     }
 
     .receipt-note {
-        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-        border: 1px solid #bfdbfe;
+        background: #181A20;
+        border: 1px solid #2C313A;
         border-radius: 16px;
         padding: 20px;
         margin: 24px 0;
@@ -277,17 +249,12 @@
     }
 
     @keyframes loading {
-        0% {
-            background-position: 200% 0;
-        }
-
-        100% {
-            background-position: -200% 0;
-        }
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
     }
 
     .receipt-note h5 {
-        color: #1e40af;
+        color: #D4AF37;
         margin-bottom: 12px;
         font-size: 16px;
         font-weight: 600;
@@ -297,7 +264,7 @@
     }
 
     .receipt-note p {
-        color: #1e40af;
+        color: #B3B8C4;
         margin: 0;
         font-size: 14px;
         line-height: 1.6;
@@ -306,9 +273,9 @@
 
     .receipt-actions {
         padding: 30px;
-        background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+        background: #20232A;
         text-align: center;
-        border-top: 1px solid #e2e8f0;
+        border-top: 1px solid #2C313A;
     }
 
     .btn-receipt {
@@ -351,29 +318,28 @@
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+        box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
         color: white;
     }
 
     .btn-secondary {
-        background: white;
+        background: #181A20;
         color: #D4AF37;
         border: 2px solid #D4AF37;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
     .btn-secondary:hover {
         transform: translateY(-2px);
         background: #D4AF37;
         color: white;
-        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
     }
 
     .print-only {
         display: none;
     }
 
-    /* Icon animations */
     .icon {
         transition: transform 0.2s ease;
     }
@@ -382,88 +348,31 @@
         transform: scale(1.1);
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
-        body {
-            padding: 10px;
-        }
-
-        .receipt-container {
-            border-radius: 16px;
-            margin: 0;
-        }
-
-        .receipt-header {
-            padding: 30px 20px;
-        }
-
-        .receipt-title {
-            font-size: 24px;
-        }
-
-        .receipt-icon {
-            font-size: 48px;
-        }
-
-        .receipt-body {
-            padding: 24px 20px;
-        }
-
-        .transaction-details {
-            padding: 20px;
-        }
-
-        .receipt-actions {
-            padding: 20px;
-        }
-
-        .btn-receipt {
-            display: block;
-            margin: 8px 0;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .receipt-amount {
-            font-size: 24px;
-        }
+        body { padding: 10px; }
+        .receipt-container { border-radius: 16px; margin: 0; }
+        .receipt-header { padding: 30px 20px; }
+        .receipt-title { font-size: 24px; }
+        .receipt-icon { font-size: 48px; }
+        .receipt-body { padding: 24px 20px; }
+        .transaction-details { padding: 20px; }
+        .receipt-actions { padding: 20px; }
+        .btn-receipt { display: block; margin: 8px 0; width: 100%; justify-content: center; }
+        .receipt-amount { font-size: 24px; }
     }
 
     @media print {
-        body {
-            background: white;
-            padding: 0;
-        }
-
-        .receipt-actions,
-        .no-print {
-            display: none !important;
-        }
-
-        .print-only {
-            display: block !important;
-        }
-
-        .receipt-container {
-            box-shadow: none;
-            border: 1px solid #ddd;
-            border-radius: 0;
-        }
-
-        .receipt-header {
-            background: #D4AF37;
-            background: #667eea !important;
-        }
-
-        .receipt-note::before {
-            display: none;
-        }
+        body { background: white; padding: 0; }
+        .receipt-actions, .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        .receipt-container { box-shadow: none; border: 1px solid #ddd; border-radius: 0; }
+        .receipt-header { background: #D4AF37 !important; }
+        .receipt-note::before { display: none; }
     }
 
-    /* Add some micro-interactions */
     .receipt-container:hover {
         transform: translateY(-2px);
-        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
     }
 </style>
 {% endblock %}
@@ -472,7 +381,6 @@
 <div class="receipt-page">
     <div class="container">
         <div class="receipt-container">
-            <!-- Receipt Header -->
             <div class="receipt-header">
                 <div class="receipt-icon">
                     {% if transaction.status == 'completed' %}
@@ -484,15 +392,12 @@
                     {% endif %}
                 </div>
                 <h1 class="receipt-title">Payment Receipt</h1>
-                <p class="receipt-subtitle">{{ business_name or "SONICVEST" }} • Digital Receipt</p>
+                <p class="receipt-subtitle">{{ business_name or "Brooklyn" }} • Digital Receipt</p>
             </div>
 
-            <!-- Receipt Body -->
             <div class="receipt-body">
-                <!-- Status Badge -->
                 <div class="receipt-status">
-                    <span
-                        class="status-badge {% if transaction.status == 'completed' %}status-success{% else %}status-pending{% endif %}">
+                    <span class="status-badge {% if transaction.status == 'completed' %}status-success{% else %}status-pending{% endif %}">
                         {% if transaction.status == 'completed' %}
                         ✓ Payment Successful
                         {% else %}
@@ -501,71 +406,44 @@
                     </span>
                 </div>
 
-                <!-- Transaction Details -->
                 <div class="transaction-details">
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">🆔</span> Transaction ID
-                        </span>
+                        <span class="receipt-label"><span class="icon">🆔</span> Transaction ID</span>
                         <span class="receipt-value">{{ transaction.reference }}</span>
                     </div>
-
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">📅</span> Date & Time
-                        </span>
-                        <span class="receipt-value">{{ transaction.created_at.strftime('%B %d, %Y at %I:%M %p')
-                            }}</span>
+                        <span class="receipt-label"><span class="icon">📅</span> Date & Time</span>
+                        <span class="receipt-value">{{ transaction.created_at.strftime('%B %d, %Y at %I:%M %p') }}</span>
                     </div>
-
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">💳</span> Payment Method
-                        </span>
+                        <span class="receipt-label"><span class="icon">💳</span> Payment Method</span>
                         <span class="receipt-value">GTR Pay Gateway</span>
                     </div>
-
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">👤</span> Account
-                        </span>
+                        <span class="receipt-label"><span class="icon">👤</span> Account</span>
                         <span class="receipt-value">{{ user.username }}</span>
                     </div>
-
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">📧</span> Email
-                        </span>
+                        <span class="receipt-label"><span class="icon">📧</span> Email</span>
                         <span class="receipt-value">{{ user.email }}</span>
                     </div>
-
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">📝</span> Description
-                        </span>
+                        <span class="receipt-label"><span class="icon">📝</span> Description</span>
                         <span class="receipt-value">{{ transaction.description }}</span>
                     </div>
-
                     {% if trade_no %}
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">🔗</span> GTR Pay Reference
-                        </span>
+                        <span class="receipt-label"><span class="icon">🔗</span> GTR Pay Reference</span>
                         <span class="receipt-value">{{ trade_no }}</span>
                     </div>
                     {% endif %}
-
-                    <!-- Amount (Special styling) -->
                     <div class="receipt-item">
-                        <span class="receipt-label">
-                            <span class="icon">💰</span> Total Amount
-                        </span>
+                        <span class="receipt-label"><span class="icon">💰</span> Total Amount</span>
                         <span class="receipt-amount">₦{{ "{:,.2f}".format(transaction.amount) }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Receipt Note -->
             {% if transaction.status == 'completed' %}
             <div class="receipt-note">
                 <h5>🎯 What's Next?</h5>
@@ -584,33 +462,24 @@
             </div>
             {% endif %}
 
-            <!-- Actions -->
             <div class="receipt-actions no-print">
-                <a href="{{ url_for('dashboard') }}" class="btn-receipt btn-primary">
-                    <span>🏠</span> Go to Dashboard
-                </a>
-                <a href="{{ url_for('deposit') }}" class="btn-receipt btn-secondary">
-                    <span>💳</span> Make Another Deposit
-                </a>
-                <button onclick="window.print()" class="btn-receipt btn-secondary">
-                    <span>🖨️</span> Print Receipt
-                </button>
+                <a href="{{ url_for('dashboard') }}" class="btn-receipt btn-primary"><span>🏠</span> Go to Dashboard</a>
+                <a href="{{ url_for('deposit') }}" class="btn-receipt btn-secondary"><span>💳</span> Make Another Deposit</a>
+                <button onclick="window.print()" class="btn-receipt btn-secondary"><span>🖨️</span> Print Receipt</button>
             </div>
 
             {% if transaction.status != 'completed' %}
             <div id="verificationNotice" class="receipt-note" style="margin-top: 18px;">
                 <h5>⏳ Verifying Payment</h5>
                 <p>We are waiting for the gateway confirmation. This page will redirect to your dashboard automatically once payment is confirmed.</p>
-                <p id="verificationState" style="margin-top: 10px; font-weight: 600; color: #667eea;">Current status: pending</p>
+                <p id="verificationState" style="margin-top: 10px; font-weight: 600; color: #D4AF37;">Current status: pending</p>
             </div>
             {% endif %}
 
-            <!-- Print Only Footer -->
-            <div class="print-only"
-                style="text-align: center; padding: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
-                <p style="margin: 0; color: #666; font-size: 12px;">
+            <div class="print-only" style="text-align: center; padding: 20px; border-top: 1px solid #2C313A; margin-top: 20px;">
+                <p style="margin: 0; color: #B3B8C4; font-size: 12px;">
                     Generated on {{ current_time.strftime('%B %d, %Y at %I:%M %p') }}<br>
-                    {{ business_name or "SONICVEST" }} - Your Trusted Investment Platform<br>
+                    {{ business_name or "Brooklyn" }} - Your Trusted Investment Platform<br>
                     🌐 Secure • Reliable • Transparent
                 </p>
             </div>
@@ -629,65 +498,44 @@
         let stopped = false;
 
         if (alreadyCompleted) {
-            if (stayOnReceipt) {
-                return;
-            }
-
-            setTimeout(() => {
-                window.location.href = dashboardUrl;
-            }, 1200);
+            if (stayOnReceipt) { return; }
+            setTimeout(() => { window.location.href = dashboardUrl; }, 1200);
             return;
         }
 
         async function checkPaymentStatus() {
-            if (stopped) {
-                return;
-            }
-
+            if (stopped) { return; }
             attempts += 1;
             try {
                 const response = await fetch(statusUrl, { credentials: 'same-origin' });
                 const data = await response.json();
-
                 const stateNode = document.getElementById('verificationState');
                 if (stateNode && data.status) {
                     stateNode.textContent = `Current status: ${data.status}`;
                 }
-
                 if (data.completed) {
                     stopped = true;
                     if (stayOnReceipt) {
-                        if (stateNode) {
-                            stateNode.textContent = 'Current status: completed';
-                        }
+                        if (stateNode) { stateNode.textContent = 'Current status: completed'; }
                         return;
                     }
                     window.location.href = data.redirect_url || dashboardUrl;
                     return;
                 }
-
                 if (attempts >= maxAttempts) {
                     stopped = true;
-                    if (stateNode) {
-                        stateNode.textContent = 'Current status: pending. Please refresh or check back shortly.';
-                    }
+                    if (stateNode) { stateNode.textContent = 'Current status: pending. Please refresh or check back shortly.'; }
                     return;
                 }
-
                 const retryAfter = Number(data.retry_after || 0);
                 delayMs = Math.min(Math.max(retryAfter ? retryAfter * 1000 : delayMs * 1.5, 2000), 15000);
                 setTimeout(checkPaymentStatus, delayMs);
             } catch (error) {
-                if (attempts >= maxAttempts) {
-                    stopped = true;
-                    return;
-                }
-
+                if (attempts >= maxAttempts) { stopped = true; return; }
                 delayMs = Math.min(delayMs * 1.5, 15000);
                 setTimeout(checkPaymentStatus, delayMs);
             }
         }
-
         checkPaymentStatus();
     })();
 </script>

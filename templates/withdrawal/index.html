@@ -3,31 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdrawals - SONICVEST</title>
+    <title>Withdrawals - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        :root{--bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)}
+        * {margin: 0;padding: 0;box-sizing: border-box;}
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #F8FAF8;
+            background: var(--bg);
             min-height: 100vh;
             padding-bottom: 100px;
         }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
+        .container {max-width: 500px;margin: 0 auto;padding: 20px;}
         .header {
-            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
+            background: var(--gradient-gold);
             padding: 24px 20px 32px;
             margin: -20px -20px 28px -20px;
             border-bottom-left-radius: 28px;
@@ -38,289 +27,75 @@
             position: relative;
             overflow: hidden;
         }
-
         .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(135,206,235,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -80px;
-            right: -60px;
+            content: '';position: absolute;width: 200px;height: 200px;
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+            border-radius: 50%;top: -80px;right: -60px;
         }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            width: 100%;
-        }
-
+        .header-content {position: relative;z-index: 1;display: flex;align-items: center;gap: 16px;width: 100%;}
         .back-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s;
+            width: 46px;height: 46px;border-radius: 14px;background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);color: white;cursor: pointer;display: flex;
+            align-items: center;justify-content: center;font-size: 18px;text-decoration: none;
+            backdrop-filter: blur(10px);transition: all 0.2s;
         }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-        }
-
-        .header-title {
-            color: white;
-            font-size: 22px;
-            font-weight: 900;
-            flex: 1;
-            letter-spacing: -0.02em;
-        }
-
-        /* Request Button (modernized) */
+        .back-btn:hover {background: rgba(255,255,255,0.25);transform: translateY(-2px);}
+        .header-title {color: white;font-size: 22px;font-weight: 900;flex: 1;letter-spacing: -0.02em;}
         .request-btn {
-            width: 100%;
-            padding: 14px 16px;
-            background: linear-gradient(135deg, var(--accent-2, #4DB8FF) 0%, var(--accent, #1E90FF) 100%);
-            color: #071018;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            margin-bottom: 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
+            width: 100%;padding: 14px 16px;background: var(--gradient-gold);color: #fff;border: none;
+            border-radius: 12px;font-size: 15px;font-weight: 900;cursor: pointer;margin-bottom: 18px;
+            display: inline-flex;align-items: center;justify-content: center;gap: 10px;text-decoration: none;
             transition: transform 0.18s ease, box-shadow 0.18s ease;
-            box-shadow: 0 12px 30px rgba(30,144,255,0.12);
+            box-shadow: 0 12px 30px rgba(212,175,55,0.12);
         }
-
-        .request-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(30,144,255,0.14); }
-
+        .request-btn:hover {transform: translateY(-2px);box-shadow: 0 16px 40px rgba(212,175,55,0.14);}
         .info-banner {
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
-            border: 1px solid #BEEAFF;
-            color: #1E90FF;
-            border-radius: 18px;
-            padding: 14px 16px;
-            margin-bottom: 18px;
-            box-shadow: 0 6px 18px rgba(30,144,255,0.08);
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.6;
+            background: var(--card);border: 1px solid var(--border);color: var(--muted);
+            border-radius: 18px;padding: 14px 16px;margin-bottom: 18px;box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            font-size: 13px;font-weight: 600;line-height: 1.6;
         }
-
-        /* Withdrawal List */
-        .withdrawal-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
+        .withdrawal-list {display: flex;flex-direction: column;gap: 14px;}
         .withdrawal-item {
-            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,251,255,0.98));
-            border-radius: 20px;
-            padding: 18px;
-            box-shadow: 0 14px 40px rgba(8,60,120,0.06);
-            border: 1px solid rgba(30,144,255,0.06);
+            background: var(--card);border-radius: 20px;padding: 18px;
+            box-shadow: 0 14px 40px rgba(0,0,0,0.2);border: 1px solid var(--border);
         }
-
-        .withdrawal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-
-        .withdrawal-date {
-            font-size: 13px;
-            color: #6B7A6B;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 7px 14px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .status-badge.completed {
-            background: linear-gradient(135deg, #DFF4FF 0%, #BEEAFF 100%);
-            color: #1E90FF;
-        }
-
-        .status-badge.pending {
-            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-            color: #92400E;
-        }
-
-        .status-badge.rejected {
-            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-            color: #991B1B;
-        }
-
-        .withdrawal-details {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .detail-label {
-            font-size: 13px;
-            color: #6B7A6B;
-            font-weight: 500;
-        }
-
-        .detail-value {
-            font-size: 14px;
-            font-weight: 800;
-            color: #142114;
-        }
-
-        .detail-value.amount {
-            color: #1E90FF;
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
+        .withdrawal-header {display: flex;justify-content: space-between;align-items: center;margin-bottom: 14px;}
+        .withdrawal-date {font-size: 13px;color: var(--muted);font-weight: 600;}
+        .status-badge {padding: 7px 14px;border-radius: 999px;font-size: 11px;font-weight: 800;text-transform: uppercase;letter-spacing: 0.05em;}
+        .status-badge.completed {background: rgba(34,197,94,0.15);color: var(--success);}
+        .status-badge.pending {background: rgba(245,158,11,0.15);color: var(--warning);}
+        .status-badge.rejected {background: rgba(239,68,68,0.15);color: var(--danger);}
+        .withdrawal-details {display: flex;flex-direction: column;gap: 10px;}
+        .detail-row {display: flex;justify-content: space-between;align-items: center;}
+        .detail-label {font-size: 13px;color: var(--muted);font-weight: 500;}
+        .detail-value {font-size: 14px;font-weight: 800;color: var(--text);}
+        .detail-value.amount {color: var(--gold);font-size: 20px;font-weight: 900;letter-spacing: -0.02em;}
         .receipt-btn {
-            margin-top: 14px;
-            padding: 10px 14px;
-            background: linear-gradient(180deg, rgba(238,248,255,0.9), rgba(223,244,255,0.9));
-            color: var(--accent, #1E90FF);
-            border: none;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.14s ease;
+            margin-top: 14px;padding: 10px 14px;background: var(--surface);color: var(--gold);
+            border: 1px solid var(--border);border-radius: 12px;font-size: 13px;font-weight: 800;
+            cursor: pointer;text-decoration: none;display: inline-flex;align-items: center;gap: 8px;transition: transform 0.14s ease;
         }
-
-        .receipt-btn:hover { transform: translateY(-1px); }
-
-        /* Empty State */
+        .receipt-btn:hover {transform: translateY(-1px);}
         .empty-state {
-            background: white;
-            border-radius: 24px;
-            padding: 44px 28px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(14,72,140,0.08);
-            border: 1px solid rgba(14,72,140,0.05);
+            background: var(--card);border-radius: 24px;padding: 44px 28px;text-align: center;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);border: 1px solid var(--border);
         }
-
-        .empty-icon {
-            font-size: 52px;
-            color: #1E90FF;
-            margin-bottom: 18px;
-        }
-
-        .empty-title {
-            font-size: 19px;
-            font-weight: 900;
-            color: #142114;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-        }
-
-        .empty-text {
-            font-size: 14px;
-            color: #6B7A6B;
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
-            z-index: 1000;
-            border-top: 1px solid rgba(14,72,140,0.06);
-        }
-
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: #9CA69C;
-            padding: 8px 16px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .nav-item.active {
-            color: #1E90FF;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
-        }
+        .empty-icon {font-size: 52px;color: var(--gold);margin-bottom: 18px;}
+        .empty-title {font-size: 19px;font-weight: 900;color: var(--text);margin-bottom: 10px;letter-spacing: -0.02em;}
+        .empty-text {font-size: 14px;color: var(--muted);margin-bottom: 24px;font-weight: 500;}
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <a href="{{ url_for('dashboard') }}" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
+                <a href="{{ url_for('dashboard') }}" class="back-btn"><i class="fas fa-arrow-left"></i></a>
                 <h1 class="header-title">Withdrawal Records</h1>
             </div>
         </div>
 
-        <!-- Request Button -->
         <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
-            <i class="fas fa-plus"></i>
-            Request New Withdrawal
+            <i class="fas fa-plus"></i> Request New Withdrawal
         </a>
 
         <div class="info-banner">
@@ -329,7 +104,6 @@
         </div>
 
         {% if withdrawals %}
-        <!-- Withdrawal List -->
         <div class="withdrawal-list">
             {% for withdrawal in withdrawals %}
             <div class="withdrawal-item">
@@ -337,7 +111,6 @@
                     <span class="withdrawal-date">{{ withdrawal.created_at.strftime('%b %d, %Y %H:%M') }}</span>
                     <span class="status-badge {{ withdrawal.status }}">{{ withdrawal.status|title }}</span>
                 </div>
-
                 <div class="withdrawal-details">
                     <div class="detail-row">
                         <span class="detail-label">Withdrawal Amount</span>
@@ -352,23 +125,19 @@
                         <span class="detail-value">₦{{ (withdrawal.fee or 0) | format_number }}</span>
                     </div>
                 </div>
-
                 <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-btn">
-                    <i class="fas fa-receipt"></i>
-                    View Receipt
+                    <i class="fas fa-receipt"></i> View Receipt
                 </a>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <!-- Empty State -->
         <div class="empty-state">
             <i class="fas fa-money-bill-wave empty-icon"></i>
             <h3 class="empty-title">No Withdrawal Records</h3>
             <p class="empty-text">You have not made any withdrawals yet.</p>
             <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
-                <i class="fas fa-plus"></i>
-                Make Withdrawal
+                <i class="fas fa-plus"></i> Make Withdrawal
             </a>
         </div>
         {% endif %}

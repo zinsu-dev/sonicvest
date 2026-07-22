@@ -3,48 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Products - SONICVEST</title>
+    <title>My Products - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Clean mobile-first styles for My Products */
+        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#F6FAFF;min-height:100vh;padding-bottom:88px}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);min-height:100vh;padding-bottom:88px;color:var(--text)}
         .container{max-width:500px;margin:0 auto;padding:14px}
-        .header{background:linear-gradient(135deg,#6EC7FF 0%,#4DB8FF 50%,#1E90FF 100%);padding:14px 12px;border-radius:0 0 18px 18px;color:#fff;text-align:center}
+        .header{background:var(--gradient-gold);padding:14px 12px;border-radius:0 0 18px 18px;color:#000;text-align:center}
         .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-        .header-back{color:#fff;text-decoration:none;font-size:18px;display:inline-flex;align-items:center;gap:8px}
-        .brand-logo{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.12);display:inline-flex;align-items:center;justify-content:center}
+        .header-back{color:#000;text-decoration:none;font-size:18px;display:inline-flex;align-items:center;gap:8px}
+        .brand-logo{width:44px;height:44px;border-radius:12px;background:rgba(0,0,0,0.1);display:inline-flex;align-items:center;justify-content:center;color:#000}
         .header-title{font-size:18px;font-weight:900;margin:6px 0 4px}
-        .header-subtitle{font-size:13px;opacity:0.95}
+        .header-subtitle{font-size:13px;opacity:0.85}
         .filter-pills{display:flex;gap:8px;margin:12px 0 14px;overflow:auto;padding-bottom:6px}
-        .filter-pill{flex:0 0 auto;background:#fff;color:#1E90FF;padding:8px 12px;border-radius:999px;font-weight:800;border:1px solid rgba(30,144,255,0.06);font-size:13px}
-        .filter-pill.active{background:linear-gradient(135deg,#EEF8FF 0%,#DFF4FF 100%);box-shadow:0 8px 24px rgba(30,144,255,0.06)}
-        .section-title{display:flex;align-items:center;gap:10px;margin:8px 0;font-weight:800;color:#142114}
+        .filter-pill{flex:0 0 auto;background:var(--surface);color:var(--gold);padding:8px 12px;border-radius:999px;font-weight:800;border:1px solid var(--border);font-size:13px}
+        .filter-pill.active{background:rgba(212,175,55,0.12);border-color:var(--gold)}
+        .section-title{display:flex;align-items:center;gap:10px;margin:8px 0;font-weight:800;color:var(--text)}
+        .section-title i{color:var(--gold)}
         .packages-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
-        /* Order card */
-        .order-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 8px 24px rgba(7,30,22,0.06);border:1px solid #EEF4F8}
+        .order-card{background:var(--card);border-radius:16px;padding:14px;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
         .order-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
         .order-left{display:flex;align-items:center;gap:12px}
-        .order-icon{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#EEF8FF 0%,#DFF4FF 100%);display:inline-flex;align-items:center;justify-content:center;color:#4DB8FF;font-size:18px}
-        .order-title{font-weight:900;font-size:15px}
-        .order-sub{font-size:12px;color:#6B7A6B}
-        .badge{background:#EBF6FF;color:#007ACC;padding:6px 10px;border-radius:12px;font-weight:800;font-size:12px}
+        .order-icon{width:46px;height:46px;border-radius:12px;background:var(--gradient-gold);display:inline-flex;align-items:center;justify-content:center;color:#000;font-size:18px}
+        .order-title{font-weight:900;font-size:15px;color:var(--text)}
+        .order-sub{font-size:12px;color:var(--muted)}
+        .badge{background:rgba(212,175,55,0.12);color:var(--gold);padding:6px 10px;border-radius:12px;font-weight:800;font-size:12px}
         .stat-chips{display:flex;gap:8px;margin-bottom:10px}
-        .stat-chip{background:#F7FBFF;border-radius:12px;padding:10px 12px;min-width:84px}
-        .stat-chip .value{display:block;font-weight:900;color:#142114;margin-bottom:4px}
-        .stat-chip .label{font-size:11px;color:#6B7A6B;font-weight:700}
-        .order-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9AA59A}
-        .empty-state{padding:34px 20px;background:#fff;border-radius:14px;border:1px solid #E4EBE4;text-align:center}
-        .empty-state-icon{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,#EEF8FF 0%,#DFF4FF 100%);display:inline-flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;color:#4DB8FF}
-        /* Bottom nav */
-        .bottom-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;padding:12px 10px 20px;box-shadow:0 -8px 32px rgba(14,72,140,0.08);z-index:1200;border-top:1px solid rgba(7,30,22,0.06)}
+        .stat-chip{background:var(--surface);border-radius:12px;padding:10px 12px;min-width:84px;border:1px solid var(--border)}
+        .stat-chip .value{display:block;font-weight:900;color:var(--gold);margin-bottom:4px}
+        .stat-chip .label{font-size:11px;color:var(--muted);font-weight:700}
+        .order-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+        .empty-state{padding:34px 20px;background:var(--card);border-radius:14px;border:1px solid var(--border);text-align:center}
+        .empty-state-icon{width:64px;height:64px;border-radius:14px;background:var(--gradient-gold);display:inline-flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;color:#000}
+        .bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);padding:12px 10px 24px;box-shadow:0 -8px 32px rgba(0,0,0,0.3);z-index:1200;border-top:1px solid var(--border)}
         .nav-items{display:flex;justify-content:space-around;max-width:500px;margin:0 auto}
-        .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:#9CA69C;padding:6px 12px;border-radius:12px}
-        .nav-item.active{color:#1E90FF;background:linear-gradient(135deg,#EEF8FF 0%,#DFF4FF 100%)}
+        .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--muted);padding:6px 12px;border-radius:12px}
+        .nav-item.active{color:var(--gold);background:rgba(212,175,55,0.08)}
         .nav-icon{font-size:20px}
         .nav-label{font-size:12px;font-weight:700}
-        .invest-btn{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
-        .btn.btn-primary.invest-btn{background:linear-gradient(135deg,#4DB8FF 0%,#1E90FF 100%);color:#fff;border:none;box-shadow:0 12px 30px rgba(30,144,255,0.12)}
+        .invest-btn{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:#fff}
+        .btn.btn-primary.invest-btn{background:var(--gradient-gold);color:#000;border:none}
     </style>
 </head>
 <body>

@@ -1,10 +1,10 @@
-Sonic Pay - Start Earning Today
+Brooklyn - Start Earning Today
 
 Hello {{ name }},
 
 Featured packages are available now.
 
-You are just a few steps away from making money on Sonic Pay.
+You are just a few steps away from making money on Brooklyn.
 Get a package now and start earning massively.
 
 {% if package_offers %}Package highlights:

@@ -4,32 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to GTR Bank...</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        body{background:#0F1115;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+        .wrap{text-align:center;max-width:400px;padding:20px}
+        .spin{width:40px;height:40px;border:3px solid rgba(212,175,55,0.2);border-left:3px solid #D4AF37;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        h3{margin:0 0 8px;font-weight:700}
+        p{color:#B3B8C4;margin:0 0 20px;font-size:14px}
+        .details{background:#20232A;border-radius:12px;padding:16px;margin-bottom:20px;border:1px solid #2C313A}
+        .row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+        .row .lbl{color:#B3B8C4}
+        .row .val{font-weight:700}
+        .link{display:none;margin-top:16px}
+        .link a{color:#D4AF37;text-decoration:none;font-weight:700}
+    </style>
 </head>
 <body>
-    <!-- Loader -->
-    <div class="loader-overlay active">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <h3>Redirecting to GTR Bank</h3>
-            <p>Please wait while we redirect you to the secure payment gateway...</p>
-            <div class="payment-details">
-                <div class="detail-item">
-                    <span class="detail-label">Reference:</span>
-                    <span class="detail-value">{{ reference }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Amount:</span>
-                    <span class="detail-value">₦{{ amount | format_number }}</span>
-                </div>
-            </div>
-            <div id="manual-link-container" style="display: none;">
-                <p><a href="{{ payment_url }}" class="manual-link" target="_blank">
-                    <i class="fas fa-external-link-alt"></i>
-                    Click here if not redirected automatically
-                </a></p>
-            </div>
+    <div class="wrap">
+        <div class="spin"></div>
+        <h3>Redirecting to GTR Bank</h3>
+        <p>Please wait while we redirect you to the secure payment gateway...</p>
+        <div class="details">
+            <div class="row"><span class="lbl">Reference:</span><span class="val">{{ reference }}</span></div>
+            <div class="row"><span class="lbl">Amount:</span><span class="val">₦{{ amount | format_number }}</span></div>
+        </div>
+        <div class="link" id="manual-link-container">
+            <a href="{{ payment_url }}" target="_blank">Click here if not redirected automatically</a>
         </div>
     </div>
 
@@ -106,8 +107,8 @@
         }
         
         .btn-primary {
-            background: #007bff;
-            color: white;
+            background: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%);
+            color: #fff;
             padding: 12px 24px;
             text-decoration: none;
             border-radius: 8px;
@@ -117,7 +118,7 @@
         }
         
         .btn-primary:hover {
-            background: #0056b3;
+            background: #C89B3C;
             transform: translateY(-2px);
         }
     </style>    

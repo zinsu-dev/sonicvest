@@ -1,19 +1,12 @@
 {% extends "base.html" %}
-
-{% block title %}Server Error - SONICVEST{% endblock %}
-
+{% block title %}Server Error - Brooklyn{% endblock %}
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
-            <h1 class="display-1 text-danger mb-4">500</h1>
-            <h2 class="mb-4">Server Error</h2>
-            <p class="lead mb-5">Something went wrong on our end. We're working to fix the issue. Please try again
-                later.</p>
-            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-home me-2"></i>Go to Homepage
-            </a>
-        </div>
-    </div>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="text-align:center;max-width:400px;">
+    <div style="width:80px;height:80px;background:linear-gradient(135deg,#EF4444,#DC2626);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;font-weight:900;color:#fff;">500</div>
+    <h1 style="font-size:28px;font-weight:700;margin-bottom:12px;">Server Error</h1>
+    <p style="color:#B3B8C4;font-size:15px;line-height:1.6;margin-bottom:28px;">Something went wrong. We're working on it.</p>
+    <a href="{{ url_for('index') }}" class="btn-primary" style="display:inline-flex;width:auto;padding:14px 32px;text-decoration:none;">Go Home</a>
+  </div>
 </div>
 {% endblock %}

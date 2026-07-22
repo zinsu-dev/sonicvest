@@ -1,225 +1,177 @@
-/* Premium Green, White & Green Theme Enhancements */
-
-/* Add green shimmer effect to primary buttons */
 .btn-primary, .invest-now-btn {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%);
+  box-shadow: 0 4px 15px rgba(212,175,55,0.3);
 }
 
 .btn-primary::before, .invest-now-btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.3) 50%,
-        transparent 70%
-    );
-    animation: shimmer 3s infinite;
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer {
-    0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    }
-    100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-    }
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
-/* Green text shadow for headings */
 .auth-logo, .package-card .price, .stat-value {
-    text-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+  text-shadow: 0 2px 4px rgba(212,175,55,0.2);
 }
 
-/* Green success badges with glow */
 .badge.bg-completed, .badge.bg-success {
-    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important;
-    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+  background: linear-gradient(135deg, #22C55E, #16A34A) !important;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.2);
 }
 
-/* Green income badges */
 .badge.bg-income, .badge.bg-bonus {
-    background: linear-gradient(135deg, #22C55E, #16A34A) !important;
-    color: white !important;
-    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+  background: linear-gradient(135deg, #D4AF37, #C89B3C) !important;
+  color: #0F1115 !important;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.3);
 }
 
-/* Enhanced card styling with green border accent */
 .card, .auth-card, .plan-card {
-    border-top: 3px solid #22C55E;
+  border: 1px solid #2C313A;
 }
 
-/* Package cards with green highlights */
 .package-card:hover {
-    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
-    border-top: 3px solid #16A34A;
+  box-shadow: 0 8px 30px rgba(212,175,55,0.15);
+  border-color: rgba(212,175,55,0.3);
 }
 
-/* Green gradient for stats */
 .stat-card .stat-icon {
-    background: linear-gradient(135deg, #22C55E, #16A34A);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  background: linear-gradient(135deg, #D4AF37, #E5C158);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Green accent for success states */
 .daily-income, .success, .calc-value.success {
-    color: #2E7D32 !important;
-    font-weight: 600;
+  color: #22C55E !important;
+  font-weight: 600;
 }
 
-/* White background with subtle green tint */
 .auth-card, .card, .plan-card {
-    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
+  background: linear-gradient(135deg, #20232A 0%, #181A20 100%);
 }
 
-/* Green hover effect for links */
 .auth-link:hover, a:hover {
-    color: #16A34A !important;
+  color: #E5C158 !important;
 }
 
-/* Enhanced bottom navigation with green active state */
 .nav-item.active {
-    color: #22C55E !important;
-    background: rgba(34, 197, 94, 0.1);
+  color: #D4AF37 !important;
+  background: rgba(212,175,55,0.08);
 }
 
-/* Green progress bars */
 .progress-bar {
-    background: linear-gradient(90deg, #22C55E, #16A34A);
+  background: linear-gradient(90deg, #D4AF37, #E5C158);
 }
 
-/* Premium table styling */
 .table th {
-    background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-    border-bottom: 2px solid #22C55E;
+  background: rgba(212,175,55,0.08);
+  border-bottom: 2px solid #D4AF37;
+  color: #D4AF37;
 }
 
-/* Green check icons */
 .feature-item i, .timeline-icon.end i {
-    color: #2E7D32;
+  color: #22C55E;
 }
 
-/* Green navbar brand */
 .navbar-brand {
-    color: #22C55E !important;
-    text-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+  color: #D4AF37 !important;
+  text-shadow: 0 2px 4px rgba(212,175,55,0.3);
 }
 
-/* Enhanced dashboard header */
 .dashboard-header {
-    background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%);
-    border-bottom: 3px solid #22C55E;
+  border-bottom: 1px solid #2C313A;
 }
 
-.dashboard-header .balance-value {
-    color: #22C55E !important;
-}
-
-/* Green loader */
 .loader {
-    border-color: #F0FDF4;
-    border-top-color: #22C55E;
+  border-color: #2C313A;
+  border-top-color: #D4AF37;
 }
 
-/* Premium shadow effects */
 .card:hover, .package-card:hover {
-    box-shadow: 0 12px 40px rgba(34, 197, 94, 0.25);
+  box-shadow: 0 12px 40px rgba(212,175,55,0.1);
 }
 
-/* Green success messages */
 .alert-success {
-    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-    border-left: 4px solid #2E7D32;
-    color: #1B5E20;
+  background: rgba(34,197,94,0.08);
+  border-left: 4px solid #22C55E;
+  color: #22C55E;
 }
 
-/* Green info messages */
 .alert-info {
-    background: linear-gradient(135deg, #FAFAFA, #F0FDF4);
-    border-left: 4px solid #22C55E;
-    color: #14532D;
+  background: rgba(59,130,246,0.08);
+  border-left: 4px solid #3B82F6;
+  color: #3B82F6;
 }
 
-/* Referral code styling */
 .referral-code {
-    background: linear-gradient(135deg, #22C55E, #16A34A);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(135deg, #D4AF37, #E5C158);
+  color: #0F1115;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 15px rgba(212,175,55,0.3);
 }
 
-/* Premium input focus state */
 .form-control:focus {
-    border-color: #22C55E !important;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.1) !important;
 }
 
-/* Green counter/timer */
 .countdown-timer {
-    color: #22C55E;
-    background: rgba(34, 197, 94, 0.1);
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 2px solid #DCFCE7;
+  color: #D4AF37;
+  background: rgba(212,175,55,0.08);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(212,175,55,0.2);
 }
 
-/* Transaction type colors */
 .badge.bg-deposit {
-    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important;
+  background: linear-gradient(135deg, #D4AF37, #C89B3C) !important;
+  color: #0F1115 !important;
 }
 
 .badge.bg-referral {
-    background: linear-gradient(135deg, #66BB6A, #388E3C) !important;
+  background: linear-gradient(135deg, #3B82F6, #2563EB) !important;
 }
 
-/* Profile header with green theme */
 .profile-header {
-    background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%);
-    border-bottom: 3px solid #22C55E;
-    color: #212529;
+  background: linear-gradient(135deg, #0F1115 0%, #181A20 100%);
+  border-bottom: 1px solid #2C313A;
+  color: #FFFFFF;
 }
 
-/* Action buttons with theme colors */
 .send-otp-btn {
-    background: linear-gradient(135deg, #22C55E, #16A34A);
+  background: linear-gradient(135deg, #D4AF37, #E5C158);
+  color: #0F1115;
 }
 
 .send-otp-btn:hover {
-    background: linear-gradient(135deg, #DCFCE7, #22C55E);
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(135deg, #E5C158, #D4AF37);
+  box-shadow: 0 4px 15px rgba(212,175,55,0.3);
 }
 
-/* Password toggle button */
 .password-toggle:hover {
-    color: #22C55E !important;
+  color: #D4AF37 !important;
 }
 
-/* Premium scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #F8F7F5;
-}
-
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0F1115; }
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #22C55E, #16A34A);
-    border-radius: 4px;
+  background: linear-gradient(135deg, #D4AF37, #C89B3C);
+  border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #DCFCE7, #4ADE80);
+  background: linear-gradient(135deg, #E5C158, #D4AF37);
 }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220" role="img" aria-label="SONICVEST logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220" role="img" aria-label="Brooklyn logo">
   <defs>
     <linearGradient id="svGreen" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#78f0a3"/>
@@ -18,5 +18,5 @@
     <path d="M184 45h43v43" stroke="url(#svGreen)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   </g>
 
-  <text x="284" y="144" font-family="Montserrat, Poppins, 'Segoe UI', Arial, sans-serif" font-size="84" font-weight="800" letter-spacing="2" fill="#ffffff">SONICVEST</text>
+  <text x="284" y="144" font-family="Montserrat, Poppins, 'Segoe UI', Arial, sans-serif" font-size="84" font-weight="800" letter-spacing="2" fill="#ffffff">Brooklyn</text>
 </svg>

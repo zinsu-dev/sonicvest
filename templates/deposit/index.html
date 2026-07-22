@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit - SONICVEST</title>
+    <title>Deposit - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root{
+            --bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)
+        }
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +17,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #F8FAF8;
+            background: var(--bg);
             min-height: 100vh;
             padding-bottom: 100px;
         }
@@ -25,9 +28,8 @@
             padding: 20px;
         }
 
-        /* Header */
         .header {
-            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
+            background: var(--gradient-gold);
             padding: 24px 20px 32px;
             margin: -20px -20px 28px -20px;
             border-bottom-left-radius: 28px;
@@ -44,7 +46,7 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(135,206,235,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
             border-radius: 50%;
             top: -80px;
             right: -60px;
@@ -62,7 +64,7 @@
             width: 46px;
             height: 46px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.2);
             color: white;
             cursor: pointer;
@@ -87,15 +89,14 @@
             letter-spacing: -0.02em;
         }
 
-        /* Balance Card */
         .balance-card {
-            background: white;
+            background: var(--card);
             border-radius: 24px;
             padding: 28px;
-            box-shadow: 0 8px 40px rgba(14,72,140,0.08);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
             margin-bottom: 24px;
             text-align: center;
-            border: 1px solid rgba(14,72,140,0.05);
+            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
         }
@@ -107,12 +108,12 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #4DB8FF, #1E90FF);
+            background: var(--gradient-gold);
         }
 
         .balance-label {
             font-size: 13px;
-            color: #6B7A6B;
+            color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 10px;
@@ -122,15 +123,14 @@
         .balance-amount {
             font-size: 36px;
             font-weight: 900;
-            color: #1E90FF;
+            color: var(--gold);
             letter-spacing: -0.02em;
         }
 
-        /* Deposit Methods */
         .section-title {
             font-size: 17px;
             font-weight: 800;
-            color: #142114;
+            color: var(--text);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -138,7 +138,7 @@
         }
 
         .section-title i {
-            color: #4DB8FF;
+            color: var(--gold);
         }
 
         .methods-grid {
@@ -149,29 +149,29 @@
         }
 
         .method-item {
-            background: white;
+            background: var(--card);
             border-radius: 20px;
             padding: 18px 22px;
             display: flex;
             align-items: center;
             gap: 16px;
             text-decoration: none;
-            color: #142114;
-            box-shadow: 0 4px 16px rgba(14,72,140,0.06);
-            border: 1px solid rgba(14,72,140,0.04);
+            color: var(--text);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
             transition: all 0.3s;
         }
 
         .method-item:hover {
             transform: translateX(6px);
-            box-shadow: 0 8px 24px rgba(14,72,140,0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         .method-icon {
             width: 52px;
             height: 52px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+            background: var(--gradient-gold);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -188,21 +188,20 @@
             font-size: 16px;
             font-weight: 800;
             margin-bottom: 4px;
-            color: #142114;
+            color: var(--text);
         }
 
         .method-desc {
             font-size: 13px;
-            color: #6B7A6B;
+            color: var(--muted);
             font-weight: 500;
         }
 
         .method-arrow {
-            color: #9CA69C;
+            color: var(--muted);
             font-size: 18px;
         }
 
-        /* Quick Amounts */
         .quick-amounts {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -211,46 +210,45 @@
         }
 
         .quick-btn {
-            background: white;
+            background: var(--card);
             border-radius: 18px;
             padding: 18px 14px;
             text-align: center;
-            box-shadow: 0 4px 16px rgba(14,72,140,0.06);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
             cursor: pointer;
             transition: all 0.3s;
-            border: 1px solid rgba(7,30,22,0.04);
+            border: 1px solid var(--border);
         }
 
         .quick-btn:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(30,144,255,0.15);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         .quick-amount {
             font-size: 20px;
             font-weight: 900;
-            color: #1E90FF;
+            color: var(--gold);
             margin-bottom: 6px;
             letter-spacing: -0.02em;
         }
 
         .quick-label {
             font-size: 12px;
-            color: #6B7A6B;
+            color: var(--muted);
             font-weight: 700;
         }
 
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--surface);
             padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
             z-index: 1000;
-            border-top: 1px solid rgba(14,72,140,0.06);
+            border-top: 1px solid var(--border);
         }
 
         .nav-items {
@@ -266,15 +264,15 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            color: #9CA69C;
+            color: var(--muted);
             padding: 8px 16px;
             border-radius: 14px;
             transition: all 0.2s;
         }
 
         .nav-item.active {
-            color: #1E90FF;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+            color: var(--gold);
+            background: var(--card);
         }
 
         .nav-icon {
@@ -289,7 +287,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <a href="{{ url_for('dashboard') }}" class="back-btn">
@@ -299,13 +296,11 @@
             </div>
         </div>
 
-        <!-- Balance Card -->
         <div class="balance-card">
             <div class="balance-label">Current Balance</div>
             <div class="balance-amount">₦{{ (user.balance or 0) | format_number }}</div>
         </div>
 
-        <!-- Deposit Methods -->
         <h2 class="section-title">
             <i class="fas fa-wallet"></i>
             Choose Deposit Method
@@ -333,7 +328,6 @@
             </a>
         </div>
 
-        <!-- Quick Amounts -->
         <h2 class="section-title">
             <i class="fas fa-bolt"></i>
             Quick Amounts
@@ -358,7 +352,6 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <div class="nav-items">
             <a href="{{ url_for('dashboard') }}" class="nav-item">
@@ -385,7 +378,6 @@
             alert('Selected ₦' + amount.toLocaleString() + '. Please choose a deposit method to continue.');
         }
     </script>    
-    <!-- Vercel Web Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 
 </body>

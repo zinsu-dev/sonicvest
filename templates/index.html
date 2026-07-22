@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}SONICVEST - Your Path to Financial Freedom{% endblock %}
+{% block title %}Brooklyn - Your Path to Financial Freedom{% endblock %}
 
 {% block content %}
 <section class="hero bg-primary text-white text-center py-5">
     <div class="container">
-        <h1 class="display-4 fw-bold">Welcome to SONICVEST</h1>
+        <h1 class="display-4 fw-bold">Welcome to Brooklyn</h1>
         <p class="lead">Invest wisely and earn daily income with our premium packages.</p>
         <div class="mt-4">
             {% if session.user_id %}
@@ -26,7 +26,7 @@
 
 <section class="features py-5">
     <div class="container">
-        <h2 class="text-center mb-5">Why Choose SONICVEST?</h2>
+        <h2 class="text-center mb-5">Why Choose Brooklyn?</h2>
 
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -172,7 +172,7 @@
             'name': ['John Doe', 'Jane Smith', 'Robert Johnson'][i],
             'role': ['Investor', 'Business Owner', 'Entrepreneur'][i],
             'text': [
-            'I\'ve been using SONICVEST for 3 months and already earned back my initial investment plus profit!',
+            'I\'ve been using Brooklyn for 3 months and already earned back my initial investment plus profit!',
             'The daily income is consistent and the platform is very easy to use. Highly recommended!',
             'The referral system is amazing! I\'ve earned almost as much from referrals as from my investments.'
             ][i]
@@ -212,7 +212,7 @@
 <section class="cta py-5 bg-primary text-white text-center">
     <div class="container">
         <h2 class="mb-4">Ready to Start Earning Daily Income?</h2>
-        <p class="lead mb-4">Join thousands of investors who are growing their wealth with SONICVEST.</p>
+        <p class="lead mb-4">Join thousands of investors who are growing their wealth with Brooklyn.</p>
         {% if session.user_id %}
         <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg">Go to Dashboard</a>
         {% else %}

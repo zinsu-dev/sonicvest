@@ -1,52 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Max Wealth{% endblock %}</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Modern Design System -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <!-- Loader CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
-    {% block styles %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Brooklyn{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block styles %}{% endblock %}
 </head>
-
-<body class="bg-light" style="background: var(--color-neutral-50);">
-    <!-- Flash messages -->
-    <div class="modern-container" style="padding-top: var(--space-6);">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="modern-alert modern-alert-{{ category if category in ['success', 'error', 'warning', 'info'] else 'info' }}">
-            <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' if category == 'error' else 'exclamation-triangle' if category == 'warning' else 'info-circle' }} modern-alert-icon"></i>
-            <div class="modern-alert-content">
-                <div class="modern-alert-title">{{ message }}</div>
-            </div>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10000;width:min(92vw,420px);display:flex;flex-direction:column;gap:8px;">
+    {% for category, message in messages %}
+    <div style="padding:12px 16px;border-radius:12px;background:#20232A;border:1px solid #2C313A;border-left:4px solid {{ '#22C55E' if category == 'success' else '#EF4444' if category == 'error' else '#F59E0B' if category == 'warning' else '#3B82F6' }};color:#F8FAFC;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+      <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' if category == 'error' else 'exclamation-triangle' if category == 'warning' else 'info-circle' }}" style="margin-right:8px;color:{{ '#22C55E' if category == 'success' else '#EF4444' if category == 'error' else '#F59E0B' if category == 'warning' else '#3B82F6' }};"></i>
+      {{ message }}
     </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
 
-    <!-- Main content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <!-- Loader JS -->
-    <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
-    {% block scripts %}{% endblock %}
-    
-    <!-- Vercel Web Analytics -->
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
+  {% block scripts %}{% endblock %}
 </body>
-<script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
-
 </html>

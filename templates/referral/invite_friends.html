@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invite Friends - SONICVEST</title>
+    <title>Invite Friends - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --bg: #0F1115;
+            --surface: #181A20;
+            --card: #20232A;
+            --border: #2C313A;
+            --text: #F8FAFC;
+            --muted: #B3B8C4;
+            --gold: #D4AF37;
+            --gold-light: #E5C158;
+            --gold-dark: #C89B3C;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gradient-gold: linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +30,9 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #F0F9F4;
+            background: var(--bg);
             min-height: 100vh;
-            color: #142114;
+            color: var(--text);
             padding: 20px 16px 100px 16px;
         }
 
@@ -36,7 +52,7 @@
         .back-btn {
             background: none;
             border: none;
-            color: #03396C;
+            color: var(--gold);
             font-size: 20px;
             margin-right: 15px;
             cursor: pointer;
@@ -45,7 +61,7 @@
         .page-title {
             font-size: 20px;
             font-weight: 700;
-            color: #142114;
+            color: var(--text);
         }
 
         /* Invite Section */
@@ -57,37 +73,37 @@
         .invite-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+            background: var(--gradient-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
             font-size: 36px;
-            color: white;
+            color: #000;
         }
 
         .invite-title {
             font-size: 24px;
             font-weight: 800;
             margin-bottom: 10px;
-            color: #142114;
+            color: var(--text);
         }
 
         .invite-subtitle {
-            color: #6B7A6B;
+            color: var(--muted);
             font-size: 15px;
             line-height: 1.5;
         }
 
         /* Code Section */
         .code-section {
-            background: white;
+            background: var(--card);
             border-radius: 24px;
             padding: 28px;
             margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(14,72,140,0.08);
-            border: 1px solid rgba(14,72,140,0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
         }
 
         .qr-container {
@@ -99,19 +115,19 @@
         .qr-code {
             width: 120px;
             height: 120px;
-            background: white;
+            background: var(--card);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            border: 2px solid #E5F1EA;
+            border: 2px solid var(--border);
         }
 
         .qr-placeholder {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+            background: var(--gradient-gold);
             border-radius: 12px;
             position: relative;
         }
@@ -122,7 +138,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
+            color: #000;
             font-weight: 900;
             font-size: 24px;
         }
@@ -132,7 +148,7 @@
         }
 
         .code-label {
-            color: #6B7A6B;
+            color: var(--muted);
             font-size: 14px;
             margin-bottom: 5px;
             font-weight: 600;
@@ -141,14 +157,14 @@
         .code-value {
             font-size: 24px;
             font-weight: 800;
-            color: #1E90FF;
+            color: var(--gold);
             margin-bottom: 15px;
             letter-spacing: 1px;
         }
 
         .copy-code-btn {
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
-            color: white;
+            background: var(--gradient-gold);
+            color: #000;
             border: none;
             padding: 12px 24px;
             border-radius: 999px;
@@ -158,7 +174,7 @@
             margin-bottom: 15px;
             display: block;
             width: 100%;
-            box-shadow: 0 8px 24px rgba(30,144,255,0.2);
+            box-shadow: 0 8px 24px rgba(212,175,55,0.2);
             transition: all 0.3s;
         }
 
@@ -171,7 +187,7 @@
         }
 
         .link-label {
-            color: #6B7A6B;
+            color: var(--muted);
             font-size: 14px;
             margin-bottom: 5px;
             font-weight: 600;
@@ -179,14 +195,14 @@
 
         .link-value {
             font-size: 12px;
-            color: #6B7A6B;
+            color: var(--muted);
             margin-bottom: 10px;
             word-break: break-all;
         }
 
         .copy-link-btn {
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
-            color: white;
+            background: var(--gradient-gold);
+            color: #000;
             border: none;
             padding: 10px 18px;
             border-radius: 999px;
@@ -194,7 +210,7 @@
             font-weight: 700;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 8px 24px rgba(30,144,255,0.2);
+            box-shadow: 0 8px 24px rgba(212,175,55,0.2);
             transition: all 0.3s;
         }
 
@@ -211,35 +227,35 @@
         .team-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+            background: var(--gradient-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
             font-size: 28px;
-            color: white;
+            color: #000;
         }
 
         .team-title {
             font-size: 20px;
             font-weight: 800;
             margin-bottom: 10px;
-            color: #142114;
+            color: var(--text);
         }
 
         .team-subtitle {
-            color: #6B7A6B;
+            color: var(--muted);
             margin-bottom: 20px;
             font-size: 14px;
         }
 
         .team-stats {
-            background: white;
+            background: var(--card);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 8px 32px rgba(14,72,140,0.08);
-            border: 1px solid rgba(14,72,140,0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
         }
 
         .stats-row {
@@ -247,7 +263,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #E5F1EA;
+            border-bottom: 1px solid var(--border);
         }
 
         .stats-row:last-child {
@@ -255,18 +271,18 @@
         }
 
         .stats-label {
-            color: #6B7A6B;
+            color: var(--muted);
             font-size: 14px;
             font-weight: 600;
         }
 
         .stats-value {
-            color: #1E90FF;
+            color: var(--gold);
             font-weight: 800;
         }
 
         .no-referrals {
-            color: #6B7A6B;
+            color: var(--muted);
             font-style: italic;
             text-align: center;
             padding: 20px;
@@ -278,11 +294,11 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--surface);
             padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
             z-index: 1000;
-            border-top: 1px solid rgba(14,72,140,0.06);
+            border-top: 1px solid var(--border);
         }
 
         .nav-items {
@@ -300,15 +316,15 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            color: #9CA69C;
+            color: var(--muted);
             padding: 8px 16px;
             border-radius: 14px;
             transition: all 0.2s;
         }
 
         .nav-item.active {
-            color: #1E90FF;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+            color: var(--gold);
+            background: rgba(212,175,55,0.1);
         }
 
         .nav-icon {
@@ -449,11 +465,11 @@
             const btn = document.querySelector(selector);
             const originalText = btn.textContent;
             btn.textContent = message;
-            btn.style.background = 'linear-gradient(135deg, #4DB8FF 0%, #1E90FF 100%)';
+            btn.style.background = 'var(--gradient-gold)';
 
             setTimeout(() => {
                 btn.textContent = originalText;
-                btn.style.background = 'linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%)';
+                btn.style.background = 'var(--gradient-gold)';
             }, 2000);
         }
 

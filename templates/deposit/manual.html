@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Transfer - SONICVEST</title>
+    <title>Bank Transfer - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root{
+            --bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)
+        }
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +17,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #F8FAF8;
+            background: var(--bg);
             min-height: 100vh;
             padding-bottom: 100px;
         }
@@ -25,9 +28,8 @@
             padding: 20px;
         }
 
-        /* Header */
         .header {
-            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
+            background: var(--gradient-gold);
             padding: 24px 20px 32px;
             margin: -20px -20px 28px -20px;
             border-bottom-left-radius: 28px;
@@ -44,7 +46,7 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(135,206,235,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
             border-radius: 50%;
             top: -80px;
             right: -60px;
@@ -62,7 +64,7 @@
             width: 46px;
             height: 46px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.2);
             color: white;
             cursor: pointer;
@@ -87,14 +89,13 @@
             letter-spacing: -0.02em;
         }
 
-        /* Cards */
         .card {
-            background: white;
+            background: var(--card);
             border-radius: 24px;
             padding: 24px;
-            box-shadow: 0 8px 40px rgba(14,72,140,0.08);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
             margin-bottom: 20px;
-            border: 1px solid rgba(14,72,140,0.05);
+            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
         }
@@ -106,13 +107,13 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #4DB8FF, #1E90FF);
+            background: var(--gradient-gold);
         }
 
         .card-title {
             font-size: 17px;
             font-weight: 800;
-            color: #142114;
+            color: var(--text);
             margin-bottom: 18px;
             display: flex;
             align-items: center;
@@ -120,17 +121,16 @@
         }
 
         .card-title i {
-            color: #4DB8FF;
+            color: var(--gold);
             font-size: 20px;
         }
 
-        /* Bank Details */
         .bank-detail {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 0;
-            border-bottom: 1px solid #E4EBE4;
+            border-bottom: 1px solid var(--border);
         }
 
         .bank-detail:last-child {
@@ -139,23 +139,23 @@
 
         .bank-label {
             font-size: 14px;
-            color: #6B7A6B;
+            color: var(--muted);
             font-weight: 600;
         }
 
         .bank-value {
             font-size: 14px;
             font-weight: 800;
-            color: #142114;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .copy-btn {
-            background: linear-gradient(135deg, #BEEAFF 0%, #8FD8FF 100%);
-            color: #03396C;
-            border: none;
+            background: var(--surface);
+            color: var(--gold);
+            border: 1px solid var(--border);
             border-radius: 10px;
             padding: 8px 14px;
             font-size: 12px;
@@ -165,24 +165,24 @@
         }
 
         .copy-btn:hover {
-            background: linear-gradient(135deg, #8FD8FF 0%, #1E90FF 100%);
+            background: var(--gold);
+            color: #fff;
             transform: translateY(-1px);
         }
 
-        /* Notice */
         .notice {
-            background: #FFFBEB;
-            border-left: 4px solid #F59E0B;
+            background: var(--card);
+            border-left: 4px solid var(--gold);
             border-radius: 18px;
             padding: 18px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(245,158,11,0.06);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
 
         .notice-title {
             font-size: 15px;
             font-weight: 800;
-            color: #92400E;
+            color: var(--gold);
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -190,20 +190,19 @@
         }
 
         .notice-title i {
-            color: #F59E0B;
+            color: var(--gold);
         }
 
         .notice-text {
             font-size: 14px;
-            color: #78350F;
+            color: var(--muted);
             line-height: 1.7;
             font-weight: 500;
         }
 
-        /* File Upload */
         .file-upload {
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
-            border: 2px dashed #1E90FF;
+            background: var(--surface);
+            border: 2px dashed var(--gold);
             border-radius: 20px;
             padding: 36px 20px;
             text-align: center;
@@ -212,26 +211,26 @@
         }
 
         .file-upload:hover {
-            background: linear-gradient(135deg, #DFF4FF 0%, #BEEAFF 100%);
+            background: var(--card);
             transform: translateY(-2px);
         }
 
         .file-upload i {
             font-size: 48px;
-            color: #1E90FF;
+            color: var(--gold);
             margin-bottom: 14px;
         }
 
         .file-upload-text {
             font-size: 15px;
-            color: #03396C;
+            color: var(--text);
             font-weight: 700;
             margin-bottom: 8px;
         }
 
         .file-upload-small {
             font-size: 13px;
-            color: #6B7A6B;
+            color: var(--muted);
             font-weight: 500;
         }
 
@@ -239,7 +238,7 @@
             margin-top: 14px;
             font-size: 14px;
             font-weight: 700;
-            color: #03396C;
+            color: var(--gold);
             display: none;
         }
 
@@ -252,14 +251,13 @@
             border-radius: 14px;
             margin-top: 14px;
             display: none;
-            box-shadow: 0 4px 16px rgba(14,72,140,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
         }
 
-        /* Submit Button */
         .submit-btn {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, #4DB8FF 0%, #1E90FF 50%, #007ACC 100%);
+            background: var(--gradient-gold);
             color: white;
             border: none;
             border-radius: 16px;
@@ -272,12 +270,12 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 8px 24px rgba(30,144,255,0.25);
+            box-shadow: 0 8px 24px rgba(212,175,55,0.25);
         }
 
         .submit-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(30,144,255,0.35);
+            box-shadow: 0 12px 32px rgba(212,175,55,0.35);
         }
 
         .submit-btn:disabled {
@@ -287,7 +285,6 @@
             box-shadow: none;
         }
 
-        /* Alert */
         .alert {
             padding: 16px;
             border-radius: 16px;
@@ -295,32 +292,31 @@
             display: none;
             font-size: 14px;
             font-weight: 700;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
 
         .alert-success {
-            background: linear-gradient(135deg, #DFF4FF 0%, #BEEAFF 100%);
-            border: 1px solid #8FD8FF;
-            color: #03396C;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: var(--success);
         }
 
         .alert-error {
-            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-            border: 1px solid #FCA5A5;
-            color: #991B1B;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: var(--danger);
         }
 
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--surface);
             padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(14,72,140,0.12);
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
             z-index: 1000;
-            border-top: 1px solid rgba(14,72,140,0.06);
+            border-top: 1px solid var(--border);
         }
 
         .nav-items {
@@ -336,15 +332,15 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            color: #9CA69C;
+            color: var(--muted);
             padding: 8px 16px;
             border-radius: 14px;
             transition: all 0.2s;
         }
 
         .nav-item.active {
-            color: #1E90FF;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
+            color: var(--gold);
+            background: var(--card);
         }
 
         .nav-icon {
@@ -359,7 +355,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <a href="{{ url_for('deposit') }}" class="back-btn">
@@ -369,7 +364,6 @@
             </div>
         </div>
 
-        <!-- Alerts -->
         <div id="alertSuccess" class="alert alert-success">
             <i class="fas fa-check-circle"></i>
             <span id="successMessage"></span>
@@ -379,7 +373,6 @@
             <span id="errorMessage"></span>
         </div>
 
-        <!-- Bank Details Card -->
         <div class="card">
             <h2 class="card-title">
                 <i class="fas fa-university"></i>
@@ -409,7 +402,6 @@
             </div>
         </div>
 
-        <!-- Notice -->
         <div class="notice">
             <div class="notice-title">
                 <i class="fas fa-info-circle"></i>
@@ -420,7 +412,6 @@
             </p>
         </div>
 
-        <!-- Upload Form -->
         <div class="card">
             <h2 class="card-title">
                 <i class="fas fa-file-upload"></i>
@@ -445,7 +436,6 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <div class="nav-items">
             <a href="{{ url_for('dashboard') }}" class="nav-item">
@@ -562,7 +552,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>    
-    <!-- Vercel Web Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 
 </body>

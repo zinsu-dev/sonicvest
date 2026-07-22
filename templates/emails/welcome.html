@@ -3,106 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Sonic Pay</title>
+  <title>Welcome to Brooklyn</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f8f1f2;
-      font-family: Arial, sans-serif;
-      color: #2a2a2a;
-    }
-    .container {
-      max-width: 620px;
-      margin: 24px auto;
-      background: #ffffff;
-      border: 1px solid #f0d9dc;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .header {
-      background: linear-gradient(135deg, #9d1a2e 0%, #d7263d 100%);
-      padding: 28px 24px;
-      color: #ffffff;
-      text-align: center;
-    }
-    .brand {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      margin: 0 0 6px;
-    }
-    .subtitle {
-      font-size: 13px;
-      margin: 0;
-      color: #ffe8eb;
-    }
-    .content {
-      padding: 26px 24px;
-    }
-    .content p {
-      font-size: 14px;
-      line-height: 1.65;
-      margin: 0 0 14px;
-      color: #3a3a3a;
-    }
-    .bonus-box {
-      border: 1px solid #f4c9cf;
-      background: #fff5f6;
-      border-left: 4px solid #d7263d;
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 18px 0;
-    }
-    .bonus-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: #9d1a2e;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 4px;
-    }
-    .bonus-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: #b21e35;
-      margin: 0;
-    }
-    .cta {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 12px 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 700;
-      color: #ffffff;
-      background: #d7263d;
-    }
-    .footer {
-      border-top: 1px solid #f3e5e7;
-      background: #fff9fa;
-      padding: 16px 24px 20px;
-      color: #7a5860;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .footer a {
-      color: #9d1a2e;
-      text-decoration: none;
-    }
+    body { margin: 0; padding: 0; background: #0F1115; font-family: Arial, sans-serif; color: #e0e0e0; }
+    .container { max-width: 620px; margin: 24px auto; background: #181A20; border: 1px solid #2C313A; border-radius: 12px; overflow: hidden; }
+    .header { background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%); padding: 28px 24px; color: #000; text-align: center; }
+    .brand { font-size: 22px; font-weight: 700; letter-spacing: 0.3px; margin: 0 0 6px; }
+    .subtitle { font-size: 13px; margin: 0; color: rgba(0,0,0,0.7); }
+    .content { padding: 26px 24px; }
+    .content p { font-size: 14px; line-height: 1.65; margin: 0 0 14px; color: #c8cbd0; }
+    .bonus-box { border: 1px solid #2C313A; background: #20232A; border-left: 4px solid #D4AF37; border-radius: 8px; padding: 14px 16px; margin: 18px 0; }
+    .bonus-label { font-size: 12px; font-weight: 700; color: #D4AF37; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+    .bonus-value { font-size: 28px; font-weight: 700; color: #E5C158; margin: 0; }
+    .cta { display: inline-block; margin-top: 10px; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 700; color: #000; background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%); }
+    .footer { border-top: 1px solid #2C313A; background: #181A20; padding: 16px 24px 20px; color: #B3B8C4; font-size: 12px; line-height: 1.6; }
+    .footer a { color: #D4AF37; text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <p class="brand">Sonic Pay</p>
+      <p class="brand">Brooklyn</p>
       <p class="subtitle">Account Registration Confirmation</p>
     </div>
 
     <div class="content">
       <p>Hello {{ name }},</p>
-      <p>Your Sonic Pay account has been created successfully.</p>
+      <p>Your Brooklyn account has been created successfully.</p>
 
       <div class="bonus-box">
         <div class="bonus-label">Welcome Bonus Added</div>
@@ -110,9 +37,9 @@
       </div>
 
       <p>You can sign in below to access your dashboard:</p>
-      <p><a href="{{ login_url }}" class="cta">Sign In to Sonic Pay</a></p>
+      <p><a href="{{ login_url }}" class="cta">Sign In to Brooklyn</a></p>
 
-      <p style="font-size:12px;color:#7a5860;">Registered email: <strong>{{ email }}</strong></p>
+      <p style="font-size:12px;color:#B3B8C4;">Registered email: <strong>{{ email }}</strong></p>
     </div>
 
     <div class="footer">

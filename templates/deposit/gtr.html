@@ -1,540 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit Payment - SONICVEST</title>
+    <title>Deposit - Brooklyn</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .gtr-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #FFFFFF 0%, #F5F1E8 100%);
-            padding: 20px;
-        }
-
-        .gtr-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .gtr-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-        }
-
-        .gtr-logo {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-        }
-
-        .gtr-content {
-            padding: 40px 30px;
-        }
-
-        .balance-display {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .balance-label {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .balance-amount {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .amount-input-group {
-            margin-bottom: 30px;
-        }
-
-        .amount-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            font-size: 18px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .amount-input:focus {
-            outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-        }
-
-        .quick-amounts {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .quick-amount {
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .quick-amount:hover {
-            border-color: #4facfe;
-            background: #f8f9ff;
-        }
-
-        .quick-amount.selected {
-            border-color: #4facfe;
-            background: #4facfe;
-            color: white;
-        }
-
-        .gtr-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .gtr-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
-        }
-
-        .gtr-btn:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .payment-info {
-            background: #e8f4fd;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .payment-info h4 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .info-item:last-child {
-            border-bottom: none;
-        }
-
-        .security-note {
-            text-align: center;
-            color: #6c757d;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        /* old inline loader removed; using global loader */
-
-        @media (max-width: 768px) {
-            .gtr-container {
-                padding: 10px;
-            }
-
-            .gtr-content {
-                padding: 30px 20px;
-            }
-        }
+        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--success:#22C55E;--danger:#EF4444;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);min-height:100vh;padding-bottom:20px}
+        .wrap{max-width:480px;margin:0 auto;padding:16px}
+        .top-bar{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-top:8px}
+        .back-btn{width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);text-decoration:none;font-size:18px;transition:all 0.2s}
+        .back-btn:hover{background:var(--card)}
+        .top-bar h1{font-size:20px;font-weight:800;color:var(--text)}
+        .hero{background:var(--gradient-gold);border-radius:20px;padding:24px;color:#000;margin-bottom:24px;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;width:160px;height:160px;background:radial-gradient(circle,rgba(0,0,0,0.06) 0%,transparent 70%);border-radius:50%;top:-60px;right:-40px}
+        .hero-label{font-size:13px;font-weight:600;opacity:0.8;margin-bottom:4px}
+        .hero-amount{font-size:32px;font-weight:900;letter-spacing:-0.02em}
+        .hero-sub{font-size:13px;opacity:0.7;margin-top:4px}
+        .section-label{font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .section-label i{color:var(--gold)}
+        .amount-input{width:100%;padding:16px 20px;border:2px solid var(--border);border-radius:14px;font-size:22px;font-weight:700;text-align:center;transition:all 0.3s;background:var(--surface);color:var(--text);outline:none}
+        .amount-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,0.12)}
+        .amount-input::placeholder{color:var(--muted);font-weight:500}
+        .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 24px}
+        .quick-btn{padding:12px;border:2px solid var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--surface);color:var(--text);font-weight:700;font-size:14px}
+        .quick-btn:hover{border-color:var(--gold);background:var(--card)}
+        .quick-btn.selected{border-color:var(--gold);background:var(--gradient-gold);color:#000}
+        .summary{background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--border);margin-bottom:20px;display:none}
+        .summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px}
+        .summary-row .lbl{color:var(--muted)}
+        .summary-row .val{color:var(--text);font-weight:700}
+        .summary-row.total{border-top:1px solid var(--border);margin-top:4px;padding-top:12px}
+        .summary-row.total .val{color:var(--gold);font-size:16px}
+        .pay-btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.3s;background:var(--gradient-gold);color:#000;display:flex;align-items:center;justify-content:center;gap:10px}
+        .pay-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(212,175,55,0.25)}
+        .pay-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+        .secure-note{text-align:center;color:var(--muted);font-size:12px;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+        .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:50000;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;display:none;max-width:90vw;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+        .toast.success{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:var(--success)}
+        .toast.danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
+        .toast.warning{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:var(--warning)}
+        .loader-inline{display:none;text-align:center;padding:20px}
+        .loader-inline .spin{width:36px;height:36px;border:3px solid rgba(212,175,55,0.15);border-left:3px solid var(--gold);border-radius:50%;animation:spinz 1s linear infinite;margin:0 auto 10px}
+        @keyframes spinz{to{transform:rotate(360deg)}}
+        .loader-inline p{color:var(--muted);font-size:14px}
     </style>
 </head>
-
 <body>
-    <div class="gtr-container">
-        <div class="gtr-card">
-            <!-- Header -->
-            <div class="gtr-header">
-                <a href="{{ url_for('dashboard') }}" class="back-btn" data-loader data-loader-text="Loading..."
-                    data-loader-subtitle="Returning to dashboard">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <div class="gtr-logo">
-                    <i class="fas fa-credit-card"></i>
-                </div>
-                <h2>Deposit Payment</h2>
-                <p>Fast, secure payment processing</p>
-            </div>
+    <div id="toast" class="toast"></div>
 
-            <!-- Content -->
-            <div class="gtr-content">
-                <!-- Current Balance -->
-                <div class="balance-display">
-                    <div class="balance-label">Current Balance</div>
-                    <div class="balance-amount">₦{{ "{:,.0f}".format(user.recharge_balance) }}</div>
-                </div>
+    <div class="wrap">
+        <div class="top-bar">
+            <a href="{{ url_for('dashboard') }}" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Deposit</h1>
+        </div>
 
-                <!-- Amount Input -->
-                <div class="amount-input-group">
-                    <label for="amount" style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: bold;">
-                        <i class="fas fa-naira-sign"></i> Enter Amount
-                    </label>
-                    <input type="number" id="amount" class="amount-input" placeholder="{{ "{:,.0f}".format(minimum_deposit|default(3000)) }}" min="{{ minimum_deposit|default(3000)|int }}" step="50"
-                        oninput="updatePaymentInfo()">
-                </div>
+        <div class="hero">
+            <div class="hero-label">Current Balance</div>
+            <div class="hero-amount">₦{{ "{:,.0f}".format(user.recharge_balance) }}</div>
+            <div class="hero-sub">Available for investment</div>
+        </div>
 
-                <!-- Quick Amount Selection -->
-                <div class="quick-amounts">
-                    <div class="quick-amount" onclick="selectAmount(3000)">₦3,000</div>
-                    <div class="quick-amount" onclick="selectAmount(5000)">₦5,000</div>
-                    <div class="quick-amount" onclick="selectAmount(7000)">₦7,000</div>
-                    <div class="quick-amount" onclick="selectAmount(8000)">₦8,000</div>
-                    <div class="quick-amount" onclick="selectAmount(9000)">₦9,000</div>
-                    <div class="quick-amount" onclick="selectAmount(10000)">₦10,000</div>
-                </div>
+        <div class="section-label"><i class="fas fa-naira-sign"></i> Enter Amount</div>
+        <input type="number" id="amount" class="amount-input" placeholder="Minimum ₦{{ "{:,.0f}".format(minimum_deposit|default(3000)) }}" min="{{ minimum_deposit|default(3000)|int }}" step="50" oninput="updateSummary()">
 
-                <!-- Payment Button -->
-                <button class="gtr-btn" id="payBtn" onclick="processPayment()" disabled>
-                    <i class="fas fa-lock"></i> Continue to Payment
-                </button>
+        <div class="quick-grid">
+            <div class="quick-btn" onclick="selectAmount(3000,this)">₦3,000</div>
+            <div class="quick-btn" onclick="selectAmount(5000,this)">₦5,000</div>
+            <div class="quick-btn" onclick="selectAmount(7000,this)">₦7,000</div>
+            <div class="quick-btn" onclick="selectAmount(8000,this)">₦8,000</div>
+            <div class="quick-btn" onclick="selectAmount(9000,this)">₦9,000</div>
+            <div class="quick-btn" onclick="selectAmount(10000,this)">₦10,000</div>
+        </div>
 
-                <!-- Global loader handles processing state -->
+        <div class="summary" id="summary">
+            <div class="summary-row"><span class="lbl">Amount</span><span class="val" id="sumAmount">₦0</span></div>
+            <div class="summary-row"><span class="lbl">Fee</span><span class="val">₦0</span></div>
+            <div class="summary-row total"><span class="lbl">Total</span><span class="val" id="sumTotal">₦0</span></div>
+        </div>
 
-                <!-- Payment Information -->
-                <div class="payment-info" id="paymentInfo" style="display: none;">
-                    <h4><i class="fas fa-info-circle"></i> Payment Details</h4>
-                    <div class="info-item">
-                        <span>Amount:</span>
-                        <span id="payAmount">₦0</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Processing Fee:</span>
-                        <span id="payFee">₦0</span>
-                    </div>
-                    <div class="info-item">
-                        <span><strong>Total:</strong></span>
-                        <span id="payTotal"><strong>₦0</strong></span>
-                    </div>
-                </div>
+        <button class="pay-btn" id="payBtn" onclick="processPayment()" disabled>
+            <i class="fas fa-lock"></i> Continue
+        </button>
 
-                <!-- Security Note -->
-                <div class="security-note">
-                    <i class="fas fa-shield-alt"></i>
-                    Your payment is secured with 256-bit SSL encryption
-                </div>
+        <div id="loaderInline" class="loader-inline">
+            <div class="spin"></div>
+            <p id="loaderText">Processing...</p>
+        </div>
 
-            </div>
+        <div class="secure-note">
+            <i class="fas fa-shield-alt"></i> Secured with 256-bit SSL encryption
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
     <script>
-        const minimumDeposit = {{ minimum_deposit|default(3000)|int }};
-        const maximumDeposit = {{ maximum_deposit|default(10000)|int }};
+        const minDep = {{ minimum_deposit|default(3000)|int }};
+        const maxDep = {{ maximum_deposit|default(10000)|int }};
 
-        function selectAmount(amount) {
-            if (maximumDeposit && amount > maximumDeposit) {
-                showToast(`Maximum automatic deposit is ₦${maximumDeposit.toLocaleString()}`, 'warning');
-                return;
-            }
-
-            // Remove selection from all buttons
-            document.querySelectorAll('.quick-amount').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-
-            // Select clicked button
-            event.target.classList.add('selected');
-
-            // Set amount in input
-            document.getElementById('amount').value = amount;
-
-            // Update payment info
-            updatePaymentInfo();
+        function showToast(msg, type) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast ' + type;
+            t.style.display = 'block';
+            clearTimeout(t._hide);
+            t._hide = setTimeout(() => t.style.display = 'none', 3000);
         }
 
-        function updatePaymentInfo() {
-            const amount = parseFloat(document.getElementById('amount').value) || 0;
-            const minAmount = minimumDeposit;
-            const maxAmount = maximumDeposit;
+        function showInlineLoader(text) {
+            document.getElementById('loaderText').textContent = text || 'Processing...';
+            document.getElementById('loaderInline').style.display = 'block';
+            document.getElementById('payBtn').style.display = 'none';
+        }
 
-            if (amount >= minAmount && (!maxAmount || amount <= maxAmount)) {
-                document.getElementById('payBtn').disabled = false;
-                document.getElementById('paymentInfo').style.display = 'block';
+        function hideInlineLoader() {
+            document.getElementById('loaderInline').style.display = 'none';
+            document.getElementById('payBtn').style.display = 'flex';
+        }
 
-                const fee = 0;
-                const total = amount;
+        function selectAmount(amount, el) {
+            if (maxDep && amount > maxDep) {
+                showToast('Maximum is ₦' + maxDep.toLocaleString(), 'warning');
+                return;
+            }
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('selected'));
+            if (el) el.classList.add('selected');
+            document.getElementById('amount').value = amount;
+            updateSummary();
+        }
 
-                // Update display
-                document.getElementById('payAmount').textContent = `₦${amount.toLocaleString()}`;
-                document.getElementById('payFee').textContent = `₦${fee.toLocaleString()}`;
-                document.getElementById('payTotal').textContent = `₦${total.toLocaleString()}`;
-            } else {
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('paymentInfo').style.display = 'none';
+        function updateSummary() {
+            const amt = parseFloat(document.getElementById('amount').value) || 0;
+            const ok = amt >= minDep && (!maxDep || amt <= maxDep);
+            document.getElementById('payBtn').disabled = !ok;
+            document.getElementById('summary').style.display = ok ? 'block' : 'none';
+            if (ok) {
+                document.getElementById('sumAmount').textContent = '₦' + amt.toLocaleString();
+                document.getElementById('sumTotal').textContent = '₦' + amt.toLocaleString();
             }
         }
 
         function processPayment() {
-            const amount = parseFloat(document.getElementById('amount').value);
-
-            if (!amount || amount < minimumDeposit) {
-                showToast(`Please enter a valid amount (minimum ₦${minimumDeposit.toLocaleString()})`, 'warning');
+            const amt = parseFloat(document.getElementById('amount').value);
+            if (!amt || amt < minDep) {
+                showToast('Minimum deposit is ₦' + minDep.toLocaleString(), 'warning');
                 return;
             }
-
-            if (maximumDeposit && amount > maximumDeposit) {
-                showToast(`Please enter a valid amount (maximum ₦${maximumDeposit.toLocaleString()})`, 'warning');
+            if (maxDep && amt > maxDep) {
+                showToast('Maximum deposit is ₦' + maxDep.toLocaleString(), 'warning');
                 return;
             }
-
-            // Show global loader
-            showLoader('Processing payment...', 'Creating payment request');
-            const payBtn = document.getElementById('payBtn');
-            payBtn.disabled = true;
-
-            // Confirm before creating the payment request
-            setTimeout(() => {
-                // For now, redirect to a success page or show success message
-                // In real implementation, this would integrate with the payment API
-
-                const total = amount;
-
-                // Use custom inline confirm modal instead of browser confirm
-                showGtrConfirm(`Proceed with payment of ₦${total.toLocaleString()}?`, {
-                    title: 'Confirm Payment',
-                    confirmText: 'Continue',
-                    cancelText: 'Cancel'
-                }).then(ok => {
-                    if (ok) {
-                        processDeposit(amount);
-                    } else {
-                        hideLoader();
-                        payBtn.disabled = false;
-                    }
-                });
-            }, 1000);
-        }
-
-        function processDeposit(amount) {
-            // Submit to backend
-            const formData = new FormData();
-            formData.append('amount', amount);
-            formData.append('payment_method', 'nekpayment');
-
-            fetch('/process_deposit', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Decide based on backend response
-                    if (data.success) {
-                        if (data.payment_url) {
-                            showLoader('Opening payment page...', 'Complete the payment in the current tab');
-
-                            setTimeout(() => {
-                                window.location.href = data.payment_url;
-                            }, 250);
-
-                            hideLoader();
-                            showToast('Payment opened in the current tab. Finish payment there and return to the site once complete.', 'success');
+            if (!confirm('Proceed with payment of ₦' + amt.toLocaleString() + '?')) return;
+            showInlineLoader('Creating payment request...');
+            document.getElementById('payBtn').disabled = true;
+            const fd = new FormData();
+            fd.append('amount', amt);
+            fd.append('payment_method', 'nekpayment');
+            fetch('/process_deposit', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(d => {
+                    if (d.success) {
+                        if (d.payment_url) {
+                            showInlineLoader('Opening payment page...');
+                            setTimeout(() => { window.location.href = d.payment_url; }, 300);
                         } else {
-                            // Fallback - should not happen in normal flow
-                            showLoaderSuccess('Deposit successful!', `₦${amount.toLocaleString()} added to your account`);
-                            setTimeout(() => { window.location.href = '/dashboard'; }, 900);
+                            showToast('Deposit successful! ₦' + amt.toLocaleString() + ' added', 'success');
+                            setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
                         }
                     } else {
-                        hideLoader();
-                        showToast('Payment creation failed: ' + (data.message || 'Unknown error'), 'danger');
+                        hideInlineLoader();
                         document.getElementById('payBtn').disabled = false;
+                        showToast(d.message || 'Payment failed', 'danger');
                     }
                 })
-                .catch(error => {
-                    hideLoader();
-                    showToast('Network error occurred. Please try again.', 'danger');
+                .catch(() => {
+                    hideInlineLoader();
                     document.getElementById('payBtn').disabled = false;
+                    showToast('Network error. Please try again.', 'danger');
                 });
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
-            updatePaymentInfo();
-        });
+        document.addEventListener('DOMContentLoaded', updateSummary);
     </script>
-    <style>
-        /* Inline minimal confirm modal for this page */
-        .gtr-confirm-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.45);
-            z-index: 40000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-
-        .gtr-confirm {
-            width: min(92vw, 460px);
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            border-left: 5px solid #D4AF37;
-        }
-
-        .gtr-confirm-header {
-            padding: 14px 16px 6px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .gtr-confirm-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #0f172a;
-            margin: 0;
-        }
-
-        .gtr-confirm-body {
-            padding: 0 16px 6px 16px;
-            color: #0f172a;
-            font-size: 14px;
-        }
-
-        .gtr-confirm-actions {
-            padding: 12px 16px 16px 16px;
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .gtr-btn {
-            appearance: none;
-            border: 0;
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .gtr-btn.cancel {
-            background: #e5e7eb;
-            color: #111827;
-        }
-
-        .gtr-btn.primary {
-            background: #D4AF37;
-            color: #fff;
-        }
-    </style>
-    <div id="gtrConfirm" class="gtr-confirm-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-        <div class="gtr-confirm">
-            <div class="gtr-confirm-header">
-                <i class="fas fa-info-circle" style="color:#D4AF37"></i>
-                <h3 class="gtr-confirm-title" id="gtrConfirmTitle">Confirm</h3>
-            </div>
-            <div class="gtr-confirm-body" id="gtrConfirmMessage">Message</div>
-            <div class="gtr-confirm-actions">
-                <button type="button" class="gtr-btn cancel" id="gtrCancelBtn">Cancel</button>
-                <button type="button" class="gtr-btn primary" id="gtrOkBtn">OK</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        function showGtrConfirm(message, opts = {}) {
-            const { title = 'Please confirm', confirmText = 'OK', cancelText = 'Cancel' } = opts;
-            return new Promise(resolve => {
-                const backdrop = document.getElementById('gtrConfirm');
-                const titleEl = document.getElementById('gtrConfirmTitle');
-                const msgEl = document.getElementById('gtrConfirmMessage');
-                const okBtn = document.getElementById('gtrOkBtn');
-                const cancelBtn = document.getElementById('gtrCancelBtn');
-
-                titleEl.textContent = title;
-                msgEl.textContent = message;
-                okBtn.textContent = confirmText;
-                cancelBtn.textContent = cancelText;
-
-                function cleanup(val) {
-                    backdrop.style.display = 'none';
-                    backdrop.setAttribute('aria-hidden', 'true');
-                    document.removeEventListener('keydown', onKey);
-                    backdrop.removeEventListener('click', onBackdrop);
-                    okBtn.removeEventListener('click', onOk);
-                    cancelBtn.removeEventListener('click', onCancel);
-                    resolve(val);
-                }
-                function onOk() { cleanup(true); }
-                function onCancel() { cleanup(false); }
-                function onBackdrop(e) { if (e.target === backdrop) cleanup(false); }
-                function onKey(e) { if (e.key === 'Escape') cleanup(false); if (e.key === 'Enter') cleanup(true); }
-
-                okBtn.addEventListener('click', onOk);
-                cancelBtn.addEventListener('click', onCancel);
-                backdrop.addEventListener('click', onBackdrop);
-                document.addEventListener('keydown', onKey);
-
-                backdrop.style.display = 'flex';
-                backdrop.setAttribute('aria-hidden', 'false');
-                setTimeout(() => okBtn.focus(), 0);
-            });
-        }
-    </script>    
-    <!-- Vercel Web Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
 </body>
-
 </html>

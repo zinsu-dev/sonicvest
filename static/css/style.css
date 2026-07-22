@@ -1,259 +1,168 @@
-/* Custom CSS for Fintech Finance */
-
 :root {
-    --primary-color: #22C55E;
-    --primary-dark: #16A34A;
-    --primary-light: #DCFCE7;
-    --secondary-color: #6c757d;
-    --success-color: #2E7D32;
-    --success-light: #4CAF50;
-    --info-color: #22C55E;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --light-color: #F8F7F5;
-    --very-light: #FDFCFA;
-    --dark-color: #212529;
-    --green-accent: #2E7D32;
-    --green-light: #E8F5E9;
+  --primary-color: #D4AF37;
+  --primary-dark: #C89B3C;
+  --primary-light: #E5C158;
+  --secondary-color: #B3B8C4;
+  --success-color: #22C55E;
+  --success-light: #4ADE80;
+  --info-color: #3B82F6;
+  --warning-color: #F59E0B;
+  --danger-color: #EF4444;
+  --light-color: #20232A;
+  --very-light: #181A20;
+  --dark-color: #0F1115;
+  --gold-accent: #D4AF37;
+  --gold-light: rgba(212,175,55,0.1);
 }
 
 body {
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--dark-color);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #F8FAFC;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0F1115;
 }
 
-main {
-    flex-grow: 1;
-}
+main { flex-grow: 1; }
 
-/* Custom navbar styling */
-.navbar-brand {
-    font-weight: 700;
-    font-size: 1.5rem;
-}
+.navbar-brand { font-weight: 700; font-size: 1.5rem; }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
-    color: #ffffff;
+  color: #D4AF37;
 }
 
-/* Card customization */
 .card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    margin-bottom: 20px;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+  background: #20232A;
+  color: #F8FAFC;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
+.card:hover { transform: translateY(-5px); }
 
 .card-header {
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 10px 10px 0 0 !important;
-    padding: 15px;
-    font-weight: 600;
+  background: #D4AF37;
+  color: #0F1115;
+  border-radius: 16px 16px 0 0 !important;
+  padding: 15px;
+  font-weight: 600;
 }
 
-/* Package cards */
-.package-card {
-    height: 100%;
-}
+.package-card { height: 100%; }
+.package-card .card-header { text-align: center; }
+.package-card .price { font-size: 2rem; font-weight: 700; color: #D4AF37; }
+.package-card .daily-income { font-size: 1.2rem; font-weight: 600; color: #22C55E; }
 
-.package-card .card-header {
-    text-align: center;
-}
+.stat-card { text-align: center; padding: 20px; }
+.stat-card .stat-icon { font-size: 2rem; margin-bottom: 10px; color: #D4AF37; }
+.stat-card .stat-value { font-size: 1.8rem; font-weight: 700; color: #F8FAFC; }
+.stat-card .stat-label { font-size: 1rem; color: #B3B8C4; }
 
-.package-card .price {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-shadow: 0 1px 2px rgba(212, 175, 55, 0.2);
-}
-
-.package-card .daily-income {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--green-accent);
-}
-
-/* Dashboard statistics cards */
-.stat-card {
-    text-align: center;
-    padding: 20px;
-}
-
-.stat-card .stat-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: var(--primary-color);
-}
-
-.stat-card .stat-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.stat-card .stat-label {
-    font-size: 1rem;
-    color: var(--secondary-color);
-}
-
-/* Buttons */
 .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+  background: #D4AF37;
+  border-color: #D4AF37;
+  color: #0F1115;
+  font-weight: 700;
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
+  background: #E5C158;
+  border-color: #E5C158;
+  color: #0F1115;
 }
 
 .btn-outline-primary {
-    color: var(--primary-color);
-    border-color: var(--primary-color);
+  color: #D4AF37;
+  border-color: #D4AF37;
 }
 
 .btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+  background: #D4AF37;
+  border-color: #D4AF37;
+  color: #0F1115;
 }
 
-/* Timer countdown */
 .countdown-timer {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #D4AF37;
 }
 
-/* Referral section */
 .referral-link {
-    background-color: var(--light-color);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+  background: #20232A;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .referral-code {
-    font-weight: 700;
-    color: var(--primary-color);
-    letter-spacing: 1px;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 1px;
 }
 
-/* Tables */
 .table th {
-    background-color: var(--light-blue);
-    font-weight: 600;
-    color: var(--dark-gray);
+  background: rgba(212,175,55,0.08);
+  font-weight: 600;
+  color: #D4AF37;
 }
 
-/* Transaction badges */
-.badge.bg-deposit {
-    background-color: var(--success-color);
-}
+.badge.bg-deposit { background: #D4AF37 !important; color: #0F1115 !important; }
+.badge.bg-income { background: #D4AF37 !important; color: #0F1115 !important; }
+.badge.bg-bonus { background: #F59E0B !important; color: #0F1115 !important; }
+.badge.bg-referral { background: #3B82F6 !important; }
+.badge.bg-withdrawal { background: #B3B8C4 !important; color: #0F1115 !important; }
+.badge.bg-pending { background: #F59E0B !important; color: #0F1115 !important; }
+.badge.bg-completed { background: #22C55E !important; }
+.badge.bg-rejected { background: #EF4444 !important; }
 
-.badge.bg-income {
-    background-color: var(--info-color);
-}
+.auth-card { max-width: 500px; margin: 2rem auto; }
 
-.badge.bg-bonus {
-    background-color: var(--warning-color);
-    color: var(--dark-color);
-}
-
-.badge.bg-referral {
-    background-color: var(--primary-color);
-}
-
-.badge.bg-withdrawal {
-    background-color: var(--secondary-color);
-}
-
-/* Status badges */
-.badge.bg-pending {
-    background-color: var(--warning-color);
-    color: var(--dark-color);
-}
-
-.badge.bg-completed {
-    background-color: var(--success-color);
-}
-
-.badge.bg-rejected {
-    background-color: var(--danger-color);
-}
-
-/* Auth pages */
-.auth-card {
-    max-width: 500px;
-    margin: 2rem auto;
-}
-
-/* Profile section */
 .profile-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 30px 0;
-    margin-bottom: 30px;
-    border-radius: 10px;
+  background: linear-gradient(135deg, #0F1115 0%, #181A20 100%);
+  color: #F8FAFC;
+  padding: 30px 0;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  border-bottom: 1px solid #2C313A;
 }
 
-.profile-header h2 {
-    margin-bottom: 0;
-}
-
-/* Footer styling */
 footer {
-    background-color: var(--dark-color);
-    color: white;
-    padding: 40px 0 20px;
+  background: #0F1115;
+  color: #B3B8C4;
+  padding: 40px 0 20px;
+  border-top: 1px solid #2C313A;
 }
 
-footer a {
-    color: var(--light-color);
-    text-decoration: none;
-}
+footer a { color: #D4AF37; text-decoration: none; }
+footer a:hover { color: #E5C158; text-decoration: underline; }
 
-footer a:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-    .stat-card {
-        margin-bottom: 20px;
-    }
-    
-    .package-card {
-        margin-bottom: 20px;
-    }
+  .stat-card { margin-bottom: 20px; }
+  .package-card { margin-bottom: 20px; }
 }
 
-/* Animation for loader */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid var(--primary-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
+  border: 5px solid #2C313A;
+  border-top: 5px solid #D4AF37;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
 }

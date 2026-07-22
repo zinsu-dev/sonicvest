@@ -1,70 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdrawal Records - SONICVEST</title>
+    <title>Withdrawal Records - Brooklyn</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --brand: #d1182f;
-            --brand-dark: #a01226;
-            --light: #f6efef;
-            --border: #e5d5dd;
-        }
+        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
+        body{background:var(--bg);min-height:100vh;margin:0;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+        .header-row{display:flex;align-items:center;margin-bottom:30px}
+        .back-link{background:var(--surface);border:1px solid var(--border);border-radius:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);font-size:18px;margin-right:20px;transition:all 0.2s}
+        .back-link:hover{background:var(--card)}
+        .page-title{color:var(--gold);margin:0;font-size:24px;font-weight:700}
+        .withdrawal-records-container{display:flex;flex-direction:column;gap:16px;padding:0}
+        .withdrawal-record-card{background:var(--card);border-radius:20px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 15px rgba(0,0,0,0.15)}
+        .withdrawal-record-date{background:var(--gradient-gold);color:#000;padding:12px 20px;font-weight:700;font-size:14px}
+        .withdrawal-record-content{padding:20px;background:var(--card)}
+        .withdrawal-record-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .withdrawal-record-row:last-child{margin-bottom:0}
+        .withdrawal-record-label{color:var(--muted);font-size:14px;font-weight:500}
+        .withdrawal-record-value{color:var(--text);font-size:14px;font-weight:500;text-align:right}
+        .withdrawal-record-amount{color:var(--gold);font-size:16px;font-weight:700;text-align:right}
+        .withdrawal-status-badge{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase}
+        .withdrawal-status-completed,.withdrawal-status-success{background:rgba(34,197,94,0.15);color:var(--success)}
+        .withdrawal-status-pending{background:rgba(245,158,11,0.15);color:var(--warning)}
+        .withdrawal-status-rejected{background:rgba(239,68,68,0.15);color:var(--danger)}
+        .receipt-link{background:var(--gradient-gold);color:#000;text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:700;display:inline-flex;align-items:center;gap:6px;font-size:13px}
+        .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+        .empty-icon{font-size:64px;margin-bottom:20px;opacity:0.5;color:var(--gold)}
+        .empty-state h3{font-size:24px;margin-bottom:10px;font-weight:700;color:var(--text)}
+        .empty-state p{font-size:16px;opacity:0.8;line-height:1.5;color:var(--muted)}
+        @media(max-width:768px){body{padding:15px}.withdrawal-record-card{margin-bottom:15px}.withdrawal-record-content{padding:15px}.withdrawal-record-row{margin-bottom:10px}}
     </style>
 </head>
-
-<body
-    style="background: linear-gradient(135deg, #f6efef 0%, #efe4e7 100%); min-height: 100vh; margin: 0; padding: 20px;">
-
-    <!-- Header -->
-    <div style="display: flex; align-items: center; margin-bottom: 30px;">
-        <a href="{{ url_for('dashboard') }}"
-            style="background: white; border: 1px solid var(--border); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #666; font-size: 18px; margin-right: 20px; transition: all 0.2s ease;">
+<body>
+    <div class="header-row">
+        <a href="{{ url_for('dashboard') }}" class="back-link">
             <i class="fas fa-arrow-left"></i>
         </a>
-        <h1 style="color: var(--brand); margin: 0; font-size: 24px; font-weight: 600;">Withdrawal Records</h1>
+        <h1 class="page-title">Withdrawal Records</h1>
     </div>
 
-    <!-- Withdrawal Records -->
     <div class="withdrawal-records-container">
         {% if withdrawals %}
         {% for withdrawal in withdrawals %}
         <div class="withdrawal-record-card">
-            <!-- Date Header -->
             <div class="withdrawal-record-date">
                 {{ withdrawal.created_at.strftime('%d-%m-%Y %H:%M') }}
             </div>
-
-            <!-- Card Content -->
             <div class="withdrawal-record-content">
                 <div class="withdrawal-record-row">
                     <span class="withdrawal-record-label">Withdrawal Amount</span>
                     <span class="withdrawal-record-amount">NGN{{ "%.0f"|format(withdrawal.amount) }}</span>
                 </div>
-
                 <div class="withdrawal-record-row">
                     <span class="withdrawal-record-label">Amount Received</span>
-                    <span class="withdrawal-record-amount">NGN{{ "%.1f"|format(withdrawal.amount - (withdrawal.fee or
-                        0)) }}</span>
+                    <span class="withdrawal-record-amount">NGN{{ "%.1f"|format(withdrawal.amount - (withdrawal.fee or 0)) }}</span>
                 </div>
-
                 <div class="withdrawal-record-row">
                     <span class="withdrawal-record-label">Fee</span>
                     <span class="withdrawal-record-amount">NGN{{ "%.1f"|format(withdrawal.fee or 0) }}</span>
                 </div>
-
                 <div class="withdrawal-record-row">
                     <span class="withdrawal-record-label">Status</span>
-                    <span class="withdrawal-status-badge withdrawal-status-{{ withdrawal.status }}">{{
-                        withdrawal.status|title }}</span>
+                    <span class="withdrawal-status-badge withdrawal-status-{{ withdrawal.status }}">{{ withdrawal.status|title }}</span>
                 </div>
                 <div class="withdrawal-record-row" style="justify-content:flex-end; margin-top: 8px;">
-                    <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}"
-                        style="background:var(--brand);color:#fff;text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;display:inline-flex;align-items:center;gap:6px;font-size:13px;">
+                    <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-link">
                         <i class="fas fa-receipt"></i> View Receipt
                     </a>
                 </div>
@@ -82,149 +85,6 @@
         {% endif %}
     </div>
 
-    <style>
-        /* Withdrawal Records Container */
-        .withdrawal-records-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 0;
-        }
-
-        /* Withdrawal Record Card */
-        .withdrawal-record-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        /* Date Header */
-        .withdrawal-record-date {
-            background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-            color: white;
-            padding: 12px 20px;
-            font-weight: 600;
-            font-size: 14px;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-
-        /* Card Content */
-        .withdrawal-record-content {
-            padding: 20px;
-            background: rgba(243, 244, 246, 0.5);
-        }
-
-        /* Record Row */
-        .withdrawal-record-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .withdrawal-record-row:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Labels */
-        .withdrawal-record-label {
-            color: #6b7280;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Values */
-        .withdrawal-record-value {
-            color: #374151;
-            font-size: 14px;
-            font-weight: 500;
-            text-align: right;
-        }
-
-        /* Amount (special styling) */
-        .withdrawal-record-amount {
-            color: var(--brand);
-            font-size: 16px;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        /* Status Badge */
-        .withdrawal-status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .withdrawal-status-completed,
-        .withdrawal-status-success {
-            background: #10b981;
-            color: white;
-        }
-
-        .withdrawal-status-pending {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .withdrawal-status-rejected {
-            background: var(--brand);
-            color: white;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.7;
-        }
-
-        .empty-state h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .empty-state p {
-            font-size: 16px;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-
-            .withdrawal-record-card {
-                margin-bottom: 15px;
-            }
-
-            .withdrawal-record-content {
-                padding: 15px;
-            }
-
-            .withdrawal-record-row {
-                margin-bottom: 10px;
-            }
-        }
-    </style>    
-    <!-- Vercel Web Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
-
 </body>
-
 </html>

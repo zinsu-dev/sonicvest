@@ -3,273 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transactions - SONICVEST</title>
+    <title>Transactions - Brooklyn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #F8FAF8;
-            min-height: 100vh;
-            padding-bottom: 100px;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #6EC7FF 0%, #4DB8FF 50%, #1E90FF 100%);
-            padding: 24px 20px 32px;
-            margin: -20px -20px 28px -20px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(135,206,235,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -80px;
-            right: -60px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            width: 100%;
-        }
-
-        .back-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-        }
-
-        .header-title {
-            color: white;
-            font-size: 22px;
-            font-weight: 900;
-            flex: 1;
-            letter-spacing: -0.02em;
-        }
-
-        /* Transaction List */
-        .transaction-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .transaction-item {
-            background: white;
-            border-radius: 22px;
-            padding: 20px;
-            box-shadow: 0 6px 24px rgba(14,72,140,0.08);
-            border: 1px solid rgba(14,72,140,0.05);
-        }
-
-        .transaction-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-
-        .transaction-date {
-            font-size: 13px;
-            color: #6B7A6B;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 7px 14px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .status-badge.completed {
-            background: linear-gradient(135deg, #EEF8FF 0%, #BEEAFF 100%);
-            color: #1E90FF;
-        }
-
-        .status-badge.pending {
-            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-            color: #92400E;
-        }
-
-        .status-badge.rejected {
-            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-            color: #991B1B;
-        }
-
-        .transaction-details {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .detail-label {
-            font-size: 13px;
-            color: #6B7A6B;
-            font-weight: 500;
-        }
-
-        .detail-value {
-            font-size: 14px;
-            font-weight: 800;
-            color: #142114;
-        }
-
-        .detail-value.amount {
-            color: #1E90FF;
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        .receipt-btn {
-            margin-top: 12px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
-            color: #1E90FF;
-            border: none;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .receipt-btn:hover {
-            background: linear-gradient(135deg, #DFF4FF 0%, #BEEAFF 100%);
-            transform: translateY(-1px);
-        }
-
-        /* Empty State */
-        .empty-state {
-            background: white;
-            border-radius: 24px;
-            padding: 44px 28px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(14,72,140,0.08);
-            border: 1px solid rgba(14,72,140,0.05);
-        }
-
-        .empty-icon {
-            font-size: 52px;
-            color: #1E90FF;
-            margin-bottom: 18px;
-        }
-
-        .empty-title {
-            font-size: 19px;
-            font-weight: 900;
-            color: #142114;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-        }
-
-        .empty-text {
-            font-size: 14px;
-            color: #6B7A6B;
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(7,30,22,0.12);
-            z-index: 1000;
-            border-top: 1px solid rgba(7,30,22,0.08);
-        }
-
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: #9CA69C;
-            padding: 8px 16px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .nav-item.active {
-            color: #1E90FF;
-            background: linear-gradient(135deg, #EEF8FF 0%, #DFF4FF 100%);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
-        }
+        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);min-height:100vh;padding-bottom:100px}
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        .header{background:var(--gradient-gold);padding:24px 20px 32px;margin:-20px -20px 28px -20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden}
+        .header::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(212,175,55,0.15) 0%,transparent 70%);border-radius:50%;top:-80px;right:-60px}
+        .header-content{position:relative;z-index:1;display:flex;align-items:center;gap:16px;width:100%}
+        .back-btn{width:46px;height:46px;border-radius:14px;background:rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.15);color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;transition:all 0.2s}
+        .back-btn:hover{background:rgba(0,0,0,0.2);transform:translateY(-2px)}
+        .header-title{color:#000;font-size:22px;font-weight:900;flex:1;letter-spacing:-0.02em}
+        .transaction-list{display:flex;flex-direction:column;gap:14px}
+        .transaction-item{background:var(--card);border-radius:22px;padding:20px;box-shadow:0 6px 24px rgba(0,0,0,0.15);border:1px solid var(--border)}
+        .transaction-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+        .transaction-date{font-size:13px;color:var(--muted);font-weight:600}
+        .status-badge{padding:7px 14px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em}
+        .status-badge.completed{background:rgba(34,197,94,0.12);color:var(--success)}
+        .status-badge.pending{background:rgba(245,158,11,0.12);color:var(--warning)}
+        .status-badge.rejected{background:rgba(239,68,68,0.12);color:var(--danger)}
+        .transaction-details{display:flex;flex-direction:column;gap:10px}
+        .detail-row{display:flex;justify-content:space-between;align-items:center}
+        .detail-label{font-size:13px;color:var(--muted);font-weight:500}
+        .detail-value{font-size:14px;font-weight:800;color:var(--text)}
+        .detail-value.amount{color:var(--gold);font-size:18px;font-weight:900;letter-spacing:-0.02em}
+        .receipt-btn{margin-top:12px;padding:10px 18px;background:rgba(212,175,55,0.1);color:var(--gold);border:1px solid rgba(212,175,55,0.2);border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s}
+        .receipt-btn:hover{background:rgba(212,175,55,0.2);transform:translateY(-1px)}
+        .empty-state{background:var(--card);border-radius:24px;padding:44px 28px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.15);border:1px solid var(--border)}
+        .empty-icon{font-size:52px;color:var(--gold);margin-bottom:18px}
+        .empty-title{font-size:19px;font-weight:900;color:var(--text);margin-bottom:10px;letter-spacing:-0.02em}
+        .empty-text{font-size:14px;color:var(--muted);margin-bottom:24px;font-weight:500}
+        .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);padding:12px 16px 24px;box-shadow:0 -8px 32px rgba(0,0,0,0.3);z-index:1000;border-top:1px solid var(--border)}
+        .nav-items{display:flex;justify-content:space-around;max-width:500px;margin:0 auto}
+        .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--muted);padding:8px 16px;border-radius:14px;transition:all 0.2s}
+        .nav-item.active{color:var(--gold);background:rgba(212,175,55,0.08)}
+        .nav-icon{font-size:22px}
+        .nav-label{font-size:12px;font-weight:700}
     </style>
 </head>
 <body>
