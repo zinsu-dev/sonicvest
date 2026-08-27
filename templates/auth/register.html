@@ -4,39 +4,119 @@
 
 {% block styles %}
 <style>
-  body > main:first-of-type { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  body > main:first-of-type {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #09090B; padding: 16px;
+  }
+  .auth-wrap { width: 100%; max-width: 400px; }
+  .auth-top { text-align: center; margin-bottom: 28px; }
+  .auth-logo {
+    width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 16px;
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    display: flex; align-items: center; justify-content: center;
+    color: #09090B; font-weight: 900; font-size: 1.25rem;
+    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
+  }
+  .auth-brand { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .auth-tagline { font-size: 0.875rem; color: #71717a; }
+
+  .auth-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px; padding: 28px 24px; position: relative; overflow: hidden;
+  }
+  .auth-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block; font-size: 0.75rem; font-weight: 700; color: #a1a1aa;
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .input-wrap {
+    position: relative; display: flex; align-items: center;
+  }
+  .input-wrap .form-input {
+    width: 100%; padding: 13px 16px; padding-right: 48px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; color: #fafafa; font-size: 0.9375rem; font-weight: 500;
+    font-family: inherit; outline: none; transition: all 0.2s;
+  }
+  .input-wrap .form-input:focus {
+    border-color: rgba(212,175,55,0.4);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.08);
+  }
+  .input-wrap .form-input::placeholder { color: #3f3f46; }
+  .input-toggle {
+    position: absolute; right: 8px; width: 36px; height: 36px;
+    border-radius: 8px; border: none; background: transparent;
+    color: #52525b; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; transition: color 0.15s;
+  }
+  .input-toggle:hover { color: #D4AF37; }
+  .input-toggle svg { width: 18px; height: 18px; }
+
+  .submit-btn {
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: #09090B; font-size: 0.9375rem; font-weight: 800;
+    cursor: pointer; margin-top: 6px;
+    box-shadow: 0 6px 20px rgba(212,175,55,0.25);
+    transition: all 0.2s; font-family: inherit;
+  }
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,175,55,0.30); }
+
+  .auth-footer {
+    text-align: center; margin-top: 20px;
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .auth-footer span { color: #52525b; font-size: 0.875rem; }
+  .auth-link {
+    color: #D4AF37; font-weight: 700; margin-left: 4px;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .auth-link:hover { color: #E5C158; }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="auth-container">
-  <div class="auth-card animate-fade-in">
-    <div class="auth-header">
-      <div class="auth-logo">S</div>
-      <h1 class="auth-title">Create account</h1>
-      <p class="auth-subtitle">Start your investment journey</p>
-    </div>
+<div class="auth-wrap">
+  <div class="auth-top">
+    <div class="auth-logo">S</div>
+    <div class="auth-brand">Brooklyn</div>
+    <div class="auth-tagline">Start your investment journey</div>
+  </div>
 
+  <div class="auth-card">
     <form method="POST" action="{{ url_for('register') }}">
       <div class="form-group">
         <label class="form-label" for="name">Full Name</label>
-        <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" value="{{ request.form.get('name','') }}" autocomplete="name" required>
+        <div class="input-wrap">
+          <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" value="{{ request.form.get('name','') }}" autocomplete="name" required>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label" for="email">Email Address</label>
-        <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" value="{{ request.form.get('email','') }}" autocomplete="email" required>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" value="{{ request.form.get('email','') }}" autocomplete="email" required>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label" for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" class="form-input" placeholder="08012345678" value="{{ request.form.get('phone','') }}" autocomplete="tel" required>
+        <div class="input-wrap">
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="08012345678" value="{{ request.form.get('phone','') }}" autocomplete="tel" required>
+        </div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="referral_code">Referral Code (Optional)</label>
-        <input type="text" id="referral_code" name="referral_code" class="form-input" placeholder="Enter referral code" value="{{ request.form.get('referral_code','') }}">
+        <label class="form-label" for="referral_code">Referral Code</label>
+        <div class="input-wrap">
+          <input type="text" id="referral_code" name="referral_code" class="form-input" placeholder="Optional" value="{{ request.form.get('referral_code','') }}">
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label" for="password">Password</label>
-        <div class="input-group">
+        <div class="input-wrap">
           <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required>
           <button type="button" class="input-toggle" id="passwordToggle" aria-label="Toggle password visibility">
             <i data-lucide="eye"></i>
@@ -44,7 +124,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
+      <button type="submit" class="submit-btn">Create Account</button>
     </form>
 
     <div class="auth-footer">
@@ -57,7 +137,6 @@
 
 {% block scripts %}
 <script>
-  lucide.createIcons();
   (function(){
     var toggle = document.getElementById('passwordToggle');
     var input = document.getElementById('password');
