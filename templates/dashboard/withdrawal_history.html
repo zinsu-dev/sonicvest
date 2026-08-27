@@ -1,168 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdrawal History - Brooklyn</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
     <style>
-        :root{--bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)}
-        *{box-sizing:border-box}
-        body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:18px 14px 110px}
-        .wrap{max-width:720px;margin:0 auto}
-        .header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-        .back-btn{width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none}
-        .title{font-size:20px;font-weight:900;margin:0}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #09090B; color: #fafafa; min-height: 100vh; }
 
-        .summary{display:flex;gap:12px;margin:14px 0 18px;flex-wrap:wrap}
-        .summary .tile{flex:1;min-width:160px;background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--border);box-shadow:0 8px 26px rgba(0,0,0,0.2)}
-        .tile .val{font-weight:900;color:var(--gold);font-size:18px}
-        .tile .lbl{font-size:12px;color:var(--muted);margin-top:6px;font-weight:700}
+        .page { max-width: 480px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
-        .controls{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
-        .filters{display:flex;gap:8px}
-        .pill{background:var(--surface);border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:800;color:var(--gold);cursor:pointer}
-        .pill.active{background:var(--card);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+        /* Header */
+        .hdr {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px 0 14px;
+        }
+        .hdr-back {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #a1a1aa; text-decoration: none; transition: all 0.2s;
+        }
+        .hdr-back:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
+        .hdr-back svg { width: 18px; height: 18px; }
+        .hdr-title { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; }
 
-        .list{display:flex;flex-direction:column;gap:12px}
-        .withdrawal-card{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,0.2);display:flex;flex-direction:column}
-        .card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-        .amount{font-weight:900;color:var(--gold);font-size:18px}
-        .status-chip{padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;text-transform:uppercase}
-        .status-completed{background:rgba(34,197,94,0.15);color:var(--success);border:1px solid rgba(34,197,94,0.2)}
-        .status-pending{background:rgba(245,158,11,0.15);color:var(--warning);border:1px solid rgba(245,158,11,0.2)}
-        .status-failed{background:rgba(239,68,68,0.15);color:var(--danger);border:1px solid rgba(239,68,68,0.2)}
+        /* Stats */
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .stat {
+            padding: 14px; border-radius: 14px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-val { font-size: 1.125rem; font-weight: 900; color: #D4AF37; letter-spacing: -0.02em; }
+        .stat-lbl { font-size: 0.6875rem; color: #71717a; font-weight: 600; margin-top: 4px; }
 
-        .meta{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:10px;color:var(--muted);font-size:13px}
-        .meta .label{font-weight:700;color:var(--text)}
-        .meta .value{text-align:right;font-weight:800;color:var(--text)}
+        /* Filters */
+        .filters {
+            display: flex; gap: 6px; margin-bottom: 16px;
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .filters::-webkit-scrollbar { display: none; }
+        .pill {
+            padding: 7px 14px; border-radius: 999px; border: none;
+            background: rgba(255,255,255,0.04); color: #71717a;
+            font-size: 0.75rem; font-weight: 700; cursor: pointer;
+            white-space: nowrap; transition: all 0.15s;
+        }
+        .pill.active { background: rgba(212,175,55,0.12); color: #D4AF37; }
 
-        .receipt-btn{align-self:flex-end;margin-top:10px;background:var(--gradient-gold);color:#fff;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-flex;gap:8px}
+        /* Cards */
+        .w-list { display: flex; flex-direction: column; gap: 10px; }
+        .w-card {
+            padding: 16px; border-radius: 14px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .w-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .w-amt { font-size: 1.125rem; font-weight: 900; color: #D4AF37; letter-spacing: -0.02em; }
+        .w-badge {
+            font-size: 0.625rem; font-weight: 700; padding: 3px 8px;
+            border-radius: 6px; text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .w-badge.completed { background: rgba(34,197,94,0.12); color: #22c55e; }
+        .w-badge.pending { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .w-badge.failed { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .w-details { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .w-row { display: flex; justify-content: space-between; align-items: center; }
+        .w-row-lbl { font-size: 0.8125rem; color: #71717a; }
+        .w-row-val { font-size: 0.8125rem; font-weight: 700; color: #e4e4e7; }
+        .w-receipt {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 12px; border-radius: 10px;
+            background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.12);
+            font-size: 0.75rem; font-weight: 700; color: #D4AF37;
+            text-decoration: none; transition: all 0.15s;
+        }
+        .w-receipt:hover { background: rgba(212,175,55,0.15); }
+        .w-receipt svg { width: 12px; height: 12px; }
 
-        .empty{background:var(--card);border-radius:14px;padding:28px;text-align:center;border:1px solid var(--border)}
-        .empty i{font-size:44px;color:var(--gold);margin-bottom:8px}
-
-        @media(max-width:720px){.wrap{padding:0 8px}.summary{flex-direction:column}}
+        /* Empty */
+        .empty {
+            text-align: center; padding: 48px 24px;
+            background: rgba(255,255,255,0.02); border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.06);
+        }
+        .empty-pip {
+            width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 16px;
+            background: rgba(255,255,255,0.04); display: flex;
+            align-items: center; justify-content: center; color: #3f3f46;
+        }
+        .empty-pip svg { width: 24px; height: 24px; }
+        .empty-title { font-size: 1rem; font-weight: 700; color: #a1a1aa; margin-bottom: 6px; }
+        .empty-desc { font-size: 0.8125rem; color: #52525b; margin-bottom: 24px; }
     </style>
 </head>
-
 <body>
-    <div class="wrap">
-        <div class="header">
-            <a href="{{ url_for('profile') }}" class="back-btn" aria-label="Back">
-                <i data-lucide="arrow-left"></i>
-            </a>
-            <h1 class="title">Withdraw Record</h1>
+    <div class="page">
+        <!-- Header -->
+        <div class="hdr">
+            <a href="{{ url_for('profile') }}" class="hdr-back"><i data-lucide="arrow-left"></i></a>
+            <span class="hdr-title">Withdrawal History</span>
         </div>
 
-        <div class="summary">
-            <div class="tile">
-                <div class="val">NGN{{ total_withdrawals | format_number }}</div>
-                <div class="lbl">Total Withdrawn</div>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-val">₦{{ total_withdrawals | format_number }}</div>
+                <div class="stat-lbl">Total Withdrawn</div>
             </div>
-            <div class="tile">
-                <div class="val">NGN{{ pending_withdrawals | format_number }}</div>
-                <div class="lbl">Pending</div>
+            <div class="stat">
+                <div class="stat-val">₦{{ pending_withdrawals | format_number }}</div>
+                <div class="stat-lbl">Pending</div>
             </div>
-            <div class="tile">
-                <div class="val">{{ successful_withdrawals }}</div>
-                <div class="lbl">Successful</div>
+            <div class="stat">
+                <div class="stat-val">{{ successful_withdrawals }}</div>
+                <div class="stat-lbl">Successful</div>
             </div>
-            <div class="tile">
-                <div class="val">NGN{{ total_fees_paid | format_number }}</div>
-                <div class="lbl">Fees Paid</div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <div></div>
-            <div class="filters" role="tablist" aria-label="Filter withdrawals">
-                <button type="button" class="pill active" data-filter="all">All</button>
-                <button type="button" class="pill" data-filter="pending">Pending</button>
-                <button type="button" class="pill" data-filter="completed">Completed</button>
-                <button type="button" class="pill" data-filter="failed">Failed</button>
+            <div class="stat">
+                <div class="stat-val">₦{{ total_fees_paid | format_number }}</div>
+                <div class="stat-lbl">Fees Paid</div>
             </div>
         </div>
 
+        <!-- Filters -->
+        <div class="filters" role="tablist">
+            <button type="button" class="pill active" data-filter="all">All</button>
+            <button type="button" class="pill" data-filter="pending">Pending</button>
+            <button type="button" class="pill" data-filter="completed">Completed</button>
+            <button type="button" class="pill" data-filter="failed">Failed</button>
+        </div>
+
+        <!-- List -->
         {% if withdrawals %}
-        {% for withdrawal in withdrawals %}
-        {% set is_completed = withdrawal.status in ['completed', 'approved', 'processed'] %}
-        <div class="withdrawal-card" data-status="{{ 'completed' if is_completed else withdrawal.status }}">
-            <div class="card-top">
-                <span class="amount">-NGN{{ withdrawal.amount | format_number }}</span>
-                {% if is_completed %}
-                <span class="status-chip status-completed">Completed</span>
-                {% elif withdrawal.status == 'pending' %}
-                <span class="status-chip status-pending">Pending</span>
-                {% else %}
-                <span class="status-chip status-failed">{{ withdrawal.status|title }}</span>
-                {% endif %}
+        <div class="w-list">
+            {% for w in withdrawals %}
+            {% set is_completed = w.status in ['completed', 'approved', 'processed'] %}
+            <div class="w-card" data-status="{{ 'completed' if is_completed else w.status }}">
+                <div class="w-top">
+                    <span class="w-amt">-₦{{ w.amount | format_number }}</span>
+                    {% if is_completed %}
+                    <span class="w-badge completed">Completed</span>
+                    {% elif w.status == 'pending' %}
+                    <span class="w-badge pending">Pending</span>
+                    {% else %}
+                    <span class="w-badge failed">{{ w.status|title }}</span>
+                    {% endif %}
+                </div>
+                <div class="w-details">
+                    <div class="w-row">
+                        <span class="w-row-lbl">Reference</span>
+                        <span class="w-row-val">{{ w.reference or 'WD' ~ w.id ~ w.created_at.strftime('%m%d') }}</span>
+                    </div>
+                    <div class="w-row">
+                        <span class="w-row-lbl">Fee ({{ (withdrawal_fee_rate * 100)|int }}%)</span>
+                        <span class="w-row-val">₦{{ (w.amount * withdrawal_fee_rate) | format_number }}</span>
+                    </div>
+                    <div class="w-row">
+                        <span class="w-row-lbl">Net Amount</span>
+                        <span class="w-row-val">₦{{ (w.amount * (1 - withdrawal_fee_rate)) | format_number }}</span>
+                    </div>
+                    {% if w.description %}
+                    <div class="w-row">
+                        <span class="w-row-lbl">Description</span>
+                        <span class="w-row-val">{{ w.description }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="w-row">
+                        <span class="w-row-lbl">Date</span>
+                        <span class="w-row-val">{{ w.created_at.strftime('%b %d, %Y %H:%M') }}</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('withdrawal_receipt', withdrawal_id=w.id) }}" class="w-receipt">
+                    <i data-lucide="file-text"></i> View Receipt
+                </a>
             </div>
-
-            <div class="meta">
-                <span>Reference ID:</span>
-                <span class="value">{{ withdrawal.reference or 'WD' + withdrawal.id|string +
-                    withdrawal.created_at.strftime('%m%d') }}</span>
-            </div>
-            <div class="meta">
-                <span>Fee ({{ (withdrawal_fee_rate * 100)|int }}%):</span>
-                <span class="value">NGN{{ (withdrawal.amount * withdrawal_fee_rate) | format_number }}</span>
-            </div>
-            <div class="meta">
-                <span>Net Amount:</span>
-                <span class="value">NGN{{ (withdrawal.amount * (1 - withdrawal_fee_rate)) | format_number }}</span>
-            </div>
-            {% if withdrawal.description %}
-            <div class="meta">
-                <span>Description:</span>
-                <span class="value">{{ withdrawal.description }}</span>
-            </div>
-            {% endif %}
-            <div class="meta">
-                <span>Date:</span>
-                <span class="value">{{ withdrawal.created_at.strftime('%b %d, %Y at %I:%M %p') }}</span>
-            </div>
-
-            <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-btn">
-                <i data-lucide="receipt"></i>
-                View Receipt
-            </a>
+            {% endfor %}
         </div>
-        {% endfor %}
         {% else %}
         <div class="empty">
-            <i data-lucide="banknote"></i>
-            <h3>No Withdrawal Records</h3>
-            <p>You have not made any withdrawal requests yet.</p>
-            <a href="{{ url_for('request_withdrawal') }}" class="receipt-btn">
-                <i data-lucide="plus"></i>
-                Make Withdrawal
+            <div class="empty-pip"><i data-lucide="wallet"></i></div>
+            <div class="empty-title">No withdrawals yet</div>
+            <div class="empty-desc">Your withdrawal history will appear here</div>
+            <a href="{{ url_for('request_withdrawal') }}" class="w-receipt" style="display:inline-flex;">
+                <i data-lucide="plus"></i> Make Withdrawal
             </a>
         </div>
         {% endif %}
     </div>
+
+    {% set active = '' %}
+    {% include 'partials/bottom_nav.html' %}
+
     <script>
         (function(){
-            const pills = document.querySelectorAll('.pill');
-            const cards = document.querySelectorAll('.withdrawal-card');
-            function setActive(el){ pills.forEach(p=>p.classList.toggle('active', p===el)); }
+            var pills = document.querySelectorAll('.pill');
+            var cards = document.querySelectorAll('.w-card');
+            function setActive(el){ pills.forEach(function(p){ p.classList.toggle('active', p === el); }); }
             function applyFilter(filter){
-                cards.forEach(card=>{
-                    const status = (card.dataset.status||'').toLowerCase();
-                    if(filter==='all'){ card.style.display = ''; return; }
-                    if(filter==='completed' && status==='completed'){ card.style.display = ''; return; }
-                    if(filter==='pending' && status==='pending'){ card.style.display = ''; return; }
-                    if(filter==='failed' && (status==='failed' || status==='rejected' || status==='cancelled')){ card.style.display = ''; return; }
+                cards.forEach(function(card){
+                    var status = (card.dataset.status || '').toLowerCase();
+                    if(filter === 'all'){ card.style.display = ''; return; }
+                    if(filter === 'completed' && status === 'completed'){ card.style.display = ''; return; }
+                    if(filter === 'pending' && status === 'pending'){ card.style.display = ''; return; }
+                    if(filter === 'failed' && (status === 'failed' || status === 'rejected' || status === 'cancelled')){ card.style.display = ''; return; }
                     card.style.display = 'none';
                 });
             }
-            pills.forEach(p=>p.addEventListener('click', e=>{ e.preventDefault(); setActive(p); applyFilter(p.dataset.filter); }));
+            pills.forEach(function(p){ p.addEventListener('click', function(e){ e.preventDefault(); setActive(p); applyFilter(p.dataset.filter); }); });
         })();
     </script>
     <script>lucide.createIcons();</script>
 </body>
-
 </html>

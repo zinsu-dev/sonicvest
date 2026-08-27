@@ -4,377 +4,204 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Transfer - Brooklyn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root {
-            --gradient-gold: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 40%, var(--primary-dark) 100%);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #09090B; color: #fafafa; min-height: 100vh; }
 
-        body {
-            padding-bottom: 100px;
-        }
+        .page { max-width: 480px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
+        /* Header */
+        .hdr {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px 0 14px;
         }
-
-        .header {
-            background: var(--gradient-gold);
-            padding: 24px 20px 32px;
-            margin: -20px -20px 28px -20px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            overflow: hidden;
+        .hdr-back {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #a1a1aa; text-decoration: none; transition: all 0.2s;
         }
+        .hdr-back:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
+        .hdr-back svg { width: 18px; height: 18px; }
+        .hdr-title { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -80px;
-            right: -60px;
+        /* Section */
+        .sec { margin-bottom: 22px; }
+        .sec-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .sec-ico {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .sec-ico svg { width: 14px; height: 14px; }
+        .sec-ico.gold { background: rgba(212,175,55,0.12); color: #D4AF37; }
+        .sec-ico.blue { background: rgba(59,130,246,0.12); color: #3b82f6; }
+        .sec-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        /* Bank Card */
+        .bank-card {
+            padding: 20px; border-radius: 16px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            position: relative; overflow: hidden;
         }
-
-        .back-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s;
+        .bank-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, #D4AF37, #E5C158, #D4AF37);
         }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
+        .bank-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-
-        .header-title {
-            color: white;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        .card {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-gold);
-        }
-
-        .card-title {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-title i {
-            color: var(--gold);
-            font-size: 20px;
-        }
-
-        .bank-detail {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .bank-detail:last-child {
-            border-bottom: none;
-        }
-
-        .bank-label {
-            font-size: 14px;
-            color: var(--muted);
-            font-weight: 600;
-        }
-
-        .bank-value {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .bank-row:last-child { border-bottom: none; }
+        .bank-lbl { font-size: 0.8125rem; color: #71717a; font-weight: 500; }
+        .bank-val { display: flex; align-items: center; gap: 10px; }
+        .bank-text { font-size: 0.875rem; font-weight: 700; color: #fafafa; }
         .copy-btn {
-            background: var(--surface);
-            color: var(--gold);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
+            padding: 6px 12px; border-radius: 8px;
+            background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.12);
+            font-size: 0.6875rem; font-weight: 700; color: #D4AF37;
+            cursor: pointer; transition: all 0.15s;
+        }
+        .copy-btn:hover { background: rgba(212,175,55,0.15); }
+
+        /* Notice */
+        .notice {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 14px; border-radius: 12px; margin-bottom: 22px;
+            background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.10);
+        }
+        .notice svg { width: 16px; height: 16px; color: #f59e0b; flex-shrink: 0; margin-top: 1px; }
+        .notice-text { font-size: 0.8125rem; color: #a1a1aa; line-height: 1.5; }
+
+        /* Upload Area */
+        .upload-zone {
+            padding: 32px 20px; border-radius: 16px; text-align: center; cursor: pointer;
+            background: rgba(255,255,255,0.02); border: 2px dashed rgba(212,175,55,0.15);
+            transition: all 0.2s; position: relative;
+        }
+        .upload-zone:hover { background: rgba(255,255,255,0.04); border-color: rgba(212,175,55,0.25); }
+        .upload-zone.has-file { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.03); }
+        .upload-ico {
+            width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 14px;
+            background: rgba(212,175,55,0.08); display: flex;
+            align-items: center; justify-content: center; color: #D4AF37;
+        }
+        .upload-ico svg { width: 24px; height: 24px; }
+        .upload-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; margin-bottom: 4px; }
+        .upload-sub { font-size: 0.75rem; color: #52525b; }
+        .upload-file {
+            margin-top: 14px; font-size: 0.8125rem; font-weight: 700; color: #22c55e;
+            display: none; align-items: center; justify-content: center; gap: 6px;
+        }
+        .upload-file svg { width: 14px; height: 14px; }
+        #fileInput { display: none; }
+
+        .preview-img {
+            max-width: 100%; border-radius: 12px; margin-top: 14px;
+            display: none; border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Submit */
+        .submit {
+            width: 100%; padding: 15px; border-radius: 14px; border: none;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: #09090B; font-size: 0.9375rem; font-weight: 800;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 8px; margin-top: 18px;
+            box-shadow: 0 6px 20px rgba(212,175,55,0.25);
             transition: all 0.2s;
         }
+        .submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,175,55,0.30); }
+        .submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .submit svg { width: 18px; height: 18px; }
+        .submit .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .copy-btn:hover {
-            background: var(--gold);
-            color: #fff;
-            transform: translateY(-1px);
-        }
-
-        .notice {
-            background: var(--card);
-            border-left: 4px solid var(--gold);
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        }
-
-        .notice-title {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--gold);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .notice-title i {
-            color: var(--gold);
-        }
-
-        .notice-text {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-weight: 500;
-        }
-
-        .file-upload {
-            background: var(--surface);
-            border: 2px dashed var(--gold);
-            border-radius: 20px;
-            padding: 36px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .file-upload:hover {
-            background: var(--card);
-            transform: translateY(-2px);
-        }
-
-        .file-upload i {
-            font-size: 48px;
-            color: var(--gold);
-            margin-bottom: 14px;
-        }
-
-        .file-upload-text {
-            font-size: 15px;
-            color: var(--text);
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .file-upload-small {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 500;
-        }
-
-        .file-name {
-            margin-top: 14px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--gold);
-            display: none;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            border-radius: 14px;
-            margin-top: 14px;
-            display: none;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--gradient-gold);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 18px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 24px rgba(212,175,55,0.25);
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(212,175,55,0.35);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
+        /* Alert */
         .alert {
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            display: none;
-            font-size: 14px;
-            font-weight: 700;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            padding: 14px; border-radius: 12px; margin-bottom: 18px;
+            display: none; font-size: 0.8125rem; font-weight: 600;
+            align-items: center; gap: 8px;
         }
-
-        .alert-success {
-            background: rgba(34,197,94,0.15);
-            border: 1px solid rgba(34,197,94,0.3);
-            color: var(--success);
-        }
-
-        .alert-error {
-            background: rgba(239,68,68,0.15);
-            border: 1px solid rgba(239,68,68,0.3);
-            color: var(--danger);
-        }
-
-        .spinner {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
+        .alert svg { width: 16px; height: 16px; flex-shrink: 0; }
+        .alert.show { display: flex; }
+        .alert.success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); color: #22c55e; }
+        .alert.error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); color: #ef4444; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <a href="{{ url_for('deposit') }}" class="back-btn">
-                    <i data-lucide="arrow-left"></i>
-                </a>
-                <h1 class="header-title">Bank Transfer</h1>
+    <div class="page">
+        <!-- Header -->
+        <div class="hdr">
+            <a href="{{ url_for('deposit') }}" class="hdr-back"><i data-lucide="arrow-left"></i></a>
+            <span class="hdr-title">Bank Transfer</span>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert" id="alertBox">
+            <i data-lucide="check-circle" id="alertIcon"></i>
+            <span id="alertMsg"></span>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="sec">
+            <div class="sec-hdr">
+                <div class="sec-ico gold"><i data-lucide="building-2"></i></div>
+                <span class="sec-title">Bank Account Details</span>
+            </div>
+            <div class="bank-card">
+                <div class="bank-row">
+                    <span class="bank-lbl">Bank Name</span>
+                    <div class="bank-val">
+                        <span class="bank-text">{{ bank_details.bank_name }}</span>
+                        <button class="copy-btn" onclick="copyText('{{ bank_details.bank_name }}')">Copy</button>
+                    </div>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-lbl">Account Number</span>
+                    <div class="bank-val">
+                        <span class="bank-text">{{ bank_details.account_number }}</span>
+                        <button class="copy-btn" onclick="copyText('{{ bank_details.account_number }}')">Copy</button>
+                    </div>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-lbl">Account Name</span>
+                    <div class="bank-val">
+                        <span class="bank-text">{{ bank_details.account_name }}</span>
+                        <button class="copy-btn" onclick="copyText('{{ bank_details.account_name }}')">Copy</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="card-title">
-                <i data-lucide="building-2"></i>
-                Bank Account Details
-            </h2>
-
-            <div class="bank-detail">
-                <span class="bank-label">Bank Name</span>
-                <span class="bank-value">
-                    {{ bank_details.bank_name }}
-                    <button class="copy-btn" onclick="copyText('{{ bank_details.bank_name }}')">Copy</button>
-                </span>
-            </div>
-            <div class="bank-detail">
-                <span class="bank-label">Account Number</span>
-                <span class="bank-value">
-                    {{ bank_details.account_number }}
-                    <button class="copy-btn" onclick="copyText('{{ bank_details.account_number }}')">Copy</button>
-                </span>
-            </div>
-            <div class="bank-detail">
-                <span class="bank-label">Account Name</span>
-                <span class="bank-value">
-                    {{ bank_details.account_name }}
-                    <button class="copy-btn" onclick="copyText('{{ bank_details.account_name }}')">Copy</button>
-                </span>
-            </div>
-        </div>
-
+        <!-- Notice -->
         <div class="notice">
-            <div class="notice-title">
-                <i data-lucide="info"></i>
-                Important Notice
-            </div>
-            <p class="notice-text">
-                After payment, upload your payment receipt below. Your deposit will be credited after admin verification (usually within 1-24 hours).
-            </p>
+            <i data-lucide="alert-triangle"></i>
+            <span class="notice-text">After payment, upload your receipt below. Your deposit will be credited after admin verification (1-24 hours).</span>
         </div>
 
-        <div class="card">
-            <h2 class="card-title">
-                <i data-lucide="file-up"></i>
-                Upload Payment Proof
-            </h2>
-
+        <!-- Upload -->
+        <div class="sec">
+            <div class="sec-hdr">
+                <div class="sec-ico blue"><i data-lucide="file-up"></i></div>
+                <span class="sec-title">Upload Payment Proof</span>
+            </div>
             <form id="depositForm" method="POST" enctype="multipart/form-data">
-                <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                    <i data-lucide="upload-cloud"></i>
-                    <div class="file-upload-text">Click to upload payment receipt</div>
-                    <div class="file-upload-small">(JPG, PNG, PDF - Max 5MB)</div>
-                    <div class="file-name" id="fileName"></div>
+                <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-ico"><i data-lucide="upload-cloud"></i></div>
+                    <div class="upload-title">Click to upload receipt</div>
+                    <div class="upload-sub">JPG, PNG, PDF - Max 5MB</div>
+                    <div class="upload-file" id="fileName"><i data-lucide="check-circle"></i> <span></span></div>
                 </div>
                 <input type="file" id="fileInput" name="receipt" accept="image/*,.pdf" required>
-                <img id="previewImage" class="preview-image" alt="Receipt preview">
+                <img id="previewImage" class="preview-img" alt="Receipt preview">
 
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <i data-lucide="send"></i>
-                    Submit Deposit Request
+                <button type="submit" class="submit" id="submitBtn">
+                    <i data-lucide="send"></i> Submit Deposit Request
                 </button>
             </form>
         </div>
@@ -391,22 +218,35 @@
             });
         }
 
-        const fileInput = document.getElementById('fileInput');
-        const fileName = document.getElementById('fileName');
-        const previewImage = document.getElementById('previewImage');
+        function showAlert(type, msg) {
+            var box = document.getElementById('alertBox');
+            var icon = document.getElementById('alertIcon');
+            var text = document.getElementById('alertMsg');
+            box.className = 'alert show ' + type;
+            icon.setAttribute('data-lucide', type === 'success' ? 'check-circle' : 'alert-circle');
+            text.textContent = msg;
+            lucide.createIcons();
+            setTimeout(function() { box.className = 'alert'; }, 3000);
+        }
 
-        fileInput.addEventListener('change', function (e) {
-            const file = e.target.files[0];
+        var fileInput = document.getElementById('fileInput');
+        var uploadZone = document.getElementById('uploadZone');
+        var fileName = document.getElementById('fileName');
+        var previewImage = document.getElementById('previewImage');
+
+        fileInput.addEventListener('change', function(e) {
+            var file = e.target.files[0];
             if (file) {
-                fileName.textContent = '✓ ' + file.name;
-                fileName.style.display = 'block';
+                uploadZone.classList.add('has-file');
+                fileName.querySelector('span').textContent = file.name;
+                fileName.style.display = 'flex';
 
                 if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        previewImage.src = e.target.result;
+                    var reader = new FileReader();
+                    reader.onload = function(ev) {
+                        previewImage.src = ev.target.result;
                         previewImage.style.display = 'block';
-                    }
+                    };
                     reader.readAsDataURL(file);
                 } else {
                     previewImage.style.display = 'none';
@@ -414,16 +254,15 @@
             }
         });
 
-        document.getElementById('depositForm').addEventListener('submit', function (e) {
+        document.getElementById('depositForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const submitBtn = document.getElementById('submitBtn');
+            var formData = new FormData(this);
+            var submitBtn = document.getElementById('submitBtn');
 
             if (!fileInput.files[0]) {
                 showAlert('error', 'Please upload your payment receipt');
                 return;
             }
-
             if (fileInput.files[0].size > 5 * 1024 * 1024) {
                 showAlert('error', 'File size must be less than 5MB');
                 return;
@@ -437,37 +276,27 @@
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showAlert('success', data.message);
-                        setTimeout(() => {
-                            window.location.href = '{{ url_for("deposit_history") }}';
-                        }, 2000);
-                    } else {
-                        showAlert('error', data.message || 'Failed to submit deposit request');
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Deposit Request';
-                        lucide.createIcons();
-                    }
-                })
-                .catch(error => {
-                    if(window.showToast) window.showToast('An error occurred. Please try again.', 'danger');
-                    else showAlert('error', 'An error occurred. Please try again.');
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    showAlert('success', data.message);
+                    setTimeout(function() { window.location.href = '{{ url_for("deposit_history") }}'; }, 2000);
+                } else {
+                    showAlert('error', data.message || 'Failed to submit deposit request');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Deposit Request';
                     lucide.createIcons();
-                });
+                }
+            })
+            .catch(function() {
+                showAlert('error', 'An error occurred. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Deposit Request';
+                lucide.createIcons();
+            });
         });
 
-        function showAlert(type, message) {
-            if(window.showToast) {
-                window.showToast(message, type === 'success' ? 'success' : 'danger');
-            }
-        }
+        lucide.createIcons();
     </script>
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-    <script>lucide.createIcons();</script>
-
 </body>
 </html>
