@@ -18,7 +18,8 @@
   }
   .ft-toast.success { border-left-color: #22C55E; }
   .ft-toast.warning { border-left-color: #F59E0B; }
-  .ft-toast.danger  { border-left-color: #EF4444; }
+  .ft-toast.danger, .ft-toast.error { border-left-color: #EF4444; }
+  .ft-toast.info { border-left-color: #3B82F6; }
   .ft-toast .ft-icon {
     flex-shrink: 0; width: 18px; height: 18px;
   }

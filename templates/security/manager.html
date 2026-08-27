@@ -288,6 +288,18 @@
             else this.style.borderColor = '';
         });
     </script>
-    <script>lucide.createIcons();</script>
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
+    <script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    document.addEventListener('DOMContentLoaded', function(){
+      {% for category, message in messages %}
+      window.showToast('{{ message | e }}', '{{ category }}');
+      {% endfor %}
+    });
+    {% endif %}
+    {% endwith %}
+    lucide.createIcons();
+    </script>
 </body>
 </html>

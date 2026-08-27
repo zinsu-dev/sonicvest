@@ -4,416 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invite Friends - Brooklyn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root {
-            --gradient-gold: linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #09090B; color: #fafafa; min-height: 100vh; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
-            color: var(--text);
-            padding: 20px 16px 100px 16px;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+        .page { max-width: 480px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
         /* Header */
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 10px 0;
+        .hdr { display: flex; align-items: center; gap: 12px; padding: 16px 0 14px; }
+        .hdr-back {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #a1a1aa; text-decoration: none; transition: all 0.2s;
         }
+        .hdr-back:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
+        .hdr-back svg { width: 18px; height: 18px; }
+        .hdr-title { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; }
 
-        .back-btn {
-            background: none;
-            border: none;
-            color: var(--gold);
-            font-size: 20px;
-            margin-right: 15px;
-            cursor: pointer;
+        /* Hero */
+        .hero {
+            text-align: center; padding: 32px 20px; margin-bottom: 24px;
+            background: linear-gradient(145deg, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0.02) 50%, rgba(0,0,0,0) 100%);
+            border: 1px solid rgba(212,175,55,0.10); border-radius: 20px;
+            position: relative; overflow: hidden;
         }
-
-        .page-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
+        .hero::before {
+            content: ''; position: absolute; top: -50px; right: -30px;
+            width: 140px; height: 140px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
         }
-
-        /* Invite Section */
-        .invite-section {
-            text-align: center;
-            margin-bottom: 40px;
+        .hero-pip {
+            width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 16px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            display: flex; align-items: center; justify-content: center;
+            color: #09090B; box-shadow: 0 6px 20px rgba(212,175,55,0.35);
+            position: relative; z-index: 1;
         }
+        .hero-pip svg { width: 28px; height: 28px; }
+        .hero-title { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; position: relative; z-index: 1; }
+        .hero-desc { font-size: 0.875rem; color: #71717a; line-height: 1.5; position: relative; z-index: 1; }
 
-        .invite-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 36px;
-            color: #000;
+        /* Code Card */
+        .code-card {
+            padding: 20px; border-radius: 16px; margin-bottom: 16px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            position: relative; overflow: hidden;
         }
-
-        .invite-title {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--text);
+        .code-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, transparent, #D4AF37, transparent);
         }
-
-        .invite-subtitle {
-            color: var(--muted);
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        /* Code Section */
-        .code-section {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            border: 1px solid var(--border);
-        }
-
-        .qr-container {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .qr-code {
-            width: 120px;
-            height: 120px;
-            background: var(--card);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: 2px solid var(--border);
-        }
-
-        .qr-placeholder {
-            width: 100px;
-            height: 100px;
-            background: var(--gradient-gold);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .qr-placeholder::before {
-            content: "QR";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #000;
-            font-weight: 900;
-            font-size: 24px;
-        }
-
-        .code-details {
-            flex: 1;
-        }
-
         .code-label {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: 600;
+            font-size: 0.6875rem; font-weight: 700; color: #71717a;
+            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+        }
+        .code-row { display: flex; align-items: center; gap: 10px; }
+        .code-val {
+            flex: 1; font-size: 1.5rem; font-weight: 900; color: #D4AF37;
+            letter-spacing: 0.05em; word-break: break-all;
+        }
+        .copy-btn {
+            padding: 10px 16px; border-radius: 10px; border: none;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: #09090B; font-size: 0.8125rem; font-weight: 700;
+            cursor: pointer; white-space: nowrap; transition: all 0.15s;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .copy-btn:hover { transform: translateY(-1px); }
+        .copy-btn svg { width: 14px; height: 14px; }
+
+        .link-card {
+            padding: 16px; border-radius: 16px; margin-bottom: 24px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .link-url {
+            font-size: 0.75rem; color: #52525b; word-break: break-all;
+            margin-bottom: 12px; line-height: 1.4;
         }
 
-        .code-value {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--gold);
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+        /* Share Section */
+        .share-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .share-ico {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .share-ico svg { width: 14px; height: 14px; }
+        .share-ico.green { background: rgba(34,197,94,0.12); color: #22c55e; }
+        .share-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; }
 
-        .copy-code-btn {
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: block;
-            width: 100%;
-            box-shadow: 0 8px 24px rgba(212,175,55,0.2);
-            transition: all 0.3s;
+        .share-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+        .share-btn {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 16px; border-radius: 14px; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s;
         }
-
-        .copy-code-btn:hover {
-            transform: translateY(-2px);
+        .share-btn:hover { transform: translateY(-1px); }
+        .share-pip {
+            width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
         }
+        .share-pip svg { width: 18px; height: 18px; }
+        .share-pip.wa { background: rgba(37,211,102,0.15); color: #25D366; }
+        .share-pip.tg { background: rgba(0,136,204,0.15); color: #0088CC; }
+        .share-pip.tw { background: rgba(29,161,242,0.15); color: #1DA1F2; }
+        .share-pip.fb { background: rgba(24,119,242,0.15); color: #1877F2; }
+        .share-name { font-size: 0.875rem; font-weight: 700; color: #e4e4e7; }
+        .share-sub { font-size: 0.6875rem; color: #52525b; }
 
-        .link-section {
-            margin-top: 20px;
+        /* Team */
+        .team-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .team-ico {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .team-ico svg { width: 14px; height: 14px; }
+        .team-ico.blue { background: rgba(59,130,246,0.12); color: #3b82f6; }
+        .team-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; }
 
-        .link-label {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .team-card {
+            padding: 16px; border-radius: 16px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
         }
+        .team-stat { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .team-stat:last-child { border-bottom: none; }
+        .team-lbl { font-size: 0.8125rem; color: #71717a; }
+        .team-val { font-size: 0.875rem; font-weight: 700; color: #D4AF37; }
 
-        .link-value {
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 10px;
-            word-break: break-all;
+        .team-member {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
+        .team-member:last-child { border-bottom: none; }
+        .member-name { font-size: 0.8125rem; font-weight: 600; color: #e4e4e7; }
+        .member-date { font-size: 0.6875rem; color: #52525b; }
 
-        .copy-link-btn {
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 8px 24px rgba(212,175,55,0.2);
-            transition: all 0.3s;
+        .empty {
+            text-align: center; padding: 32px 20px;
+            background: rgba(255,255,255,0.02); border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.06);
         }
-
-        .copy-link-btn:hover {
-            transform: translateY(-2px);
+        .empty-pip {
+            width: 48px; height: 48px; border-radius: 12px; margin: 0 auto 12px;
+            background: rgba(255,255,255,0.04); display: flex;
+            align-items: center; justify-content: center; color: #3f3f46;
         }
-
-        /* Team Section */
-        .team-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .team-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 28px;
-            color: #000;
-        }
-
-        .team-title {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .team-subtitle {
-            color: var(--muted);
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .team-stats {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            border: 1px solid var(--border);
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .stats-row:last-child {
-            border-bottom: none;
-        }
-
-        .stats-label {
-            color: var(--muted);
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .stats-value {
-            color: var(--gold);
-            font-weight: 800;
-        }
-
-        .no-referrals {
-            color: var(--muted);
-            font-style: italic;
-            text-align: center;
-            padding: 20px;
-        }
-
-        @media (max-width: 480px) {
-            .qr-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .qr-code {
-                margin: 0 auto 20px;
-            }
-        }
+        .empty-pip svg { width: 22px; height: 22px; }
+        .empty-text { font-size: 0.875rem; color: #52525b; }
     </style>
 </head>
-
 <body>
-    <!-- Header Section -->
-    <div class="container">
-        <div class="header">
-            <button class="back-btn" onclick="goBack()">
-                <i data-lucide="chevron-left"></i>
-            </button>
-            <div class="page-title">Invite Friends</div>
+    <div class="page">
+        <!-- Header -->
+        <div class="hdr">
+            <a href="{{ url_for('referral') }}" class="hdr-back"><i data-lucide="arrow-left"></i></a>
+            <span class="hdr-title">Invite Friends</span>
         </div>
 
-        <!-- Invite Friends Section -->
-        <div class="invite-section">
-            <div class="invite-icon">
-                <i data-lucide="users"></i>
-            </div>
-            <h1 class="invite-title">Invite Friends</h1>
-            <p class="invite-subtitle">Scan QR-code or copy invitation link or code so as to invite more friends to join your team</p>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-pip"><i data-lucide="user-plus"></i></div>
+            <div class="hero-title">Invite & Earn</div>
+            <div class="hero-desc">Share your referral link and earn commissions when your friends join and invest</div>
         </div>
 
-        <!-- QR Code and Invitation Section -->
-        <div class="code-section">
-            <div class="qr-container">
-                <div class="qr-code">
-                    <div class="qr-placeholder"></div>
-                </div>
-                <div class="code-details">
-                    <div class="code-label">Invitation Code</div>
-                    <div class="code-value" id="inviteCode">{{ (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' }}</div>
-                    <button class="copy-code-btn" onclick="copyCode()">Copy Code</button>
-
-                    <div class="link-section">
-                        <div class="link-label">Invitation Link</div>
-                        <div class="link-value" id="inviteLink">{{ request.url_root }}register?ref={{ (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' }}</div>
-                        <button class="copy-link-btn" onclick="copyLink()">Copy Link</button>
-                    </div>
-                </div>
+        <!-- Referral Code -->
+        {% set ref_code = (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' %}
+        {% set ref_link = request.url_root ~ 'register?ref=' ~ ref_code %}
+        <div class="code-card">
+            <div class="code-label">Your Referral Code</div>
+            <div class="code-row">
+                <div class="code-val" id="refCode">{{ ref_code }}</div>
+                <button class="copy-btn" onclick="copyCode()"><i data-lucide="copy"></i> Copy</button>
             </div>
         </div>
 
-        <!-- Team Section -->
-        <div class="team-section">
-            <div class="team-icon">
-                <i data-lucide="users"></i>
-            </div>
-            <h2 class="team-title">Team</h2>
-            <p class="team-subtitle">All my team earning and my team members</p>
+        <!-- Referral Link -->
+        <div class="link-card">
+            <div class="code-label">Your Referral Link</div>
+            <div class="link-url" id="refLink">{{ ref_link }}</div>
+            <button class="copy-btn" onclick="copyLink()" style="width:100%;justify-content:center;"><i data-lucide="link"></i> Copy Link</button>
+        </div>
 
-            <div class="team-stats">
-                {% if level1_referrals and level1_referrals|length > 0 %}
-                <div class="stats-row">
-                    <span class="stats-label">Team members ({{ (level1_referrals|length if level1_referrals else 0) + (level2_referrals|length if level2_referrals else 0) + (level3_referrals|length if level3_referrals else 0) }})</span>
-                    <span class="stats-value">Levels</span>
+        <!-- Share Buttons -->
+        <div class="share-hdr">
+            <div class="share-ico green"><i data-lucide="share-2"></i></div>
+            <span class="share-title">Share via</span>
+        </div>
+        <div class="share-grid">
+            <a href="https://wa.me/?text={{ 'Join Brooklyn and start investing! Use my referral code: ' ~ ref_code ~ ' Register here: ' ~ ref_link | urlencode }}" target="_blank" rel="noopener noreferrer" class="share-btn" style="background:rgba(37,211,102,0.05);">
+                <div class="share-pip wa"><i data-lucide="message-circle"></i></div>
+                <div>
+                    <div class="share-name">WhatsApp</div>
+                    <div class="share-sub">Share on WhatsApp</div>
                 </div>
-                <div class="stats-row">
-                    <span class="stats-label">Member ID</span>
-                    <span class="stats-label">Date</span>
+            </a>
+            <a href="https://t.me/share/url?url={{ ref_link | urlencode }}&text={{ 'Join Brooklyn and start investing! Use my referral code: ' ~ ref_code | urlencode }}" target="_blank" rel="noopener noreferrer" class="share-btn" style="background:rgba(0,136,204,0.05);">
+                <div class="share-pip tg"><i data-lucide="send"></i></div>
+                <div>
+                    <div class="share-name">Telegram</div>
+                    <div class="share-sub">Share on Telegram</div>
                 </div>
-                {% for referral in level1_referrals[:5] %}
-                <div class="stats-row">
-                    <span class="stats-label">{{ referral.username or 'User' ~ loop.index|string }}</span>
-                    <span class="stats-value">{{ referral.created_at.strftime('%m/%d') if referral.created_at else 'Recent' }}</span>
+            </a>
+            <a href="https://twitter.com/intent/tweet?text={{ 'Join Brooklyn and start investing! Use my referral code: ' ~ ref_code ~ ' ' ~ ref_link | urlencode }}" target="_blank" rel="noopener noreferrer" class="share-btn" style="background:rgba(29,161,242,0.05);">
+                <div class="share-pip tw"><i data-lucide="twitter"></i></div>
+                <div>
+                    <div class="share-name">Twitter</div>
+                    <div class="share-sub">Share on Twitter</div>
+                </div>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ ref_link | urlencode }}&quote={{ 'Join Brooklyn and start investing! Use my referral code: ' ~ ref_code | urlencode }}" target="_blank" rel="noopener noreferrer" class="share-btn" style="background:rgba(24,119,242,0.05);">
+                <div class="share-pip fb"><i data-lucide="facebook"></i></div>
+                <div>
+                    <div class="share-name">Facebook</div>
+                    <div class="share-sub">Share on Facebook</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Team -->
+        <div class="team-hdr">
+            <div class="team-ico blue"><i data-lucide="users"></i></div>
+            <span class="team-title">Your Team</span>
+        </div>
+        <div class="team-card">
+            <div class="team-stat">
+                <span class="team-lbl">Total Members</span>
+                <span class="team-val">{{ (level1_referrals|length if level1_referrals else 0) + (level2_referrals|length if level2_referrals else 0) + (level3_referrals|length if level3_referrals else 0) }}</span>
+            </div>
+            {% if level1_referrals and level1_referrals|length > 0 %}
+                {% for r in level1_referrals[:5] %}
+                <div class="team-member">
+                    <span class="member-name">{{ r.username or 'User' ~ loop.index|string }}</span>
+                    <span class="member-date">{{ r.created_at.strftime('%b %d') if r.created_at else 'Recent' }}</span>
                 </div>
                 {% endfor %}
-                {% else %}
-                <div class="no-referrals">No referrals found.</div>
-                {% endif %}
+            {% else %}
+            <div class="empty" style="margin-top:12px;">
+                <div class="empty-pip"><i data-lucide="users"></i></div>
+                <div class="empty-text">No members yet. Share your link!</div>
             </div>
+            {% endif %}
         </div>
     </div>
 
     {% set active = 'referral' %}
     {% include 'partials/bottom_nav.html' %}
 
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
     <script>
-        let currentReferralCode = '{{ (user.referral_code if user else current_user.referral_code) if (user or current_user) else "SONIC123" }}';
-        let inviteLink = '{{ request.url_root }}register?ref=' + currentReferralCode;
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    document.addEventListener('DOMContentLoaded', function(){
+      {% for category, message in messages %}
+      window.showToast('{{ message | e }}', '{{ category }}');
+      {% endfor %}
+    });
+    {% endif %}
+    {% endwith %}
 
-        function copyCode() {
-            navigator.clipboard.writeText(currentReferralCode).then(function () {
-                showSuccess('.copy-code-btn', 'Copied!');
-            }).catch(function (err) {
-                fallbackCopy(currentReferralCode);
-                showSuccess('.copy-code-btn', 'Copied!');
-            });
-        }
+    var refCode = '{{ ref_code }}';
+    var refLink = '{{ ref_link }}';
 
-        function copyLink() {
-            navigator.clipboard.writeText(inviteLink).then(function () {
-                showSuccess('.copy-link-btn', 'Copied!');
-            }).catch(function (err) {
-                fallbackCopy(inviteLink);
-                showSuccess('.copy-link-btn', 'Copied!');
-            });
-        }
+    function copyCode() {
+        navigator.clipboard.writeText(refCode).then(function() {
+            window.showToast('Code copied!', 'success');
+        }).catch(function() {
+            fallbackCopy(refCode);
+            window.showToast('Code copied!', 'success');
+        });
+    }
 
-        function showSuccess(selector, message) {
-            const btn = document.querySelector(selector);
-            const originalText = btn.textContent;
-            btn.textContent = message;
-            btn.style.background = 'var(--gradient-gold)';
+    function copyLink() {
+        navigator.clipboard.writeText(refLink).then(function() {
+            window.showToast('Link copied!', 'success');
+        }).catch(function() {
+            fallbackCopy(refLink);
+            window.showToast('Link copied!', 'success');
+        });
+    }
 
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = 'var(--gradient-gold)';
-            }, 2000);
-        }
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+    }
 
-        function fallbackCopy(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-        }
-
-        function goBack() {
-            window.history.back();
-        }
+    lucide.createIcons();
     </script>
-    <script>lucide.createIcons();</script>
-    <!-- Vercel Web Analytics -->
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
 </body>
 </html>
