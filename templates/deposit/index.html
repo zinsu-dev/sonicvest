@@ -4,160 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deposit - Brooklyn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        body { padding-bottom: 100px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #09090B; color: #fafafa; min-height: 100vh; }
 
-        .dep-page { max-width: 480px; margin: 0 auto; padding: 16px; }
+        .page { max-width: 480px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
-        .dep-header {
+        /* Header */
+        .hdr {
             display: flex; align-items: center; gap: 12px;
-            padding-top: 8px; margin-bottom: 20px;
+            padding: 16px 0 14px;
         }
+        .hdr-back {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #a1a1aa; text-decoration: none; transition: all 0.2s;
+        }
+        .hdr-back:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
+        .hdr-back svg { width: 18px; height: 18px; }
+        .hdr-title { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; }
 
-        .dep-balance {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--r-xl); padding: 24px; margin-bottom: 24px;
-            text-align: center; position: relative; overflow: hidden;
+        /* Balance Hero */
+        .bal-hero {
+            position: relative; border-radius: 20px; overflow: hidden;
+            margin-bottom: 24px; padding: 22px 20px 20px;
+            background: linear-gradient(145deg, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0.02) 50%, rgba(0,0,0,0) 100%);
+            border: 1px solid rgba(212,175,55,0.10);
         }
-        .dep-balance::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 2px; background: var(--primary);
+        .bal-hero::before {
+            content: ''; position: absolute; top: -50px; right: -30px;
+            width: 140px; height: 140px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
-        .dep-balance-label {
-            font-size: 0.6875rem; color: var(--gray-400);
-            text-transform: uppercase; letter-spacing: 0.08em;
-            margin-bottom: 8px; font-weight: 600;
+        .bal-label {
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; color: rgba(212,175,55,0.7); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 5px;
         }
-        .dep-balance-amount {
-            font-size: 2rem; font-weight: 800; color: var(--primary);
-            letter-spacing: -0.03em;
+        .bal-label svg { width: 12px; height: 12px; }
+        .bal-amount {
+            font-size: 2.25rem; font-weight: 900; letter-spacing: -0.04em;
+            line-height: 1; position: relative; z-index: 1;
         }
+        .bal-naira { font-size: 1.25rem; color: #D4AF37; font-weight: 800; margin-right: 2px; }
+        .bal-sub { font-size: 0.75rem; color: #52525b; margin-top: 6px; position: relative; z-index: 1; }
 
-        .dep-section-title {
-            font-size: 1rem; font-weight: 700; color: var(--white);
-            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        /* Section */
+        .sec { margin-bottom: 24px; }
+        .sec-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .sec-ico {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .dep-section-title svg { width: 18px; height: 18px; color: var(--primary); }
+        .sec-ico svg { width: 14px; height: 14px; }
+        .sec-ico.gold { background: rgba(212,175,55,0.12); color: #D4AF37; }
+        .sec-ico.blue { background: rgba(59,130,246,0.12); color: #3b82f6; }
+        .sec-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; }
 
-        .methods-grid {
-            display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+        /* Methods */
+        .methods { display: flex; flex-direction: column; gap: 10px; }
+        .method {
+            display: flex; align-items: center; gap: 14px;
+            padding: 16px; border-radius: 14px; text-decoration: none;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
         }
-
-        .method-item {
-            background: var(--surface); border-radius: var(--r-lg);
-            padding: 14px 16px; display: flex; align-items: center;
-            gap: 12px; text-decoration: none; color: var(--gray-100);
-            border: 1px solid var(--border); transition: all 0.18s var(--ease);
+        .method:hover { background: rgba(255,255,255,0.06); transform: translateX(4px); }
+        .method-pip {
+            width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
         }
-        .method-item:hover {
-            border-color: rgba(212,175,55,0.15); transform: translateX(4px);
-        }
-
-        .method-icon {
-            width: 44px; height: 44px; border-radius: var(--r-md);
-            background: var(--primary); display: flex;
-            align-items: center; justify-content: center;
-            color: var(--gray-950); flex-shrink: 0;
-        }
-        .method-icon svg { width: 20px; height: 20px; }
-
-        .method-info { flex: 1; }
-        .method-name { font-size: 0.9375rem; font-weight: 700; margin-bottom: 2px; }
-        .method-desc { font-size: 0.75rem; color: var(--gray-400); }
-        .method-arrow { color: var(--gray-500); }
+        .method-pip svg { width: 20px; height: 20px; }
+        .method-pip.gold { background: linear-gradient(135deg, #D4AF37, #C5A028); color: #09090B; box-shadow: 0 4px 12px rgba(212,175,55,0.25); }
+        .method-pip.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 4px 12px rgba(59,130,246,0.25); }
+        .method-body { flex: 1; min-width: 0; }
+        .method-name { font-size: 0.9375rem; font-weight: 700; color: #fafafa; margin-bottom: 2px; }
+        .method-desc { font-size: 0.75rem; color: #71717a; }
+        .method-arrow { color: #3f3f46; flex-shrink: 0; }
         .method-arrow svg { width: 16px; height: 16px; }
 
-        .quick-amounts {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 10px; margin-bottom: 24px;
+        /* Quick Amounts */
+        .amounts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .amt-card {
+            position: relative; border-radius: 14px; padding: 18px 14px;
+            text-align: center; text-decoration: none; overflow: hidden;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+        }
+        .amt-card:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+        .amt-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: #D4AF37; opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .amt-card:hover::before { opacity: 1; }
+        .amt-val {
+            font-size: 1.25rem; font-weight: 900; color: #D4AF37;
+            letter-spacing: -0.02em; margin-bottom: 4px;
+        }
+        .amt-label { font-size: 0.6875rem; color: #71717a; font-weight: 600; }
+
+        .amt-hint {
+            font-size: 0.75rem; color: #52525b; font-weight: 500;
+            margin: -6px 0 14px;
         }
 
-        .quick-btn {
-            background: var(--surface); border-radius: var(--r-lg);
-            padding: 16px 12px; text-align: center; cursor: pointer;
-            transition: all 0.18s var(--ease); border: 1px solid var(--border);
-            text-decoration: none; display: block;
+        /* Info */
+        .info-row {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 14px; border-radius: 12px; margin-bottom: 16px;
+            background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.10);
         }
-        .quick-btn:hover {
-            border-color: rgba(212,175,55,0.15); transform: translateY(-2px);
-        }
-
-        .quick-amount {
-            font-size: 1.125rem; font-weight: 800; color: var(--primary);
-            margin-bottom: 4px; letter-spacing: -0.02em;
-        }
-
-        .quick-label {
-            font-size: 0.6875rem; color: var(--gray-400); font-weight: 600;
-        }
+        .info-row svg { width: 16px; height: 16px; color: #3b82f6; flex-shrink: 0; margin-top: 1px; }
+        .info-text { font-size: 0.8125rem; color: #a1a1aa; line-height: 1.5; }
     </style>
 </head>
 <body>
-    <div class="dep-page">
-        <div class="dep-header">
-            <a href="{{ url_for('dashboard') }}" class="back-btn">
-                <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
-            </a>
-            <div style="font-size:1.125rem;font-weight:700;color:var(--white);">Deposit Funds</div>
+    <div class="page">
+        <!-- Header -->
+        <div class="hdr">
+            <a href="{{ url_for('dashboard') }}" class="hdr-back"><i data-lucide="arrow-left"></i></a>
+            <span class="hdr-title">Deposit Funds</span>
         </div>
 
-        <div class="dep-balance">
-            <div class="dep-balance-label">Current Balance</div>
-            <div class="dep-balance-amount">₦{{ (user.balance or 0) | format_number }}</div>
+        <!-- Balance -->
+        <div class="bal-hero">
+            <div class="bal-label">
+                <i data-lucide="wallet"></i>
+                Current Balance
+            </div>
+            <div class="bal-amount"><span class="bal-naira">₦</span>{{ (user.balance or 0) | format_number }}</div>
+            <div class="bal-sub">Ready to invest</div>
         </div>
 
-        <h2 class="dep-section-title">
-            <i data-lucide="wallet"></i>
-            Choose Deposit Method
-        </h2>
-        <div class="methods-grid">
-            <a href="{{ url_for('deposit_manual') }}" class="method-item">
-                <div class="method-icon">
-                    <i data-lucide="building-2"></i>
-                </div>
-                <div class="method-info">
-                    <div class="method-name">Bank Transfer</div>
-                    <div class="method-desc">Transfer to our bank account</div>
-                </div>
-                <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
-            </a>
-            <a href="{{ url_for('deposit_automatic') }}" class="method-item">
-                <div class="method-icon">
-                    <i data-lucide="credit-card"></i>
-                </div>
-                <div class="method-info">
-                    <div class="method-name">Automatic Payment</div>
-                    <div class="method-desc">Pay instantly through the payment gateway</div>
-                </div>
-                <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
-            </a>
+        <!-- Methods -->
+        <div class="sec">
+            <div class="sec-hdr">
+                <div class="sec-ico gold"><i data-lucide="layers"></i></div>
+                <span class="sec-title">Deposit Method</span>
+            </div>
+            <div class="methods">
+                <a href="{{ url_for('deposit_manual') }}" class="method">
+                    <div class="method-pip gold"><i data-lucide="building-2"></i></div>
+                    <div class="method-body">
+                        <div class="method-name">Bank Transfer</div>
+                        <div class="method-desc">Transfer to our bank account</div>
+                    </div>
+                    <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
+                </a>
+                <a href="{{ url_for('deposit_automatic') }}" class="method">
+                    <div class="method-pip blue"><i data-lucide="credit-card"></i></div>
+                    <div class="method-body">
+                        <div class="method-name">Automatic Payment</div>
+                        <div class="method-desc">Pay instantly via payment gateway</div>
+                    </div>
+                    <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
+                </a>
+            </div>
         </div>
 
-        <h2 class="dep-section-title">
-            <i data-lucide="zap"></i>
-            Quick Amounts
-        </h2>
-        <p style="font-size:0.75rem;color:var(--gray-400);margin:-8px 0 14px;font-weight:500;">Tap an amount to continue with instant payment.</p>
-        <div class="quick-amounts">
-            <a href="{{ url_for('deposit_automatic') }}?amount=5000" class="quick-btn">
-                <div class="quick-amount">₦5,000</div>
-                <div class="quick-label">Starter</div>
-            </a>
-            <a href="{{ url_for('deposit_automatic') }}?amount=10000" class="quick-btn">
-                <div class="quick-amount">₦10,000</div>
-                <div class="quick-label">Basic</div>
-            </a>
-            <a href="{{ url_for('deposit_automatic') }}?amount=25000" class="quick-btn">
-                <div class="quick-amount">₦25,000</div>
-                <div class="quick-label">Standard</div>
-            </a>
-            <a href="{{ url_for('deposit_automatic') }}?amount=50000" class="quick-btn">
-                <div class="quick-amount">₦50,000</div>
-                <div class="quick-label">Premium</div>
-            </a>
+        <!-- Quick Amounts -->
+        <div class="sec">
+            <div class="sec-hdr">
+                <div class="sec-ico blue"><i data-lucide="zap"></i></div>
+                <span class="sec-title">Quick Deposit</span>
+            </div>
+            <div class="amt-hint">Tap an amount for instant payment</div>
+            <div class="amounts">
+                <a href="{{ url_for('deposit_automatic') }}?amount=5000" class="amt-card">
+                    <div class="amt-val">₦5,000</div>
+                    <div class="amt-label">Starter</div>
+                </a>
+                <a href="{{ url_for('deposit_automatic') }}?amount=10000" class="amt-card">
+                    <div class="amt-val">₦10,000</div>
+                    <div class="amt-label">Basic</div>
+                </a>
+                <a href="{{ url_for('deposit_automatic') }}?amount=25000" class="amt-card">
+                    <div class="amt-val">₦25,000</div>
+                    <div class="amt-label">Standard</div>
+                </a>
+                <a href="{{ url_for('deposit_automatic') }}?amount=50000" class="amt-card">
+                    <div class="amt-val">₦50,000</div>
+                    <div class="amt-label">Premium</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="info-row">
+            <i data-lucide="info"></i>
+            <span class="info-text">Deposits are credited within minutes. Contact support if your deposit is not reflected after 30 minutes.</span>
         </div>
     </div>
 

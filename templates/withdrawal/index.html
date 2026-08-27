@@ -4,138 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdrawals - Brooklyn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        body {
-            padding-bottom: 100px;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #09090B; color: #fafafa; min-height: 100vh; }
+
+        .page { max-width: 480px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
+
+        /* Header */
+        .hdr {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px 0 14px;
         }
-        .container {max-width: 500px;margin: 0 auto;padding: 20px;}
-        .header {
-            background: var(--gradient-gold);
-            padding: 24px 20px 32px;
-            margin: -20px -20px 28px -20px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            overflow: hidden;
+        .hdr-back {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #a1a1aa; text-decoration: none; transition: all 0.2s;
         }
-        .header::before {
-            content: '';position: absolute;width: 200px;height: 200px;
-            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-            border-radius: 50%;top: -80px;right: -60px;
+        .hdr-back:hover { background: rgba(255,255,255,0.08); color: #fafafa; }
+        .hdr-back svg { width: 18px; height: 18px; }
+        .hdr-title { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; flex: 1; }
+
+        /* CTA Button */
+        .cta {
+            width: 100%; padding: 15px; border-radius: 14px; border: none;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: #09090B; font-size: 0.9375rem; font-weight: 800;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 8px; text-decoration: none; margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(212,175,55,0.25);
+            transition: all 0.2s;
         }
-        .header-content {position: relative;z-index: 1;display: flex;align-items: center;gap: 16px;width: 100%;}
-        .back-btn {
-            width: 46px;height: 46px;border-radius: 14px;background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);color: white;cursor: pointer;display: flex;
-            align-items: center;justify-content: center;font-size: 18px;text-decoration: none;
-            backdrop-filter: blur(10px);transition: all 0.2s;
+        .cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,175,55,0.30); }
+        .cta svg { width: 18px; height: 18px; }
+
+        /* Info Banner */
+        .info {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 14px; border-radius: 12px; margin-bottom: 22px;
+            background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.10);
         }
-        .back-btn:hover {background: rgba(255,255,255,0.25);transform: translateY(-2px);}
-        .header-title {color: white;font-size: 22px;font-weight: 900;flex: 1;letter-spacing: -0.02em;}
-        .request-btn {
-            width: 100%;padding: 14px 16px;background: var(--gradient-gold);color: #fff;border: none;
-            border-radius: 12px;font-size: 15px;font-weight: 900;cursor: pointer;margin-bottom: 18px;
-            display: inline-flex;align-items: center;justify-content: center;gap: 10px;text-decoration: none;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-            box-shadow: 0 12px 30px rgba(212,175,55,0.12);
+        .info svg { width: 16px; height: 16px; color: #3b82f6; flex-shrink: 0; margin-top: 1px; }
+        .info-text { font-size: 0.8125rem; color: #a1a1aa; line-height: 1.5; }
+
+        /* Section */
+        .sec-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .sec-ico {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .request-btn:hover {transform: translateY(-2px);box-shadow: 0 16px 40px rgba(212,175,55,0.14);}
-        .info-banner {
-            background: var(--card);border: 1px solid var(--border);color: var(--muted);
-            border-radius: 18px;padding: 14px 16px;margin-bottom: 18px;box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-            font-size: 13px;font-weight: 600;line-height: 1.6;
+        .sec-ico svg { width: 14px; height: 14px; }
+        .sec-ico.red { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .sec-title { font-size: 0.9375rem; font-weight: 700; color: #e4e4e7; }
+
+        /* Withdrawal Cards */
+        .w-list { display: flex; flex-direction: column; gap: 10px; }
+        .w-card {
+            padding: 16px; border-radius: 14px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
         }
-        .withdrawal-list {display: flex;flex-direction: column;gap: 14px;}
-        .withdrawal-item {
-            background: var(--card);border-radius: 20px;padding: 18px;
-            box-shadow: 0 14px 40px rgba(0,0,0,0.2);border: 1px solid var(--border);
+        .w-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .w-date { font-size: 0.75rem; color: #71717a; font-weight: 600; }
+        .w-badge {
+            font-size: 0.625rem; font-weight: 700; padding: 3px 8px;
+            border-radius: 6px; text-transform: uppercase; letter-spacing: 0.04em;
         }
-        .withdrawal-header {display: flex;justify-content: space-between;align-items: center;margin-bottom: 14px;}
-        .withdrawal-date {font-size: 13px;color: var(--muted);font-weight: 600;}
-        .status-badge {padding: 7px 14px;border-radius: 999px;font-size: 11px;font-weight: 800;text-transform: uppercase;letter-spacing: 0.05em;}
-        .status-badge.completed {background: rgba(34,197,94,0.15);color: var(--success);}
-        .status-badge.pending {background: rgba(245,158,11,0.15);color: var(--warning);}
-        .status-badge.rejected {background: rgba(239,68,68,0.15);color: var(--danger);}
-        .withdrawal-details {display: flex;flex-direction: column;gap: 10px;}
-        .detail-row {display: flex;justify-content: space-between;align-items: center;}
-        .detail-label {font-size: 13px;color: var(--muted);font-weight: 500;}
-        .detail-value {font-size: 14px;font-weight: 800;color: var(--text);}
-        .detail-value.amount {color: var(--gold);font-size: 20px;font-weight: 900;letter-spacing: -0.02em;}
-        .receipt-btn {
-            margin-top: 14px;padding: 10px 14px;background: var(--surface);color: var(--gold);
-            border: 1px solid var(--border);border-radius: 12px;font-size: 13px;font-weight: 800;
-            cursor: pointer;text-decoration: none;display: inline-flex;align-items: center;gap: 8px;transition: transform 0.14s ease;
+        .w-badge.completed { background: rgba(34,197,94,0.12); color: #22c55e; }
+        .w-badge.pending { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .w-badge.rejected { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .w-amt-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px; border-radius: 10px; margin-bottom: 8px;
+            background: rgba(255,255,255,0.02);
         }
-        .receipt-btn:hover {transform: translateY(-1px);}
-        .empty-state {
-            background: var(--card);border-radius: 24px;padding: 44px 28px;text-align: center;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.2);border: 1px solid var(--border);
+        .w-amt-label { font-size: 0.75rem; color: #71717a; font-weight: 500; }
+        .w-amt { font-size: 1.125rem; font-weight: 900; color: #D4AF37; letter-spacing: -0.02em; }
+        .w-details { display: flex; flex-direction: column; gap: 6px; }
+        .w-row { display: flex; justify-content: space-between; align-items: center; }
+        .w-row-lbl { font-size: 0.8125rem; color: #71717a; }
+        .w-row-val { font-size: 0.8125rem; font-weight: 700; color: #e4e4e7; }
+        .w-receipt {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 12px; padding: 8px 12px; border-radius: 10px;
+            background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.12);
+            font-size: 0.75rem; font-weight: 700; color: #D4AF37;
+            text-decoration: none; transition: all 0.15s;
         }
-        .empty-icon {font-size: 52px;color: var(--gold);margin-bottom: 18px;}
-        .empty-title {font-size: 19px;font-weight: 900;color: var(--text);margin-bottom: 10px;letter-spacing: -0.02em;}
-        .empty-text {font-size: 14px;color: var(--muted);margin-bottom: 24px;font-weight: 500;}
-        .spinner { animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .w-receipt:hover { background: rgba(212,175,55,0.12); }
+        .w-receipt svg { width: 12px; height: 12px; }
+
+        /* Empty */
+        .empty {
+            text-align: center; padding: 48px 24px; margin-top: 10px;
+            background: rgba(255,255,255,0.02); border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.06);
+        }
+        .empty-pip {
+            width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 16px;
+            background: rgba(255,255,255,0.04); display: flex;
+            align-items: center; justify-content: center; color: #3f3f46;
+        }
+        .empty-pip svg { width: 24px; height: 24px; }
+        .empty-title { font-size: 1rem; font-weight: 700; color: #a1a1aa; margin-bottom: 6px; }
+        .empty-desc { font-size: 0.8125rem; color: #52525b; margin-bottom: 24px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <a href="{{ url_for('dashboard') }}" class="back-btn"><i data-lucide="arrow-left"></i></a>
-                <h1 class="header-title">Withdrawal Records</h1>
-            </div>
+    <div class="page">
+        <!-- Header -->
+        <div class="hdr">
+            <a href="{{ url_for('dashboard') }}" class="hdr-back"><i data-lucide="arrow-left"></i></a>
+            <span class="hdr-title">Withdrawals</span>
         </div>
 
-        <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
-            <i data-lucide="plus"></i> Request New Withdrawal
+        <!-- CTA -->
+        <a href="{{ url_for('request_withdrawal') }}" class="cta">
+            <i data-lucide="plus"></i> Request Withdrawal
         </a>
 
-        <div class="info-banner">
-            Withdrawal requests are available from {{ withdrawal_hours }}.
-            Processing time: {{ processing_time }}.
+        <!-- Info -->
+        <div class="info">
+            <i data-lucide="clock"></i>
+            <span class="info-text">Available {{ withdrawal_hours }}. Processing: {{ processing_time }}.</span>
         </div>
 
+        <!-- Records -->
         {% if withdrawals %}
-        <div class="withdrawal-list">
-            {% for withdrawal in withdrawals %}
-            <div class="withdrawal-item">
-                <div class="withdrawal-header">
-                    <span class="withdrawal-date">{{ withdrawal.created_at.strftime('%b %d, %Y %H:%M') }}</span>
-                    <span class="status-badge {{ withdrawal.status }}">{{ withdrawal.status|title }}</span>
+        <div class="sec-hdr">
+            <div class="sec-ico red"><i data-lucide="arrow-up-right"></i></div>
+            <span class="sec-title">History</span>
+        </div>
+        <div class="w-list">
+            {% for w in withdrawals %}
+            <div class="w-card">
+                <div class="w-top">
+                    <span class="w-date">{{ w.created_at.strftime('%b %d, %Y %H:%M') }}</span>
+                    <span class="w-badge {{ w.status }}">{{ w.status|title }}</span>
                 </div>
-                <div class="withdrawal-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Withdrawal Amount</span>
-                        <span class="detail-value amount">₦{{ withdrawal.amount | format_number }}</span>
+                <div class="w-amt-row">
+                    <span class="w-amt-label">Withdrawal Amount</span>
+                    <span class="w-amt">₦{{ w.amount | format_number }}</span>
+                </div>
+                <div class="w-details">
+                    <div class="w-row">
+                        <span class="w-row-lbl">Amount Received</span>
+                        <span class="w-row-val">₦{{ (w.amount - (w.fee or 0)) | format_number }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Amount Received</span>
-                        <span class="detail-value">₦{{ (withdrawal.amount - (withdrawal.fee or 0)) | format_number }}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Fee</span>
-                        <span class="detail-value">₦{{ (withdrawal.fee or 0) | format_number }}</span>
+                    <div class="w-row">
+                        <span class="w-row-lbl">Fee</span>
+                        <span class="w-row-val">₦{{ (w.fee or 0) | format_number }}</span>
                     </div>
                 </div>
-                <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-btn">
-                    <i data-lucide="receipt"></i> View Receipt
+                <a href="{{ url_for('withdrawal_receipt', withdrawal_id=w.id) }}" class="w-receipt">
+                    <i data-lucide="file-text"></i> View Receipt
                 </a>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty-state">
-            <i data-lucide="wallet" class="empty-icon"></i>
-            <h3 class="empty-title">No Withdrawal Records</h3>
-            <p class="empty-text">You have not made any withdrawals yet.</p>
-            <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
+        <div class="empty">
+            <div class="empty-pip"><i data-lucide="wallet"></i></div>
+            <div class="empty-title">No withdrawals yet</div>
+            <div class="empty-desc">Your withdrawal history will appear here</div>
+            <a href="{{ url_for('request_withdrawal') }}" class="cta" style="margin:0 auto;max-width:220px;">
                 <i data-lucide="plus"></i> Make Withdrawal
             </a>
         </div>
