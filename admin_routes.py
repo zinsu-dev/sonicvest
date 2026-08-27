@@ -1063,6 +1063,9 @@ def gateway_withdrawal():
         bank_code = (request.form.get('bank_code') or '').strip()
         receive_name = (request.form.get('receive_name') or '').strip()
         receive_account = (request.form.get('receive_account') or '').strip()
+        number = (request.form.get('number') or '').strip() or None
+        email = (request.form.get('email') or '').strip() or None
+        mobile = (request.form.get('mobile') or '').strip() or None
         remark = (request.form.get('remark') or '').strip() or None
         back_url = (request.form.get('back_url') or '').strip() or None
         apply_date = (request.form.get('apply_date') or '').strip() or None
@@ -1077,6 +1080,9 @@ def gateway_withdrawal():
                     bank_code=bank_code,
                     receive_name=receive_name,
                     receive_account=receive_account,
+                    number=number,
+                    email=email,
+                    mobile=mobile,
                     remark=remark,
                     back_url=back_url,
                     apply_date=apply_date,

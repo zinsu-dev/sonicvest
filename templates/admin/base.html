@@ -356,12 +356,13 @@
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
-      {{ message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter:invert(1);"></button>
-    </div>
-    {% endfor %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        {% for category, message in messages %}
+        window.showToast('{{ message | e }}', '{{ 'danger' if category == 'error' else category }}');
+        {% endfor %}
+    });
+    </script>
     {% endif %}
     {% endwith %}
 
@@ -369,6 +370,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
 
   <script>
     function toggleMobileMenu() {

@@ -3,315 +3,174 @@
 {% block title %}Brooklyn - Your Path to Financial Freedom{% endblock %}
 
 {% block content %}
-<section class="hero bg-primary text-white text-center py-5">
-    <div class="container">
-        <h1 class="display-4 fw-bold">Welcome to Brooklyn</h1>
-        <p class="lead">Invest wisely and earn daily income with our premium packages.</p>
-        <div class="mt-4">
+<section style="padding:80px 0;background:var(--primary);text-align:center;">
+  <div class="container">
+    <h1 style="font-size:2.5rem;font-weight:800;color:var(--gray-950);margin-bottom:12px;letter-spacing:-0.03em;">Welcome to Brooklyn</h1>
+    <p style="font-size:1.0625rem;color:rgba(15,17,21,0.65);margin-bottom:28px;">Invest wisely and earn daily income with our premium packages.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      {% if session.user_id %}
+      <a href="{{ url_for('dashboard') }}" class="btn" style="background:var(--gray-950);color:var(--white);padding:12px 28px;font-weight:700;">
+        <i data-lucide="layout-dashboard" style="width:18px;height:18px;"></i> Dashboard
+      </a>
+      {% else %}
+      <a href="{{ url_for('register') }}" class="btn" style="background:var(--gray-950);color:var(--white);padding:12px 28px;font-weight:700;">
+        <i data-lucide="user-plus" style="width:18px;height:18px;"></i> Register
+      </a>
+      <a href="{{ url_for('login') }}" class="btn" style="background:transparent;color:var(--gray-950);border:2px solid var(--gray-950);padding:12px 28px;font-weight:700;">
+        <i data-lucide="log-in" style="width:18px;height:18px;"></i> Login
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section style="padding:60px 0;">
+  <div class="container">
+    <h2 class="text-center" style="margin-bottom:36px;">Why Choose Brooklyn?</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+      <div class="card text-center" style="padding:28px 20px;">
+        <div class="stat-icon gold" style="margin:0 auto 14px;width:48px;height:48px;">
+          <i data-lucide="trending-up" style="width:22px;height:22px;"></i>
+        </div>
+        <h3 style="margin-bottom:6px;">Daily Income</h3>
+        <p style="font-size:0.875rem;">Earn income every 22 hours with our investment packages.</p>
+      </div>
+      <div class="card text-center" style="padding:28px 20px;">
+        <div class="stat-icon blue" style="margin:0 auto 14px;width:48px;height:48px;">
+          <i data-lucide="users" style="width:22px;height:22px;"></i>
+        </div>
+        <h3 style="margin-bottom:6px;">Multi-level Referrals</h3>
+        <p style="font-size:0.875rem;">Earn commissions up to 3 levels deep with our referral system.</p>
+      </div>
+      <div class="card text-center" style="padding:28px 20px;">
+        <div class="stat-icon green" style="margin:0 auto 14px;width:48px;height:48px;">
+          <i data-lucide="wallet" style="width:22px;height:22px;"></i>
+        </div>
+        <h3 style="margin-bottom:6px;">Quick Withdrawals</h3>
+        <p style="font-size:0.875rem;">Withdraw your earnings directly to your bank account.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:60px 0;background:var(--bg-raised);">
+  <div class="container">
+    <h2 class="text-center" style="margin-bottom:36px;">Our Investment Packages</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+      {% for i in range(3) %}
+      {% set package = {
+        'name': ['Starter', 'Standard', 'Premium'][i],
+        'price': [10000, 50000, 100000][i],
+        'daily_income': [500, 2500, 5000][i],
+        'total_income': [17500, 87500, 175000][i]
+      } %}
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div style="background:var(--primary);padding:14px;text-align:center;">
+          <h3 style="color:var(--gray-950);margin:0;font-weight:700;font-size:1rem;">{{ package.name }}</h3>
+        </div>
+        <div style="padding:20px;text-align:center;">
+          <div style="font-size:1.5rem;font-weight:800;color:var(--primary);margin-bottom:6px;letter-spacing:-0.02em;">₦{{ package.price | format_number }}</div>
+          <div style="font-size:0.8125rem;font-weight:600;color:var(--success);margin-bottom:14px;">₦{{ package.daily_income | format_number }} daily income</div>
+          <div style="border-top:1px solid var(--border);padding-top:14px;text-align:left;">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+              <i data-lucide="check" style="width:14px;height:14px;color:var(--success);flex-shrink:0;"></i>
+              <span style="font-size:0.8125rem;color:var(--gray-300);">{{ ((package.total_income - package.price) / package.price * 100) | round(1) }}% total ROI</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+              <i data-lucide="check" style="width:14px;height:14px;color:var(--success);flex-shrink:0;"></i>
+              <span style="font-size:0.8125rem;color:var(--gray-300);">35 days duration</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <i data-lucide="check" style="width:14px;height:14px;color:var(--success);flex-shrink:0;"></i>
+              <span style="font-size:0.8125rem;color:var(--gray-300);">Total return: ₦{{ package.total_income | format_number }}</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
             {% if session.user_id %}
-            <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg">
-                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-            </a>
+            <a href="{{ url_for('packages') }}" class="btn btn-primary btn-block">Get Started</a>
             {% else %}
-            <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-2">
-                <i class="fas fa-user-plus me-2"></i>Register
-            </a>
-            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-            </a>
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-block">Register to Invest</a>
             {% endif %}
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+    <div class="text-center" style="margin-top:28px;">
+      {% if session.user_id %}
+      <a href="{{ url_for('packages') }}" class="btn btn-secondary">View All Packages</a>
+      {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-secondary">Register to See More</a>
+      {% endif %}
+    </div>
+  </div>
 </section>
 
-<section class="features py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Why Choose Brooklyn?</h2>
-
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
-                        <h3>Daily Income</h3>
-                        <p>Earn income every 22 hours with our investment packages.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                        <h3>Multi-level Referrals</h3>
-                        <p>Earn commissions up to 3 levels deep with our referral system.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-wallet fa-3x text-primary mb-3"></i>
-                        <h3>Quick Withdrawals</h3>
-                        <p>Withdraw your earnings directly to your bank account.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section style="padding:60px 0;">
+  <div class="container">
+    <h2 class="text-center" style="margin-bottom:36px;">How It Works</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+      {% for step in [
+        {'num': '1', 'title': 'Register', 'desc': 'Create an account to get started with a welcome bonus.'},
+        {'num': '2', 'title': 'Choose Package', 'desc': 'Select an investment package that suits your budget.'},
+        {'num': '3', 'title': 'Earn Daily', 'desc': 'Receive income every 22 hours automatically.'},
+        {'num': '4', 'title': 'Withdraw', 'desc': 'Withdraw your earnings to your bank account.'}
+      ] %}
+      <div class="card text-center" style="padding:24px 16px;">
+        <div style="width:40px;height:40px;border-radius:var(--r-md);background:var(--primary);color:var(--gray-950);display:inline-flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;margin-bottom:12px;">{{ step.num }}</div>
+        <h4 style="margin-bottom:6px;">{{ step.title }}</h4>
+        <p style="font-size:0.8125rem;">{{ step.desc }}</p>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<section class="packages py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Our Investment Packages</h2>
-
-        <div class="row">
-            {% for i in range(3) %}
-            {% set package = {
-            'name': ['Starter', 'Standard', 'Premium'][i],
-            'price': [10000, 50000, 100000][i],
-            'daily_income': [500, 2500, 5000][i],
-            'total_income': [17500, 87500, 175000][i]
-            } %}
-
-            <div class="col-md-4 mb-4">
-                <div class="card package-card">
-                    <div class="card-header">
-                        <h3 class="mb-0">{{ package.name }}</h3>
-                    </div>
-                    <div class="card-body text-center">
-                        <p class="price mb-3">₦{{ package.price | format_number }}</p>
-                        <p class="daily-income">₦{{ package.daily_income | format_number }} daily income</p>
-                        <hr>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-check text-success me-2"></i> {{ ((package.total_income -
-                                package.price) / package.price * 100) | round(1) }}% total ROI</li>
-                            <li><i class="fas fa-check text-success me-2"></i> 35 days duration</li>
-                            <li><i class="fas fa-check text-success me-2"></i> Total return: ₦{{ package.total_income |
-                                format_number }}</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer text-center">
-                        {% if session.user_id %}
-                        <a href="{{ url_for('packages') }}" class="btn btn-primary">Get Started</a>
-                        {% else %}
-                        <a href="{{ url_for('register') }}" class="btn btn-primary">Register to Invest</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+<section style="padding:60px 0;background:var(--bg-raised);">
+  <div class="container">
+    <h2 class="text-center" style="margin-bottom:36px;">What Our Investors Say</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+      {% for i in range(3) %}
+      {% set testimonial = {
+        'name': ['John Doe', 'Jane Smith', 'Robert Johnson'][i],
+        'role': ['Investor', 'Business Owner', 'Entrepreneur'][i],
+        'text': [
+          'I\'ve been using Brooklyn for 3 months and already earned back my initial investment plus profit!',
+          'The daily income is consistent and the platform is very easy to use. Highly recommended!',
+          'The referral system is amazing! I\'ve earned almost as much from referrals as from my investments.'
+        ][i]
+      } %}
+      <div class="card" style="padding:20px;">
+        <div style="color:var(--primary);margin-bottom:14px;">
+          <i data-lucide="star" style="width:16px;height:16px;fill:var(--primary);"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:var(--primary);"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:var(--primary);"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:var(--primary);"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:var(--primary);"></i>
         </div>
-
-        <div class="text-center mt-4">
-            {% if session.user_id %}
-            <a href="{{ url_for('packages') }}" class="btn btn-lg btn-outline-primary">View All Packages</a>
-            {% else %}
-            <a href="{{ url_for('register') }}" class="btn btn-lg btn-outline-primary">Register to See More</a>
-            {% endif %}
+        <p style="font-size:0.875rem;margin-bottom:16px;line-height:1.6;">{{ testimonial.text }}</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);color:var(--gray-950);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.875rem;flex-shrink:0;">{{ testimonial.name[0] }}</div>
+          <div>
+            <div style="font-weight:700;font-size:0.875rem;">{{ testimonial.name }}</div>
+            <div style="font-size:0.75rem;color:var(--gray-400);">{{ testimonial.role }}</div>
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<section class="how-it-works py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">How It Works</h2>
-
-        <div class="row">
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <div class="step-number bg-primary text-white rounded-circle mb-3">1</div>
-                        <h4>Register</h4>
-                        <p>Create an account to get started with a welcome bonus.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <div class="step-number bg-primary text-white rounded-circle mb-3">2</div>
-                        <h4>Choose Package</h4>
-                        <p>Select an investment package that suits your budget.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <div class="step-number bg-primary text-white rounded-circle mb-3">3</div>
-                        <h4>Earn Daily</h4>
-                        <p>Receive income every 22 hours automatically into your account.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <div class="step-number bg-primary text-white rounded-circle mb-3">4</div>
-                        <h4>Withdraw</h4>
-                        <p>Withdraw your earnings directly to your bank account.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section style="padding:60px 0;background:var(--primary);text-align:center;">
+  <div class="container">
+    <h2 style="color:var(--gray-950);margin-bottom:10px;">Ready to Start Earning Daily Income?</h2>
+    <p style="color:rgba(15,17,21,0.65);font-size:1rem;margin-bottom:28px;">Join thousands of investors who are growing their wealth with Brooklyn.</p>
+    {% if session.user_id %}
+    <a href="{{ url_for('dashboard') }}" class="btn" style="background:var(--gray-950);color:var(--white);padding:12px 28px;font-weight:700;">Go to Dashboard</a>
+    {% else %}
+    <a href="{{ url_for('register') }}" class="btn" style="background:var(--gray-950);color:var(--white);padding:12px 28px;font-weight:700;">Get Started Now</a>
+    {% endif %}
+  </div>
 </section>
-
-<section class="testimonials py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">What Our Investors Say</h2>
-
-        <div class="row">
-            {% for i in range(3) %}
-            {% set testimonial = {
-            'name': ['John Doe', 'Jane Smith', 'Robert Johnson'][i],
-            'role': ['Investor', 'Business Owner', 'Entrepreneur'][i],
-            'text': [
-            'I\'ve been using Brooklyn for 3 months and already earned back my initial investment plus profit!',
-            'The daily income is consistent and the platform is very easy to use. Highly recommended!',
-            'The referral system is amazing! I\'ve earned almost as much from referrals as from my investments.'
-            ][i]
-            } %}
-
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="text-warning mb-3">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="card-text">{{ testimonial.text }}</p>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
-                                style="width: 50px; height: 50px;">
-                                <span>{{ testimonial.name[0] }}</span>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">{{ testimonial.name }}</h5>
-                                <small class="text-muted">{{ testimonial.role }}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="cta py-5 bg-primary text-white text-center">
-    <div class="container">
-        <h2 class="mb-4">Ready to Start Earning Daily Income?</h2>
-        <p class="lead mb-4">Join thousands of investors who are growing their wealth with Brooklyn.</p>
-        {% if session.user_id %}
-        <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg">Go to Dashboard</a>
-        {% else %}
-        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Get Started Now</a>
-        {% endif %}
-    </div>
-</section>
-{% endblock %}
-
-{% block styles %}
-<style>
-    .hero {
-        padding: 100px 0;
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%) !important;
-    }
-
-    .step-number {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 0 auto;
-        background: #D4AF37 !important;
-    }
-
-    .cta {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%) !important;
-    }
-
-    /* Override Bootstrap primary colors for this page */
-    .bg-primary {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%) !important;
-    }
-
-    .text-primary {
-        color: #D4AF37 !important;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%) !important;
-        border-color: #D4AF37 !important;
-        color: white !important;
-    }
-
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #B8941E 0%, #9A7B18 100%) !important;
-        border-color: #B8941E !important;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-    }
-
-    .btn-outline-primary {
-        color: #D4AF37 !important;
-        border-color: #D4AF37 !important;
-    }
-
-    .btn-outline-primary:hover {
-        background: #D4AF37 !important;
-        border-color: #D4AF37 !important;
-        color: white !important;
-    }
-
-    .text-success {
-        color: #2E7D32 !important;
-    }
-
-    .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
-    }
-
-    .package-card .card-header {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%);
-        color: white;
-        font-weight: 600;
-    }
-
-    .price {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #D4AF37;
-    }
-
-    .daily-income {
-        color: #2E7D32;
-        font-weight: 600;
-    }
-
-    .testimonials .rounded-circle {
-        background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%) !important;
-    }
-
-    .text-warning {
-        color: #D4AF37 !important;
-    }
-</style>
 {% endblock %}

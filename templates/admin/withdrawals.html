@@ -102,7 +102,8 @@
 {{ super() }}
 <script>
 	async function approveWithdrawal(url) {
-		if (!confirm('Approve this withdrawal?')) return;
+		const ok = await window.showConfirm('Approve this withdrawal?', { confirmText: 'Approve' });
+		if (!ok) return;
 		try {
 			const res = await fetch(url, {
 				method: 'POST',
@@ -117,12 +118,14 @@
 	}
 
 	async function rejectWithdrawal(url) {
-		const reason = prompt('Enter reason for rejection (optional):') || 'Rejected by admin';
+		const reason = await window.showPrompt('Enter reason for rejection (optional):', { placeholder: 'Reason for rejection', defaultValue: 'Rejected by admin' });
+		if (reason === null) return;
+		const finalReason = reason.trim() || 'Rejected by admin';
 		try {
 			const res = await fetch(url, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ reason })
+				body: JSON.stringify({ reason: finalReason })
 			});
 			const data = await res.json();
 			showToast(data.message || (data.success ? 'Rejected' : 'Failed'), data.success ? 'success' : 'danger');

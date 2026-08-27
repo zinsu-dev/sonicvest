@@ -220,24 +220,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!amount || amount <= 0) {
             e.preventDefault();
-            alert('Please enter a valid amount greater than 0.');
+            if(window.showToast) window.showToast('Please enter a valid amount greater than 0.', 'danger');
             return;
         }
         
         if (!balanceType) {
             e.preventDefault();
-            alert('Please select a balance type.');
+            if(window.showToast) window.showToast('Please select a balance type.', 'danger');
             return;
         }
         
-        if (!confirm(`Are you sure you want to add ₦${amount.toLocaleString('en-US', {minimumFractionDigits: 2})} to ${balanceType === 'recharge' ? 'recharge' : 'main'} balance?`)) {
-            e.preventDefault();
-            return;
-        }
-        
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding Balance...';
-        submitBtn.disabled = true;
+        e.preventDefault();
+        window.showConfirm(`Are you sure you want to add ₦${amount.toLocaleString('en-US', {minimumFractionDigits: 2})} to ${balanceType === 'recharge' ? 'recharge' : 'main'} balance?`, { confirmText: 'Add Balance' }).then(function(ok){
+            if(!ok) return;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding Balance...';
+            submitBtn.disabled = true;
+            document.getElementById('addBalanceForm').submit();
+        });
     });
 });
 </script>

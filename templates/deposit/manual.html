@@ -4,21 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Transfer - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{
-            --bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --gradient-gold: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 40%, var(--primary-dark) 100%);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
             padding-bottom: 100px;
         }
 
@@ -90,14 +84,9 @@
         }
 
         .card {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .card::before {
@@ -307,50 +296,14 @@
             color: var(--danger);
         }
 
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
-            z-index: 1000;
-            border-top: 1px solid var(--border);
+        .spinner {
+            animation: spin 1s linear infinite;
         }
 
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            max-width: 500px;
-            margin: 0 auto;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: var(--muted);
-            padding: 8px 16px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .nav-item.active {
-            color: var(--gold);
-            background: var(--card);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
-        }
     </style>
 </head>
 <body>
@@ -358,24 +311,15 @@
         <div class="header">
             <div class="header-content">
                 <a href="{{ url_for('deposit') }}" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
+                    <i data-lucide="arrow-left"></i>
                 </a>
                 <h1 class="header-title">Bank Transfer</h1>
             </div>
         </div>
 
-        <div id="alertSuccess" class="alert alert-success">
-            <i class="fas fa-check-circle"></i>
-            <span id="successMessage"></span>
-        </div>
-        <div id="alertError" class="alert alert-error">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span id="errorMessage"></span>
-        </div>
-
         <div class="card">
             <h2 class="card-title">
-                <i class="fas fa-university"></i>
+                <i data-lucide="building-2"></i>
                 Bank Account Details
             </h2>
 
@@ -404,7 +348,7 @@
 
         <div class="notice">
             <div class="notice-title">
-                <i class="fas fa-info-circle"></i>
+                <i data-lucide="info"></i>
                 Important Notice
             </div>
             <p class="notice-text">
@@ -414,13 +358,13 @@
 
         <div class="card">
             <h2 class="card-title">
-                <i class="fas fa-file-upload"></i>
+                <i data-lucide="file-up"></i>
                 Upload Payment Proof
             </h2>
 
             <form id="depositForm" method="POST" enctype="multipart/form-data">
                 <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                    <i data-lucide="upload-cloud"></i>
                     <div class="file-upload-text">Click to upload payment receipt</div>
                     <div class="file-upload-small">(JPG, PNG, PDF - Max 5MB)</div>
                     <div class="file-name" id="fileName"></div>
@@ -429,34 +373,17 @@
                 <img id="previewImage" class="preview-image" alt="Receipt preview">
 
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i>
+                    <i data-lucide="send"></i>
                     Submit Deposit Request
                 </button>
             </form>
         </div>
     </div>
 
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
-            </a>
-        </div>
-    </div>
+    {% set active = 'deposit' %}
+    {% include 'partials/bottom_nav.html' %}
 
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
     <script>
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
@@ -503,7 +430,8 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitBtn.innerHTML = '<i data-lucide="loader" class="spinner"></i> Processing...';
+            lucide.createIcons();
 
             fetch('{{ url_for("process_manual_deposit") }}', {
                 method: 'POST',
@@ -519,40 +447,27 @@
                     } else {
                         showAlert('error', data.message || 'Failed to submit deposit request');
                         submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Deposit Request';
+                        submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Deposit Request';
+                        lucide.createIcons();
                     }
                 })
                 .catch(error => {
-                    showAlert('error', 'An error occurred. Please try again.');
+                    if(window.showToast) window.showToast('An error occurred. Please try again.', 'danger');
+                    else showAlert('error', 'An error occurred. Please try again.');
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Deposit Request';
+                    submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Deposit Request';
+                    lucide.createIcons();
                 });
         });
 
         function showAlert(type, message) {
-            const alertSuccess = document.getElementById('alertSuccess');
-            const alertError = document.getElementById('alertError');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-
-            alertSuccess.style.display = 'none';
-            alertError.style.display = 'none';
-
-            if (type === 'success') {
-                successMessage.textContent = message;
-                alertSuccess.style.display = 'block';
-                setTimeout(() => {
-                    alertSuccess.style.display = 'none';
-                }, 5000);
-            } else {
-                errorMessage.textContent = message;
-                alertError.style.display = 'block';
+            if(window.showToast) {
+                window.showToast(message, type === 'success' ? 'success' : 'danger');
             }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    </script>    
+    </script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+    <script>lucide.createIcons();</script>
 
 </body>
 </html>

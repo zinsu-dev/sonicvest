@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdrawal Records - Brooklyn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
-        body{background:var(--bg);min-height:100vh;margin:0;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+        body{padding:20px;padding-bottom:100px}
         .header-row{display:flex;align-items:center;margin-bottom:30px}
         .back-link{background:var(--surface);border:1px solid var(--border);border-radius:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);font-size:18px;margin-right:20px;transition:all 0.2s}
         .back-link:hover{background:var(--card)}
@@ -37,7 +37,7 @@
 <body>
     <div class="header-row">
         <a href="{{ url_for('dashboard') }}" class="back-link">
-            <i class="fas fa-arrow-left"></i>
+            <i data-lucide="arrow-left"></i>
         </a>
         <h1 class="page-title">Withdrawal Records</h1>
     </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="withdrawal-record-row" style="justify-content:flex-end; margin-top: 8px;">
                     <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-link">
-                        <i class="fas fa-receipt"></i> View Receipt
+                        <i data-lucide="receipt"></i> View Receipt
                     </a>
                 </div>
             </div>
@@ -77,7 +77,7 @@
         {% else %}
         <div class="empty-state">
             <div class="empty-icon">
-                <i class="fas fa-money-bill-wave"></i>
+                <i data-lucide="wallet"></i>
             </div>
             <h3>No Withdrawal Records</h3>
             <p>You haven't made any withdrawals yet. Start withdrawing your earnings!</p>
@@ -85,6 +85,10 @@
         {% endif %}
     </div>
 
+    {% set active = '' %}
+    {% include 'partials/bottom_nav.html' %}
+
+    <script>lucide.createIcons();</script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </body>
 </html>

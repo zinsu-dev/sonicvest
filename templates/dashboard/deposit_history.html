@@ -1,225 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deposit History - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{
-            --bg: #0F1115;
-            --surface: #181A20;
-            --card: #20232A;
-            --border: #2C313A;
-            --text: #FFFFFF;
-            --muted: #B3B8C4;
-            --gold: #D4AF37;
-            --gold-light: #E5C158;
-            --gold-dark: #C89B3C;
-            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%);
-        }
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 16px 12px 90px;
-        }
+        .page { max-width: 480px; margin: 0 auto; padding: 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
-        .wrap {
-            max-width: 460px;
-            margin: 0 auto;
+        .page-header {
+            display: flex; align-items: center; gap: 12px;
+            padding-top: 8px; margin-bottom: 20px;
         }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
         .back-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--gold);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+            width: 36px; height: 36px; border-radius: var(--r-md);
+            background: var(--surface); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray-300); text-decoration: none; flex-shrink: 0;
         }
+        .back-btn:hover { color: var(--white); }
+        .back-btn svg { width: 18px; height: 18px; }
+        .page-title { font-size: 1.125rem; font-weight: 700; color: var(--white); }
 
-        .title {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text);
+        /* Stats */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+            margin-bottom: 20px;
         }
-
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
         .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-            padding: 14px;
-            text-align: center;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-lg); padding: 14px; text-align: center;
         }
-
         .stat-value {
-            color: var(--gold);
-            font-size: 20px;
-            font-weight: 900;
-            margin-bottom: 4px;
+            font-size: 1.25rem; font-weight: 800; color: var(--primary);
+            letter-spacing: -0.02em;
         }
-
         .stat-label {
-            color: var(--muted);
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 0.625rem; color: var(--gray-400); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;
         }
 
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 10px 2px 10px;
-            color: var(--text);
-            font-size: 16px;
-            font-weight: 800;
+        /* Section */
+        .section-label {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.8125rem; font-weight: 700; color: var(--gray-300);
+            margin-bottom: 12px;
         }
+        .section-label svg { width: 14px; height: 14px; color: var(--gray-500); }
 
-        .deposit-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-            padding: 14px;
-            margin-bottom: 10px;
-        }
+        /* Deposit cards */
+        .deposit-list { display: flex; flex-direction: column; gap: 8px; }
 
-        .card-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
+        .deposit-item {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-lg); padding: 14px 16px;
         }
+        .deposit-top {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .deposit-amount {
+            font-size: 1.0625rem; font-weight: 800; color: var(--success);
+            letter-spacing: -0.02em;
+        }
+        .deposit-badge {
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.04em; padding: 2px 8px; border-radius: var(--r-xs);
+        }
+        .deposit-badge.completed { background: var(--success-soft); color: var(--success); }
+        .deposit-badge.pending { background: var(--warning-soft); color: var(--warning); }
+        .deposit-badge.failed, .deposit-badge.rejected { background: var(--error-soft); color: var(--error); }
 
-        .amount {
-            color: var(--gold);
-            font-size: 20px;
-            font-weight: 900;
+        .deposit-desc {
+            font-size: 0.8125rem; color: var(--gray-300);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
+        .deposit-ref {
+            font-size: 0.75rem; color: var(--gray-500); margin-top: 4px;
+            font-family: var(--font-mono);
+        }
+        .deposit-date {
+            font-size: 0.6875rem; color: var(--gray-500); margin-top: 6px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .deposit-date svg { width: 12px; height: 12px; }
 
-        .status {
-            padding: 5px 10px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
+        /* Empty */
+        .empty-state {
+            text-align: center; padding: 48px 24px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-xl);
         }
-
-        .status-completed,
-        .status-approved,
-        .status-processed {
-            background: rgba(34,197,94,0.15);
-            color: var(--success);
-            border: 1px solid rgba(34,197,94,0.3);
+        .empty-icon {
+            width: 56px; height: 56px; border-radius: var(--r-lg);
+            background: var(--primary-muted); display: inline-flex;
+            align-items: center; justify-content: center; margin-bottom: 16px;
+            color: var(--primary);
         }
-
-        .status-pending {
-            background: rgba(245,158,11,0.15);
-            color: var(--warning);
-            border: 1px solid rgba(245,158,11,0.3);
+        .empty-icon svg { width: 26px; height: 26px; }
+        .empty-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+        .empty-desc { font-size: 0.8125rem; color: var(--gray-400); line-height: 1.5; margin-bottom: 16px; }
+        .empty-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; border-radius: var(--r-md);
+            background: var(--primary); color: var(--gray-950);
+            font-size: 0.8125rem; font-weight: 700; text-decoration: none;
         }
-
-        .status-failed,
-        .status-rejected,
-        .status-cancelled {
-            background: rgba(239,68,68,0.15);
-            color: var(--danger);
-            border: 1px solid rgba(239,68,68,0.3);
-        }
-
-        .meta {
-            color: var(--muted);
-            font-size: 13px;
-            margin-top: 6px;
-            line-height: 1.45;
-        }
-
-        .empty {
-            text-align: center;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-            padding: 32px 14px;
-        }
-
-        .empty i {
-            font-size: 48px;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .empty h3 {
-            margin: 0 0 8px;
-            color: var(--text);
-        }
-
-        .empty p {
-            margin: 0 0 14px;
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        .primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            border: none;
-            border-radius: 999px;
-            padding: 11px 16px;
-            background: var(--gradient-gold);
-            color: #fff;
-            font-weight: 800;
-            font-size: 13px;
-            box-shadow: 0 8px 16px rgba(212,175,55,0.25);
-        }
-
-        @media (max-width: 420px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
+        .empty-cta svg { width: 16px; height: 16px; }
     </style>
 </head>
-
 <body>
-    <div class="wrap">
-        <div class="header">
-            <a href="{{ url_for('profile') }}" class="back-btn" aria-label="Back">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <h1 class="title">Deposit Record</h1>
+    <div class="page">
+        <div class="page-header">
+            <a href="{{ url_for('profile') }}" class="back-btn"><i data-lucide="arrow-left"></i></a>
+            <span class="page-title">Deposit History</span>
         </div>
 
-        <div class="stats">
+        <!-- Stats -->
+        <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value">NGN{{ "{:,.0f}".format(total_deposits or 0) }}</div>
+                <div class="stat-value">₦{{ "{:,.0f}".format(total_deposits or 0) }}</div>
                 <div class="stat-label">Total Deposits</div>
             </div>
             <div class="stat-card">
@@ -227,60 +129,55 @@
                 <div class="stat-label">Successful</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">NGN{{ "{:,.0f}".format(pending_deposits or 0) }}</div>
+                <div class="stat-value">₦{{ "{:,.0f}".format(pending_deposits or 0) }}</div>
                 <div class="stat-label">Pending</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value">{{ deposits|length }}</div>
-                <div class="stat-label">Total Records</div>
+                <div class="stat-label">Records</div>
             </div>
         </div>
 
-        <div class="section-title">
-            <i class="fas fa-clock-rotate-left"></i>
-            Recent Deposits
+        <!-- Deposits -->
+        <div class="section-label">
+            <i data-lucide="history"></i> Recent Deposits
         </div>
 
         {% if deposits %}
-        {% for deposit in deposits %}
-        {% set is_completed = deposit.status == 'completed' %}
-        {% set is_pending = deposit.status == 'pending' %}
-        <div class="deposit-card">
-            <div class="card-top">
-                <span class="amount">+NGN{{ "{:,.0f}".format(deposit.amount) }}</span>
-                <span class="status status-{{ 'completed' if is_completed else 'pending' if is_pending else deposit.status }}">
-                    {% if is_completed %}completed{% elif is_pending %}pending{% else %}{{ deposit.status }}{% endif %}
-                </span>
+        <div class="deposit-list">
+            {% for d in deposits %}
+            <div class="deposit-item">
+                <div class="deposit-top">
+                    <span class="deposit-amount">+₦{{ "{:,.0f}".format(d.amount) }}</span>
+                    <span class="deposit-badge {{ d.status }}">{{ d.status }}</span>
+                </div>
+                {% if d.description %}
+                <div class="deposit-desc">{{ d.description }}</div>
+                {% endif %}
+                {% if d.reference %}
+                <div class="deposit-ref">{{ d.reference }}</div>
+                {% endif %}
+                <div class="deposit-date">
+                    <i data-lucide="clock"></i>
+                    {{ d.created_at.strftime('%b %d, %Y at %I:%M %p') }}
+                </div>
             </div>
-
-            {% if deposit.description %}
-            <div class="meta">{{ deposit.description }}</div>
-            {% endif %}
-
-            {% if deposit.reference %}
-            <div class="meta"><strong>Reference:</strong> {{ deposit.reference }}</div>
-            {% endif %}
-
-            <div class="meta">
-                <i class="fas fa-clock"></i>
-                {{ deposit.created_at.strftime('%B %d, %Y at %I:%M %p') }}
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         {% else %}
-        <div class="empty">
-            <i class="fas fa-inbox"></i>
-            <h3>No Deposits Yet</h3>
-            <p>Your deposit history will appear here once you make your first deposit.</p>
-            <a href="{{ url_for('deposit') }}" class="primary">
-                <i class="fas fa-plus-circle"></i>
-                Make First Deposit
+        <div class="empty-state">
+            <div class="empty-icon"><i data-lucide="inbox"></i></div>
+            <div class="empty-title">No Deposits Yet</div>
+            <div class="empty-desc">Your deposit history will appear here once you make your first deposit.</div>
+            <a href="{{ url_for('deposit') }}" class="empty-cta">
+                <i data-lucide="plus"></i> Make First Deposit
             </a>
         </div>
         {% endif %}
-    </div>    
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+    </div>
 
+    {% set active = 'deposit' %}
+    {% include 'partials/bottom_nav.html' %}
+    <script>lucide.createIcons();</script>
 </body>
-
 </html>

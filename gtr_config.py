@@ -1,6 +1,11 @@
 """
-GTR Pay Configuration File
-Reads credentials from environment variables first, then falls back to test defaults.
+GLO Payment Gateway Configuration
+Docs: https://glopayment.net/#/document
+
+Reads credentials from environment variables first, then falls back to
+sensible defaults. Values that MUST be provided from the GLO merchant
+backend (System Management -> Account Management) are left blank so the
+service can flag them clearly instead of silently using wrong data.
 """
 
 import os
@@ -29,20 +34,31 @@ def _float_env(name: str, default: float) -> float:
         return default
 
 
+# Single merchant key is used to sign both collection (pay) and payout requests.
+_SECRET_KEY = os.environ.get('GLO_SECRET_KEY', '').strip()
+
 GTR_CONFIG = {
-    'MERCHANT_ID': os.environ.get('NEKPAY_MERCHANT_ID', '999300111'),
-    'SECRET_KEY': os.environ.get('NEKPAY_SECRET_KEY', 'e8a4cdd0ccdb4d2b9ca6212453c5e40c'),
-    'PAY_TYPE': os.environ.get('NEKPAY_PAY_TYPE', '520'),
-    'BANK_CODE': os.environ.get('NEKPAY_BANK_CODE', 'NGR044'),
-    'ENABLED': _bool_env('NEKPAY_ENABLED', True),
-    'BASE_URL': os.environ.get('NEKPAY_BASE_URL', 'https://api.nekpayment.com/pay/web'),
-    'VERIFY_BASE_URL': os.environ.get('NEKPAY_VERIFY_BASE_URL', '').strip() or None,
-    'REQUEST_TIMEOUT': _float_env('NEKPAY_REQUEST_TIMEOUT', 12.0),
-    'MIN_AMOUNT': _float_env('NEKPAY_MIN_AMOUNT', 500.0),
-    'MAX_AMOUNT': _float_env('NEKPAY_MAX_AMOUNT', 10000000.0),
-    'TRANSFER_SECRET_KEY': os.environ.get('NEKPAY_TRANSFER_SECRET_KEY', os.environ.get('NEKPAY_SECRET_KEY', 'e8a4cdd0ccdb4d2b9ca6212453c5e40c')),
-    'TRANSFER_BASE_URL': os.environ.get('NEKPAY_TRANSFER_BASE_URL', 'https://api.nekpayment.com/pay/transfer'),
-    'TRANSFER_REQUEST_TIMEOUT': _float_env('NEKPAY_TRANSFER_REQUEST_TIMEOUT', 12.0),
-    'TRANSFER_MIN_AMOUNT': _float_env('NEKPAY_TRANSFER_MIN_AMOUNT', 1.0),
-    'TRANSFER_MAX_AMOUNT': _float_env('NEKPAY_TRANSFER_MAX_AMOUNT', 100.0),
+    # --- Account / host ---
+    'MERCHANT_ID': os.environ.get('GLO_MERCHANT_ID', '500001048').strip(),
+    'SECRET_KEY': _SECRET_KEY,
+    'API_HOST': os.environ.get('GLO_API_HOST', 'https://glopayment.net').strip().rstrip('/'),
+    'ENABLED': _bool_env('GLO_ENABLED', True),
+    'REQUEST_TIMEOUT': _float_env('GLO_REQUEST_TIMEOUT', 15.0),
+
+    # --- Collection (deposit) ---
+    'CHANNEL_CODE': os.environ.get('GLO_CHANNEL_CODE', '').strip(),
+    'MIN_AMOUNT': _float_env('GLO_MIN_AMOUNT', 100.0),
+    'MAX_AMOUNT': _float_env('GLO_MAX_AMOUNT', 1000000.0),
+
+    # Fallback customer details when a value is missing on the account.
+    'DEFAULT_CUSTOMER_NAME': os.environ.get('GLO_DEFAULT_CUSTOMER_NAME', 'SONICVEST User').strip(),
+    'DEFAULT_CUSTOMER_EMAIL': os.environ.get('GLO_DEFAULT_CUSTOMER_EMAIL', 'support@sonicvest.com').strip(),
+    'DEFAULT_CUSTOMER_MOBILE': os.environ.get('GLO_DEFAULT_CUSTOMER_MOBILE', '08000000000').strip(),
+
+    # --- Payout (代付) ---
+    'PAYOUT_SECRET_KEY': os.environ.get('GLO_PAYOUT_SECRET_KEY', '').strip() or _SECRET_KEY,
+    'PAYOUT_CHANNEL_CODE': os.environ.get('GLO_PAYOUT_CHANNEL_CODE', '').strip(),
+    'PAYOUT_BANK_CODE': os.environ.get('GLO_PAYOUT_BANK_CODE', '').strip(),
+    'TRANSFER_MIN_AMOUNT': _float_env('GLO_PAYOUT_MIN_AMOUNT', 100.0),
+    'TRANSFER_MAX_AMOUNT': _float_env('GLO_PAYOUT_MAX_AMOUNT', 1000000.0),
 }

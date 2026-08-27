@@ -1,21 +1,93 @@
 <style>
-  .bottom-spacer{height:90px;width:100%;display:block}
-  .bottom{position:fixed;left:0;right:0;bottom:16px;padding:0 12px;display:flex;justify-content:center;pointer-events:auto;z-index:1200}
-  .bwrap{width:100%;max-width:520px;padding:8px 12px;background:#20232A;border-radius:20px;display:flex;justify-content:space-around;box-shadow:0 8px 32px rgba(0,0,0,0.4);border:1px solid #2C313A}
-  .bitem{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#B3B8C4;gap:4px;padding:8px 14px;border-radius:12px;transition:all 0.2s ease}
-  .bitem.active{color:#D4AF37;background:rgba(212,175,55,0.1)}
-  .bitem:hover{color:#D4AF37}
-  .bitem i{font-size:18px}
-  .bitem small{font-size:10px;font-weight:600}
-  @supports(padding:env(safe-area-inset-bottom)){.bottom{bottom:calc(16px + env(safe-area-inset-bottom))}.bottom-spacer{height:calc(90px + env(safe-area-inset-bottom))}}
+  .bottom-spacer {
+    height: 84px;
+    width: 100%;
+    display: block;
+  }
+  .bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: center;
+    pointer-events: auto;
+    z-index: var(--z-nav, 1000);
+  }
+  .bwrap {
+    width: 100%;
+    max-width: 400px;
+    padding: 5px 6px;
+    background: var(--surface, #18181B);
+    border-radius: var(--r-xl, 18px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border: 1px solid var(--border, #27272A);
+  }
+  .bitem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--gray-400, #71717A);
+    gap: 2px;
+    padding: 7px 10px;
+    border-radius: var(--r-md, 10px);
+    transition: all 0.18s ease;
+    position: relative;
+  }
+  .bitem:hover {
+    color: var(--primary, #D4AF37);
+  }
+  .bitem.active {
+    color: var(--primary, #D4AF37);
+    background: var(--primary-subtle, rgba(212,175,55,0.05));
+  }
+  .bitem i, .bitem svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+  }
+  .bitem small {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  @supports (padding: env(safe-area-inset-bottom)) {
+    .bottom {
+      bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    .bottom-spacer {
+      height: calc(84px + env(safe-area-inset-bottom));
+    }
+  }
 </style>
 <div class="bottom-spacer" aria-hidden="true"></div>
 <div class="bottom">
-  <nav class="bwrap">
-    <a href="{{ url_for('dashboard') }}" class="bitem {% if active=='dashboard' %}active{% endif %}"><i class="fas fa-home"></i><small>Home</small></a>
-    <a href="{{ url_for('packages') }}" class="bitem {% if active=='packages' %}active{% endif %}"><i class="fas fa-layer-group"></i><small>Plans</small></a>
-    <a href="{{ url_for('deposit') }}" class="bitem {% if active=='deposit' %}active{% endif %}"><i class="fas fa-plus-circle"></i><small>Deposit</small></a>
-    <a href="{{ url_for('referral') }}" class="bitem {% if active=='referral' %}active{% endif %}"><i class="fas fa-users"></i><small>Team</small></a>
-    <a href="{{ url_for('profile') }}" class="bitem {% if active=='profile' %}active{% endif %}"><i class="fas fa-user"></i><small>Profile</small></a>
+  <nav class="bwrap" aria-label="Main navigation">
+    <a href="{{ url_for('dashboard') }}" class="bitem {% if active=='dashboard' %}active{% endif %}" aria-label="Home">
+      <i data-lucide="home"></i>
+      <small>Home</small>
+    </a>
+    <a href="{{ url_for('packages') }}" class="bitem {% if active=='packages' %}active{% endif %}" aria-label="Plans">
+      <i data-lucide="layers"></i>
+      <small>Plans</small>
+    </a>
+    <a href="{{ url_for('deposit') }}" class="bitem {% if active=='deposit' %}active{% endif %}" aria-label="Deposit">
+      <i data-lucide="plus-circle"></i>
+      <small>Deposit</small>
+    </a>
+    <a href="{{ url_for('referral') }}" class="bitem {% if active=='referral' %}active{% endif %}" aria-label="Team">
+      <i data-lucide="users"></i>
+      <small>Team</small>
+    </a>
+    <a href="{{ url_for('profile') }}" class="bitem {% if active=='profile' %}active{% endif %}" aria-label="Profile">
+      <i data-lucide="user"></i>
+      <small>Profile</small>
+    </a>
   </nav>
 </div>
+<script>if(typeof lucide!=='undefined')lucide.createIcons();</script>

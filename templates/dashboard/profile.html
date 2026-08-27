@@ -4,182 +4,299 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Profile - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{
-            --bg: #0F1115;
-            --surface: #181A20;
-            --card: #20232A;
-            --border: #2C313A;
-            --text: #FFFFFF;
-            --muted: #B3B8C4;
-            --gold: #D4AF37;
-            --gold-light: #E5C158;
-            --gold-dark: #C89B3C;
-            --success: #22C55E;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --info: #3B82F6;
-            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%);
-            --card-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        .profile-page { max-width: 480px; margin: 0 auto; padding: 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
+
+        /* Header */
+        .profile-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 8px; margin-bottom: 20px;
+        }
+        .profile-title { font-size: 1.125rem; font-weight: 700; color: var(--white); }
+
+        /* Avatar Card */
+        .avatar-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl);
+            padding: 28px 20px; text-align: center; margin-bottom: 12px; position: relative;
+        }
+        .avatar-ring {
+            width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 12px;
+            background: var(--primary); display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .avatar-ring::after {
+            content: ''; position: absolute; inset: -3px; border-radius: 50%;
+            border: 2px solid var(--primary-muted);
+        }
+        .avatar-ring svg { width: 32px; height: 32px; color: var(--gray-950); }
+        .profile-name { font-size: 1.125rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+        .profile-uid {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 0.6875rem; color: var(--gray-400); font-family: var(--font-mono);
+            background: var(--bg-raised); padding: 3px 8px; border-radius: var(--r-xs);
+            border: 1px solid var(--border);
         }
 
-        *{box-sizing:border-box;margin:0;padding:0}
-        html,body{height:100%}
-        body{
-            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-            padding-bottom:110px;
+        /* Balance Row */
+        .balance-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            margin-bottom: 16px;
+        }
+        .balance-item {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+            padding: 14px 8px; text-align: center;
+        }
+        .balance-item-value {
+            font-size: 0.9375rem; font-weight: 800; color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+        .balance-item-label {
+            font-size: 0.625rem; color: var(--gray-400); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;
         }
 
-        .wrap{max-width:520px;margin:0 auto;padding:18px}
-
-        .top{
-            background: var(--gradient-gold);
-            border-radius:18px;
-            padding:24px 18px;
-            color:#fff;
-            box-shadow: var(--card-shadow);
-            position:relative;overflow:hidden;margin-bottom:18px
+        /* Quick Actions */
+        .quick-actions {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            margin-bottom: 16px;
         }
-        .top h1{font-size:22px;font-weight:800;text-align:center;letter-spacing:-0.02em}
-        .uid{position:absolute;left:18px;top:18px;font-size:12px;opacity:.95}
+        .quick-action {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            padding: 14px 8px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-lg); text-decoration: none; color: var(--gray-300);
+            transition: all 0.18s var(--ease);
+        }
+        .quick-action:hover { border-color: rgba(212,175,55,0.15); color: var(--white); }
+        .quick-action-icon {
+            width: 34px; height: 34px; border-radius: var(--r-md);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .quick-action-icon svg { width: 18px; height: 18px; }
+        .quick-action-icon.gold { background: var(--primary); color: var(--gray-950); }
+        .quick-action-icon.green { background: var(--success); color: #fff; }
+        .quick-action-icon.red { background: var(--error); color: #fff; }
+        .quick-action span { font-size: 0.6875rem; font-weight: 600; }
 
-        .card{background:var(--card);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:var(--card-shadow);border:1px solid var(--border);}
-        .avatar{width:88px;height:88px;border-radius:50%;background:var(--gradient-gold);display:flex;align-items:center;justify-content:center;color:#fff;font-size:36px;margin:0 auto 12px;box-shadow:0 8px 20px rgba(212,175,55,0.16)}
-        .name{text-align:center;font-weight:800;font-size:18px}
-        .ref{text-align:center;color:var(--muted);font-family:monospace;font-weight:600;margin-top:6px}
+        /* Withdrawals Section */
+        .section-block {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-lg); margin-bottom: 12px; overflow: hidden;
+        }
+        .section-block-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px; border-bottom: 1px solid var(--border);
+        }
+        .section-block-title {
+            font-size: 0.875rem; font-weight: 700; color: var(--white);
+        }
+        .section-block-sub {
+            font-size: 0.6875rem; color: var(--gray-400); margin-top: 1px;
+        }
 
-        .balances{display:flex;gap:10px;margin-top:12px}
-        .bal{flex:1;background:var(--surface);border-radius:12px;padding:10px;text-align:center;border:1px solid var(--border);}
-        .bal .val{color:var(--gold);font-weight:800;font-size:16px}
-        .bal .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:6px}
+        .withdrawal-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);
+        }
+        .withdrawal-row:last-child { border-bottom: none; }
 
-        .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
-        .action{background:var(--surface);border-radius:12px;padding:12px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.2);border:1px solid var(--border);text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-        .action i{color:var(--gold);font-size:18px}
-        .action small{font-weight:700;font-size:12px;color:var(--muted)}
+        .withdrawal-amount {
+            font-size: 0.9375rem; font-weight: 700; color: var(--white);
+        }
+        .withdrawal-date {
+            font-size: 0.6875rem; color: var(--gray-400); margin-top: 2px;
+        }
+        .withdrawal-status {
+            font-size: 0.6875rem; font-weight: 700; text-transform: capitalize;
+        }
+        .withdrawal-receipt {
+            font-size: 0.6875rem; font-weight: 600; color: var(--primary);
+            text-decoration: none; margin-top: 3px; display: inline-block;
+        }
 
-        .menu{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-        .menu a{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;background:var(--surface);text-decoration:none;color:var(--text);box-shadow:0 6px 18px rgba(0,0,0,0.2);border:1px solid var(--border)}
-        .menu .mi{width:44px;height:44px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px}
-        .menu .txt{font-weight:800}
+        .empty-withdrawals {
+            padding: 28px 16px; text-align: center;
+        }
+        .empty-withdrawals-icon {
+            width: 40px; height: 40px; border-radius: var(--r-md); background: var(--primary-subtle);
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 10px; color: var(--primary);
+        }
+        .empty-withdrawals h4 { font-size: 0.875rem; color: var(--white); margin-bottom: 4px; }
+        .empty-withdrawals p { font-size: 0.75rem; color: var(--gray-400); margin-bottom: 12px; }
 
-        .logout{margin-top:8px;background:var(--card);border-radius:12px;padding:12px;text-align:center;color:var(--danger);border:2px solid rgba(239,68,68,0.15);text-decoration:none;font-weight:900;display:block}
+        /* Menu Items */
+        .menu-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .menu-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+            text-decoration: none; color: var(--gray-200); transition: all 0.18s var(--ease);
+        }
+        .menu-item:hover { border-color: rgba(212,175,55,0.12); color: var(--white); }
+        .menu-item-icon {
+            width: 36px; height: 36px; border-radius: var(--r-md); background: var(--primary-muted);
+            display: flex; align-items: center; justify-content: center; color: var(--primary);
+            flex-shrink: 0;
+        }
+        .menu-item-icon svg { width: 18px; height: 18px; }
+        .menu-item-text { font-size: 0.875rem; font-weight: 600; flex: 1; }
+        .menu-item-arrow { color: var(--gray-500); }
+        .menu-item-arrow svg { width: 16px; height: 16px; }
 
-        .bottom{position:fixed;left:0;right:0;bottom:12px;padding:8px;display:flex;justify-content:center;pointer-events:auto}
-        .bwrap{width:100%;max-width:520px;padding:8px;background:var(--surface);border-radius:16px;display:flex;justify-content:space-around;box-shadow:0 12px 40px rgba(0,0,0,0.3);border:1px solid var(--border)}
-        .bitem{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--muted);gap:6px;padding:8px;border-radius:10px}
-        .bitem.active{color:var(--gold);background:var(--card)}
-
-        @media(min-width:720px){.wrap{padding:28px}.grid{gap:14px}}
+        /* Logout */
+        .logout-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 12px; background: transparent; border: 1px solid rgba(239,68,68,0.2);
+            border-radius: var(--r-lg); color: var(--error); font-weight: 600; font-size: 0.875rem;
+            cursor: pointer; transition: all 0.18s var(--ease); text-decoration: none;
+            font-family: var(--font-sans);
+        }
+        .logout-btn:hover { background: var(--error-soft); border-color: rgba(239,68,68,0.3); }
+        .logout-btn svg { width: 18px; height: 18px; }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <div class="top">
-            <div class="uid">UID:{{ user.id or user.uid or '——' }}</div>
-            <h1>My Profile</h1>
+    <div class="profile-page">
+        <!-- Header -->
+        <div class="profile-header">
+            <span class="profile-title">My Profile</span>
+            <a href="{{ url_for('dashboard') }}" class="icon-btn"><i data-lucide="settings" style="width:16px;height:16px;"></i></a>
         </div>
 
-        <div class="card">
-            <div class="avatar"><i class="fas fa-user"></i></div>
-            <div class="name">{{ user.name or 'User' }}</div>
-            <div class="ref">{{ user.referral_code }}</div>
+        <!-- Avatar Card -->
+        <div class="avatar-card">
+            <div class="avatar-ring">
+                <i data-lucide="user"></i>
+            </div>
+            <div class="profile-name">{{ user.name or 'User' }}</div>
+            <div class="profile-uid">UID: {{ user.id or user.uid or '——' }}</div>
+        </div>
 
-            <div class="balances" style="margin-top:14px">
-                <div class="bal">
-                    <div class="val">₦{{ (user.balance or 0) | format_number }}</div>
-                    <div class="lbl">Total</div>
+        <!-- Balances -->
+        <div class="balance-row">
+            <div class="balance-item">
+                <div class="balance-item-value">₦{{ (user.balance or 0) | format_number }}</div>
+                <div class="balance-item-label">Total</div>
+            </div>
+            <div class="balance-item">
+                <div class="balance-item-value">₦{{ (user.recharge_balance or 0) | format_number }}</div>
+                <div class="balance-item-label">Investment</div>
+            </div>
+            <div class="balance-item">
+                <div class="balance-item-value">₦{{ (user.main_balance or 0) | format_number }}</div>
+                <div class="balance-item-label">Withdrawable</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="{{ url_for('deposit') }}" class="quick-action">
+                <div class="quick-action-icon gold"><i data-lucide="plus"></i></div>
+                <span>Deposit</span>
+            </a>
+            <a href="{{ url_for('request_withdrawal') }}" class="quick-action">
+                <div class="quick-action-icon red"><i data-lucide="arrow-up-right"></i></div>
+                <span>Withdraw</span>
+            </a>
+            <button type="button" class="quick-action" onclick="claimDailyCashback()">
+                <div class="quick-action-icon green"><i data-lucide="coins"></i></div>
+                <span>Claim Bonus</span>
+            </button>
+        </div>
+
+        <!-- Recent Withdrawals -->
+        <div class="section-block">
+            <div class="section-block-header">
+                <div>
+                    <div class="section-block-title">Recent Withdrawals</div>
+                    <div class="section-block-sub">Track your latest payout requests</div>
                 </div>
-                <div class="bal">
-                    <div class="val">₦{{ (user.recharge_balance or 0) | format_number }}</div>
-                    <div class="lbl">Recharge</div>
-                </div>
-                <div class="bal">
-                    <div class="val">₦{{ (user.main_balance or 0) | format_number }}</div>
-                    <div class="lbl">Main</div>
-                </div>
+                <a href="{{ url_for('withdrawal_history') }}" class="section-link">View all</a>
             </div>
 
-            <div class="grid">
-                <a href="{{ url_for('deposit') }}" class="action"><i class="fas fa-wallet"></i><small>Deposit</small></a>
-                <a href="{{ url_for('request_withdrawal') }}" class="action"><i class="fas fa-arrow-up-right-from-square"></i><small>Withdraw</small></a>
-                <button type="button" class="action" onclick="claimDailyCashback()"><i class="fas fa-coins"></i><small>Daily Cashback</small></button>
-            </div>
-
-            <div class="card" style="margin-top:12px;border:1px solid var(--border);background:var(--card);box-shadow:0 10px 28px rgba(0,0,0,.2);">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+            {% if recent_withdrawals %}
+                {% for w in recent_withdrawals %}
+                <div class="withdrawal-row">
                     <div>
-                        <div style="font-weight:800;font-size:15px;color:var(--text)">Recent Withdrawals</div>
-                        <div style="font-size:12px;color:var(--muted);margin-top:3px">Track your latest payout requests</div>
+                        <div class="withdrawal-amount">₦{{ w.amount | format_number }}</div>
+                        <div class="withdrawal-date">{{ w.created_at.strftime('%b %d, %Y') }}</div>
                     </div>
-                    <a href="{{ url_for('withdrawal_history') }}" style="color:var(--gold);font-weight:700;font-size:13px;white-space:nowrap">View all</a>
-                </div>
-
-                {% if recent_withdrawals %}
-                <div style="display:flex;flex-direction:column;gap:10px">
-                    {% for w in recent_withdrawals %}
-                    <div style="display:flex;justify-content:space-between;align-items:center">
-                        <div>
-                            <div style="font-weight:800;color:var(--text)">₦{{ w.amount | format_number }}</div>
-                            <div style="font-size:12px;color:var(--muted)">{{ w.created_at.strftime('%b %d, %Y %I:%M %p') }}</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div style="font-size:12px;font-weight:700;color:var(--text)">{{ w.status|title }}</div>
-                            <a href="{{ url_for('withdrawal_receipt', withdrawal_id=w.id) }}" style="font-size:12px;color:var(--gold);display:inline-block;margin-top:6px">Receipt</a>
-                        </div>
+                    <div style="text-align:right;">
+                        <div class="withdrawal-status" style="color:{{ 'var(--success)' if w.status == 'completed' else 'var(--warning)' if w.status == 'pending' else 'var(--error)' }}">{{ w.status|title }}</div>
+                        <a href="{{ url_for('withdrawal_receipt', withdrawal_id=w.id) }}" class="withdrawal-receipt">Receipt</a>
                     </div>
-                    {% endfor %}
                 </div>
-                {% else %}
-                <div style="border:1px dashed var(--border);background:var(--surface);border-radius:14px;padding:16px;text-align:center;display:grid;gap:10px;">
-                    <div style="font-weight:800;color:var(--text)">No withdrawals yet</div>
-                    <div style="font-size:13px;color:var(--muted)">Once you request a payout, it will appear here with its status and receipt.</div>
-                    <a href="{{ url_for('request_withdrawal') }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:220px;margin:0 auto;background:var(--gradient-gold);color:#fff;font-weight:800;padding:12px 16px;border-radius:12px;box-shadow:0 10px 18px rgba(212,175,55,.22)">
-                        <i class="fas fa-arrow-up-right-from-square"></i>
-                        Make a withdrawal
+                {% endfor %}
+            {% else %}
+                <div class="empty-withdrawals">
+                    <div class="empty-withdrawals-icon"><i data-lucide="receipt" style="width:18px;height:18px;"></i></div>
+                    <h4>No withdrawals yet</h4>
+                    <p>Request a payout and it will appear here.</p>
+                    <a href="{{ url_for('request_withdrawal') }}" class="btn btn-primary btn-sm">
+                        <i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i> Make a withdrawal
                     </a>
                 </div>
-                {% endif %}
-
-                {% if recent_withdrawals %}
-                <div style="margin-top:12px;display:flex;justify-content:flex-end;">
-                    <a href="{{ url_for('request_withdrawal') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--gradient-gold);color:#fff;font-weight:800;padding:11px 14px;border-radius:12px;box-shadow:0 10px 18px rgba(212,175,55,.22);font-size:13px;">
-                        <i class="fas fa-plus"></i>
-                        Make a withdrawal
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="menu">
-                <a href="{{ url_for('bank_details') }}"><div class="mi"><i class="fas fa-university"></i></div><div class="txt">Bank</div></a>
-                <a href="{{ url_for('transactions') }}"><div class="mi"><i class="fas fa-file-invoice"></i></div><div class="txt">Invoice</div></a>
-                <a href="{{ url_for('dashboard') }}"><div class="mi"><i class="fas fa-headset"></i></div><div class="txt">Support</div></a>
-            </div>
-
-            <a href="{{ url_for('logout') }}" class="logout" onclick="return confirm('Are you sure you want to logout?')"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% endif %}
         </div>
+
+        <!-- Menu -->
+        <div class="menu-list">
+            <a href="{{ url_for('bank_details') }}" class="menu-item">
+                <div class="menu-item-icon"><i data-lucide="building-2"></i></div>
+                <span class="menu-item-text">Bank Details</span>
+                <div class="menu-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </a>
+            <a href="{{ url_for('transactions') }}" class="menu-item">
+                <div class="menu-item-icon"><i data-lucide="receipt"></i></div>
+                <span class="menu-item-text">Transactions</span>
+                <div class="menu-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </a>
+            <a href="{{ url_for('security_manager') }}" class="menu-item">
+                <div class="menu-item-icon"><i data-lucide="shield"></i></div>
+                <span class="menu-item-text">Security</span>
+                <div class="menu-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </a>
+            <a href="{{ url_for('deposit_history') }}" class="menu-item">
+                <div class="menu-item-icon"><i data-lucide="history"></i></div>
+                <span class="menu-item-text">Deposit History</span>
+                <div class="menu-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </a>
+        </div>
+
+        <!-- Logout -->
+        <a href="javascript:void(0)" class="logout-btn" onclick="confirmLogout()">
+            <i data-lucide="log-out"></i> Logout
+        </a>
     </div>
 
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
     <script>
+        lucide.createIcons();
+
+        function confirmLogout(){
+            window.showConfirm('Are you sure you want to logout?', {
+                confirmText: 'Logout',
+                danger: true
+            }).then(function(ok){
+                if(ok) window.location.href = '{{ url_for("logout") }}';
+            });
+        }
+
         async function claimDailyCashback(){
             try{
                 const res = await fetch("{{ url_for('claim_bonus') }}", { method: 'POST', headers: { 'Content-Type': 'application/json' } });
                 const data = await res.json();
                 if(data.success){
-                    alert(data.message || 'Daily cashback claimed');
-                    location.reload();
+                    window.showToast(data.message || 'Daily cashback claimed', 'success');
+                    setTimeout(function(){ location.reload(); }, 1200);
                 } else {
-                    alert(data.message || 'Could not claim daily cashback');
+                    window.showToast(data.message || 'Could not claim daily cashback', 'danger');
                 }
             } catch(err){
                 console.error(err);
-                alert('An error occurred while claiming daily cashback');
+                window.showToast('An error occurred while claiming daily cashback', 'danger');
             }
         }
     </script>

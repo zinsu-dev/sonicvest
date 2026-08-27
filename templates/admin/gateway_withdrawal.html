@@ -45,6 +45,18 @@
                         <input type="text" class="form-control" name="receive_account" placeholder="Bank account number" required>
                     </div>
                     <div class="col-md-6">
+                        <label class="form-label">Number <span class="text-muted small">(IFSC / CPF / CCI, if required)</span></label>
+                        <input type="text" class="form-control" name="number" placeholder="Leave blank to reuse account number">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Recipient Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Optional; default used if blank">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Recipient Mobile</label>
+                        <input type="text" class="form-control" name="mobile" placeholder="Optional; default used if blank">
+                    </div>
+                    <div class="col-md-6">
                         <label class="form-label">Apply Date</label>
                         <input type="text" class="form-control" name="apply_date" value="{{ default_apply_date }}" placeholder="YYYY-MM-DD HH:MM:SS">
                     </div>

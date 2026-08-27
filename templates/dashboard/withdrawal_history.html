@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdrawal History - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root{--bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)}
         *{box-sizing:border-box}
@@ -51,7 +53,7 @@
     <div class="wrap">
         <div class="header">
             <a href="{{ url_for('profile') }}" class="back-btn" aria-label="Back">
-                <i class="fas fa-arrow-left"></i>
+                <i data-lucide="arrow-left"></i>
             </a>
             <h1 class="title">Withdraw Record</h1>
         </div>
@@ -125,18 +127,18 @@
             </div>
 
             <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-btn">
-                <i class="fas fa-receipt"></i>
+                <i data-lucide="receipt"></i>
                 View Receipt
             </a>
         </div>
         {% endfor %}
         {% else %}
         <div class="empty">
-            <i class="fas fa-money-bill-wave"></i>
+            <i data-lucide="banknote"></i>
             <h3>No Withdrawal Records</h3>
             <p>You have not made any withdrawal requests yet.</p>
             <a href="{{ url_for('request_withdrawal') }}" class="receipt-btn">
-                <i class="fas fa-plus"></i>
+                <i data-lucide="plus"></i>
                 Make Withdrawal
             </a>
         </div>
@@ -160,6 +162,7 @@
             pills.forEach(p=>p.addEventListener('click', e=>{ e.preventDefault(); setActive(p); applyFilter(p.dataset.filter); }));
         })();
     </script>
+    <script>lucide.createIcons();</script>
 </body>
 
 </html>

@@ -2352,6 +2352,9 @@ def process_deposit():
         payment_result = gtr_pay_service.create_deposit_payment(
             amount=amount,
             reference=reference,
+            name=user.name,
+            email=user.email,
+            mobile=user.phone,
             callback_url=callback_url,
             page_url=return_url,
             mch_return_msg=reference,
@@ -2390,9 +2393,9 @@ def process_deposit():
 
 @app.route('/gtr-payment-callback', methods=['POST'])
 def gtr_payment_callback():
-    """Handle NekPayment IPN (Instant Payment Notification) callback"""
+    """Handle GLO IPN (Instant Payment Notification) callback"""
     try:
-        # Get callback data
+        # Get callback data (GLO sends JSON)
         if request.is_json:
             callback_data = request.get_json()
         else:
@@ -2418,18 +2421,19 @@ def gtr_payment_callback():
                     db.session.commit()
 
                     # Log successful payment
-                    print(f"✅ NekPayment deposit confirmed: {reference} - ₦{transaction.amount}")
+                    print(f"✅ GLO deposit confirmed: {reference} - ₦{transaction.amount}")
 
-                return "success", 200  # Provider expects lowercase success response
+                # GLO expects the lowercase string "ok" to stop retries
+                return "ok", 200
             else:
                 print(f"⚠️ Transaction not found: {reference}")
                 return "TRANSACTION_NOT_FOUND", 404
         else:
-            print(f"❌ NekPayment callback verification failed: {verification_result['message']}")
+            print(f"❌ GLO callback verification failed: {verification_result['message']}")
             return "VERIFICATION_FAILED", 400
             
     except Exception as e:
-        print(f"❌ Error processing NekPayment callback: {str(e)}")
+        print(f"❌ Error processing GLO callback: {str(e)}")
         return "ERROR", 500
 
 @app.route('/deposit/receipt/<reference>')

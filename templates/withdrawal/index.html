@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdrawals - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{--bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)}
-        * {margin: 0;padding: 0;box-sizing: border-box;}
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
             padding-bottom: 100px;
         }
         .container {max-width: 500px;margin: 0 auto;padding: 20px;}
@@ -83,19 +80,21 @@
         .empty-icon {font-size: 52px;color: var(--gold);margin-bottom: 18px;}
         .empty-title {font-size: 19px;font-weight: 900;color: var(--text);margin-bottom: 10px;letter-spacing: -0.02em;}
         .empty-text {font-size: 14px;color: var(--muted);margin-bottom: 24px;font-weight: 500;}
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <a href="{{ url_for('dashboard') }}" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ url_for('dashboard') }}" class="back-btn"><i data-lucide="arrow-left"></i></a>
                 <h1 class="header-title">Withdrawal Records</h1>
             </div>
         </div>
 
         <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
-            <i class="fas fa-plus"></i> Request New Withdrawal
+            <i data-lucide="plus"></i> Request New Withdrawal
         </a>
 
         <div class="info-banner">
@@ -126,18 +125,18 @@
                     </div>
                 </div>
                 <a href="{{ url_for('withdrawal_receipt', withdrawal_id=withdrawal.id) }}" class="receipt-btn">
-                    <i class="fas fa-receipt"></i> View Receipt
+                    <i data-lucide="receipt"></i> View Receipt
                 </a>
             </div>
             {% endfor %}
         </div>
         {% else %}
         <div class="empty-state">
-            <i class="fas fa-money-bill-wave empty-icon"></i>
+            <i data-lucide="wallet" class="empty-icon"></i>
             <h3 class="empty-title">No Withdrawal Records</h3>
             <p class="empty-text">You have not made any withdrawals yet.</p>
             <a href="{{ url_for('request_withdrawal') }}" class="request-btn">
-                <i class="fas fa-plus"></i> Make Withdrawal
+                <i data-lucide="plus"></i> Make Withdrawal
             </a>
         </div>
         {% endif %}
@@ -145,5 +144,6 @@
 
     {% set active = '' %}
     {% include 'partials/bottom_nav.html' %}
+    <script>lucide.createIcons();</script>
 </body>
 </html>

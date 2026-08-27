@@ -20,25 +20,25 @@
     <form method="POST" id="loginForm">
       <div class="form-group">
         <label class="form-label" for="email">Email Address</label>
-        <input type="text" id="email" name="email" class="form-control" placeholder="you@example.com" value="{{ request.form.get('email', '') }}" autocomplete="email" required>
+        <input type="text" id="email" name="email" class="form-input" placeholder="you@example.com" value="{{ request.form.get('email', '') }}" autocomplete="email" required>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="password">Password</label>
-        <div class="password-input-group">
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" required>
-          <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
-            <i class="fas fa-eye"></i>
+        <div class="input-group">
+          <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="input-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+            <i data-lucide="eye"></i>
           </button>
         </div>
       </div>
 
-      <button type="submit" class="btn-primary">Sign In</button>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
     </form>
 
     <div class="auth-footer">
-      <span style="color:var(--text-muted);font-size:14px;">Don't have an account?</span>
-      <a href="{{ url_for('register') }}" class="auth-link" style="margin-left:4px;">Create account</a>
+      <span>Don't have an account?</span>
+      <a href="{{ url_for('register') }}" class="auth-link">Create account</a>
     </div>
   </div>
 </div>
@@ -46,6 +46,7 @@
 
 {% block scripts %}
 <script>
+  lucide.createIcons();
   (function(){
     var toggle = document.getElementById('passwordToggle');
     var input = document.getElementById('password');
@@ -53,8 +54,11 @@
       toggle.addEventListener('click',function(){
         var type = input.getAttribute('type') === 'password' ? 'text' : 'password';
         input.setAttribute('type', type);
-        this.querySelector('i').classList.toggle('fa-eye');
-        this.querySelector('i').classList.toggle('fa-eye-slash');
+        var icon = toggle.querySelector('[data-lucide]');
+        if(icon){
+          icon.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+          lucide.createIcons();
+        }
       });
     }
     document.getElementById('email')?.focus();

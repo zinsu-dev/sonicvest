@@ -538,7 +538,7 @@ function sortTransactions() {
 // Transaction management functions
 function viewTransactionDetails(transactionId) {
     // Here you would open a modal or navigate to details page
-    alert(`View details for transaction #${transactionId}`);
+    if(window.showToast) window.showToast(`View details for transaction #${transactionId}`, 'info');
 }
 
 // Apply filters from URL parameters on page load

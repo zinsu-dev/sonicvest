@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deposit - Brooklyn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--success:#22C55E;--danger:#EF4444;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);min-height:100vh;padding-bottom:20px}
+        body{padding-bottom:20px}
         .wrap{max-width:480px;margin:0 auto;padding:16px}
         .top-bar{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-top:8px}
         .back-btn{width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);text-decoration:none;font-size:18px;transition:all 0.2s}
@@ -39,10 +38,6 @@
         .pay-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(212,175,55,0.25)}
         .pay-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
         .secure-note{text-align:center;color:var(--muted);font-size:12px;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:6px}
-        .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:50000;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;display:none;max-width:90vw;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
-        .toast.success{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:var(--success)}
-        .toast.danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
-        .toast.warning{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:var(--warning)}
         .loader-inline{display:none;text-align:center;padding:20px}
         .loader-inline .spin{width:36px;height:36px;border:3px solid rgba(212,175,55,0.15);border-left:3px solid var(--gold);border-radius:50%;animation:spinz 1s linear infinite;margin:0 auto 10px}
         @keyframes spinz{to{transform:rotate(360deg)}}
@@ -50,11 +45,9 @@
     </style>
 </head>
 <body>
-    <div id="toast" class="toast"></div>
-
     <div class="wrap">
         <div class="top-bar">
-            <a href="{{ url_for('dashboard') }}" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ url_for('dashboard') }}" class="back-btn"><i data-lucide="arrow-left"></i></a>
             <h1>Deposit</h1>
         </div>
 
@@ -64,7 +57,7 @@
             <div class="hero-sub">Available for investment</div>
         </div>
 
-        <div class="section-label"><i class="fas fa-naira-sign"></i> Enter Amount</div>
+        <div class="section-label"><i data-lucide="banknote"></i> Enter Amount</div>
         <input type="number" id="amount" class="amount-input" placeholder="Minimum ₦{{ "{:,.0f}".format(minimum_deposit|default(3000)) }}" min="{{ minimum_deposit|default(3000)|int }}" step="50" oninput="updateSummary()">
 
         <div class="quick-grid">
@@ -83,7 +76,7 @@
         </div>
 
         <button class="pay-btn" id="payBtn" onclick="processPayment()" disabled>
-            <i class="fas fa-lock"></i> Continue
+            <i data-lucide="lock"></i> Continue
         </button>
 
         <div id="loaderInline" class="loader-inline">
@@ -92,21 +85,19 @@
         </div>
 
         <div class="secure-note">
-            <i class="fas fa-shield-alt"></i> Secured with 256-bit SSL encryption
+            <i data-lucide="shield"></i> Secured with 256-bit SSL encryption
         </div>
     </div>
 
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
     <script>
         const minDep = {{ minimum_deposit|default(3000)|int }};
         const maxDep = {{ maximum_deposit|default(10000)|int }};
 
         function showToast(msg, type) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = 'toast ' + type;
-            t.style.display = 'block';
-            clearTimeout(t._hide);
-            t._hide = setTimeout(() => t.style.display = 'none', 3000);
+            if(window.showToast) {
+                window.showToast(msg, type);
+            }
         }
 
         function showInlineLoader(text) {
@@ -152,38 +143,47 @@
                 showToast('Maximum deposit is ₦' + maxDep.toLocaleString(), 'warning');
                 return;
             }
-            if (!confirm('Proceed with payment of ₦' + amt.toLocaleString() + '?')) return;
-            showInlineLoader('Creating payment request...');
-            document.getElementById('payBtn').disabled = true;
-            const fd = new FormData();
-            fd.append('amount', amt);
-            fd.append('payment_method', 'nekpayment');
-            fetch('/process_deposit', { method: 'POST', body: fd })
-                .then(r => r.json())
-                .then(d => {
-                    if (d.success) {
-                        if (d.payment_url) {
-                            showInlineLoader('Opening payment page...');
-                            setTimeout(() => { window.location.href = d.payment_url; }, 300);
+            window.showConfirm('Proceed with payment of ₦' + amt.toLocaleString() + '?', { confirmText: 'Pay Now' }).then(function(ok){
+                if(!ok) return;
+                showInlineLoader('Creating payment request...');
+                document.getElementById('payBtn').disabled = true;
+                const fd = new FormData();
+                fd.append('amount', amt);
+                fd.append('payment_method', 'gtr_pay');
+                fetch('/process_deposit', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(d => {
+                        if (d.success) {
+                            if (d.payment_url) {
+                                showInlineLoader('Opening payment page...');
+                                setTimeout(() => { window.location.href = d.payment_url; }, 300);
+                            } else {
+                                showToast('Deposit successful! ₦' + amt.toLocaleString() + ' added', 'success');
+                                setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
+                            }
                         } else {
-                            showToast('Deposit successful! ₦' + amt.toLocaleString() + ' added', 'success');
-                            setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
+                            hideInlineLoader();
+                            document.getElementById('payBtn').disabled = false;
+                            showToast(d.message || 'Payment failed', 'danger');
                         }
-                    } else {
+                    })
+                    .catch(() => {
                         hideInlineLoader();
                         document.getElementById('payBtn').disabled = false;
-                        showToast(d.message || 'Payment failed', 'danger');
-                    }
-                })
-                .catch(() => {
-                    hideInlineLoader();
-                    document.getElementById('payBtn').disabled = false;
-                    showToast('Network error. Please try again.', 'danger');
-                });
+                        showToast('Network error. Please try again.', 'danger');
+                    });
+            });
         }
 
-        document.addEventListener('DOMContentLoaded', updateSummary);
+        document.addEventListener('DOMContentLoaded', function () {
+            var pre = new URLSearchParams(window.location.search).get('amount');
+            if (pre && !isNaN(parseFloat(pre))) {
+                document.getElementById('amount').value = parseFloat(pre);
+            }
+            updateSummary();
+        });
     </script>
+    <script>lucide.createIcons();</script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </body>
 </html>

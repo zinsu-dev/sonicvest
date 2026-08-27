@@ -225,24 +225,17 @@
 let currentDepositId = null;
 
 function showAlert(type, message) {
-    const alertSuccess = document.getElementById('alertSuccess');
-    const alertError = document.getElementById('alertError');
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
-
-    alertSuccess.style.display = 'none';
-    alertError.style.display = 'none';
-
-    if (type === 'success') {
-        successMessage.textContent = message;
-        alertSuccess.style.display = 'block';
-        setTimeout(() => alertSuccess.style.display= 'none', 5000);
+    if(window.showToast) {
+        window.showToast(message, type === 'success' ? 'success' : 'danger');
     } else {
-        errorMessage.textContent = message;
-        alertError.style.display = 'block';
+        var el = document.getElementById(type === 'success' ? 'alertSuccess' : 'alertError');
+        var span = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+        if(el && span) {
+            span.textContent = message;
+            el.style.display = 'block';
+            setTimeout(function(){ el.style.display = 'none'; }, 5000);
+        }
     }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showApproveModal(depositId) {
@@ -256,7 +249,7 @@ function confirmApprove() {
     const amount = parseFloat(document.getElementById('depositAmount').value);
     
     if (!amount || amount <= 0) {
-        alert('Please enter a valid amount');
+        if(window.showToast) window.showToast('Please enter a valid amount', 'danger');
         return;
     }
 
@@ -298,7 +291,7 @@ function confirmReject() {
     const reason = document.getElementById('rejectReason').value.trim();
     
     if (!reason) {
-        alert('Please provide a reason for rejection');
+        if(window.showToast) window.showToast('Please provide a reason for rejection', 'danger');
         return;
     }
 

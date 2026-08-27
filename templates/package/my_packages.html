@@ -1,614 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Active Packages - Brooklyn</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F5F1E8 50%, #E8D4A0 100%);
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header h1 {
-            color: #D4AF37;
-            margin: 0;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #D4AF37;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: #B8941E;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .packages-summary {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .summary-item {
-            text-align: center;
-            padding: 15px;
-            background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%);
-            border-radius: 10px;
-            color: white;
-        }
-
-        .summary-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .summary-label {
-            font-size: 12px;
-            opacity: 0.9;
-            text-transform: uppercase;
-        }
-
-        .package-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #2E7D32;
-            transition: all 0.3s ease;
-        }
-
-        .package-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .package-card.completed {
-            border-left-color: #6b7280;
-            opacity: 0.8;
-        }
-
-        .package-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .package-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 0;
-        }
-
-        .package-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-completed {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        .package-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            text-align: center;
-            padding: 12px;
-            background: #f8fafc;
-            border-radius: 8px;
-        }
-
-        .info-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 4px;
-        }
-
-        .info-label {
-            font-size: 11px;
-            color: #6b7280;
-            text-transform: uppercase;
-        }
-
-        .progress-section {
-            margin-top: 15px;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .progress-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .progress-percentage {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50 0%, #2E7D32 100%);
-            transition: width 0.3s ease;
-        }
-
-        .no-packages {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            color: #6b7280;
-        }
-
-        .no-packages i {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #d1d5db;
-        }
-
-        .no-packages h3 {
-            margin-bottom: 10px;
-            color: #374151;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #D4AF37 0%, #B8941E 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .package-info {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .summary-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Header -->
-    <div class="header">
-        <a href="{{ url_for('profile') }}" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        <h1>
-            <i class="fas fa-box-open"></i>
-            My Active Packages
-        </h1>
-    </div>
-
-    <div style="max-width:800px;margin:12px auto;padding:0 20px">
-        <div class="filter-pills" role="tablist" aria-label="Filters">
-            {% set p = request.path %}
-            <a class="filter-pill {% if p.endswith('/my-packages') or p == '/my-packages' %}active{% endif %}" href="{{ url_for('my_packages') }}">All</a>
-            <a class="filter-pill {% if p.endswith('/active') %}active{% endif %}" href="{{ url_for('my_packages_active') }}">Active</a>
-            <a class="filter-pill {% if p.endswith('/completed') %}active{% endif %}" href="{{ url_for('my_packages_completed') }}">Completed</a>
-            <a class="filter-pill {% if p.endswith('/expired') %}active{% endif %}" href="{{ url_for('my_packages_expired') }}">Expired</a>
-        </div>
-    </div>
-
-    <div class="container">
-        {% if package_details %}
-        <!-- Packages Summary -->
-        <div class="packages-summary">
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <div class="summary-value">{{ package_details|length }}</div>
-                    <div class="summary-label">Total Packages</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">{{ package_details|selectattr('is_completed', 'equalto',
-                        false)|list|length }}</div>
-                    <div class="summary-label">Active</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">₦{{ ((package_details|sum(attribute='total_income')) or 0)|format_number
-                        }}</div>
-                    <div class="summary-label">Total Income</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">₦{{ (package_details|sum(attribute='daily_return'))|format_number }}
-                    </div>
-                    <div class="summary-label">Daily Returns</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Package Cards -->
-        {% for detail in package_details %}
-        <div class="package-card {% if detail.is_completed %}completed{% endif %}">
-            <div class="package-header">
-                <h3 class="package-name">{{ detail.package.name }}</h3>
-                <span
-                    class="package-status {% if detail.is_completed %}status-completed{% else %}status-active{% endif %}">
-                    {% if detail.is_completed %}Completed{% else %}Active{% endif %}
-                </span>
-            </div>
-
-            <div class="package-info">
-                <div class="info-item">
-                    <div class="info-value">₦{{ detail.user_package.amount_invested|format_number }}</div>
-                    <div class="info-label">Investment</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-value">{{ detail.remaining_days }}</div>
-                    <div class="info-label">Days Left</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-value">₦{{ detail.daily_return|format_number }}</div>
-                    <div class="info-label">Daily Return</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-value">₦{{ (detail.total_income or 0)|format_number }}</div>
-                    <div class="info-label">Total Income</div>
-                </div>
-            </div>
-
-            <div class="progress-section">
-                <div class="progress-header">
-                    <span class="progress-label">Progress</span>
-                    <span class="progress-percentage">{{ "%.1f"|format(detail.progress_percentage) }}%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: {{ detail.progress_percentage }}%"></div>
-                </div>
-            </div>
-
-            <div style="margin-top: 15px; font-size: 12px; color: #6b7280;">
-                <i class="fas fa-calendar-alt"></i>
-                Started {{ detail.days_since_purchase }} days ago
-                • {{ detail.package.daily_return_rate }}% daily return
-                • {{ detail.package.duration_days }} days duration
-            </div>
-        </div>
-        {% endfor %}
-
-        {% else %}
-        <!-- No Packages -->
-        <div class="no-packages">
-            <i class="fas fa-box"></i>
-            <h3>No Active Packages</h3>
-            <p>You don't have any active investment packages yet.</p>
-            <p>Start investing today to grow your wealth!</p>
-            <a href="{{ url_for('packages') }}" class="btn-primary">
-                <i class="fas fa-plus"></i>
-                Browse Packages
-            </a>
-        </div>
-        {% endif %}
-    </div>    
-    <!-- Vercel Web Analytics -->
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
-</body>
-
-</html>
-
-{% block title %}My Packages{% endblock %}
-
-{% block content %}
-<!-- Header -->
-<div style="display: flex; align-items: center; margin-bottom: 30px;">
-    <a href="{{ url_for('dashboard') }}"
-        style="background: rgba(255,255,255,0.2); border: none; border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 18px; margin-right: 20px;">
-        <i class="fas fa-arrow-left"></i>
-    </a>
-    <h1 style="color: white; margin: 0; font-size: 24px; font-weight: 600;">My Packages</h1>
-</div>
-
-<!-- My Active Packages -->
-<div class="my-packages-container">
-    {% if user_packages %}
-    {% for user_package in user_packages %}
-    <div class="package-card">
-        <div class="package-header">
-            <h3>{{ user_package.package.name }}</h3>
-            <span class="status-badge {{ user_package.status }}">{{ user_package.status.title() }}</span>
-        </div>
-
-        <div class="package-content">
-            <div class="package-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Invested Amount</span>
-                    <span class="stat-value">₦{{ user_package.amount | format_number }}</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-label">Daily Income</span>
-                    <span class="stat-value">₦{{ user_package.package.daily_income | format_number }}</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-label">Total Earnings</span>
-                    <span class="stat-value success">₦{{ user_package.get_earnings_to_date() | format_number }}</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-label">Purchase Date</span>
-                    <span class="stat-value">{{ user_package.purchase_date.strftime('%d %b %Y') }}</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-label">Expiry Date</span>
-                    <span class="stat-value">{{ user_package.expiry_date.strftime('%d %b %Y') }}</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-label">Duration</span>
-                    <span class="stat-value">{{ user_package.package.duration }} days</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-    {% else %}
-    <div class="empty-state">
-        <div class="empty-icon">
-            <i class="fas fa-box-open"></i>
-        </div>
-        <h3>No Active Packages</h3>
-        <p>You haven't purchased any packages yet. Browse our investment packages to start earning!</p>
-        <a href="{{ url_for('packages') }}" class="cta-btn">
-            <i class="fas fa-plus"></i>
-            Browse Packages
-        </a>
-    </div>
-    {% endif %}
-</div>
-{% endblock %}
+{% block title %}My Packages - Brooklyn{% endblock %}
 
 {% block styles %}
 <style>
-    /* My Packages Container */
-    .my-packages-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding: 0;
-    }
+  .mp-page { width: 100%; max-width: 520px; margin: 0 auto; padding: 16px; }
 
-    /* Package Card */
-    .package-card {
-        background: white;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
+  .mp-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-top: 8px; }
+  .mp-back {
+    width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--color-neutral-700);
+    background: #20232A; color: #B3B8C4; display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: all .2s ease; flex-shrink: 0;
+  }
+  .mp-back:hover { color: var(--color-primary-500); border-color: rgba(212,175,55,.3); }
+  .mp-title { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -.3px; }
+  .mp-subtitle { font-size: 13px; color: #B3B8C4; margin-top: 2px; }
 
-    /* Package Header */
-    .package-header {
-        background: #D4AF37;
-        color: white;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  /* Filter pills */
+  .mp-filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .mp-filters::-webkit-scrollbar { display: none; }
+  .mp-pill {
+    flex: 0 0 auto; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    background: #20232A; color: #B3B8C4; border: 1px solid var(--color-neutral-700); text-decoration: none;
+    transition: all .2s ease; white-space: nowrap;
+  }
+  .mp-pill:hover { color: #fff; border-color: rgba(212,175,55,.3); }
+  .mp-pill.active { background: var(--gradient-primary); color: #0F1115; border-color: transparent; }
 
-    .package-header h3 {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 600;
-    }
+  /* Summary */
+  .mp-summary { background: var(--gradient-card); border: 1px solid var(--color-neutral-700); border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+  .mp-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .mp-summary-item { text-align: center; padding: 12px 8px; background: rgba(212,175,55,.06); border-radius: 12px; }
+  .mp-summary-value { font-size: 20px; font-weight: 800; color: var(--color-primary-500); margin-bottom: 2px; }
+  .mp-summary-label { font-size: 11px; color: #B3B8C4; text-transform: uppercase; letter-spacing: .05em; }
 
-    /* Status Badge */
-    .status-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
+  /* Package card */
+  .mp-card { background: var(--gradient-card); border: 1px solid var(--color-neutral-700); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+  .mp-card.completed { opacity: .75; }
+  .mp-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .mp-card-name { font-size: 16px; font-weight: 700; color: #fff; margin: 0; }
+  .mp-status { padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .mp-status.active { background: rgba(34,197,94,.15); color: #22C55E; }
+  .mp-status.completed { background: rgba(148,163,184,.15); color: #94A3B8; }
 
-    .status-badge.active {
-        background: linear-gradient(135deg, #4CAF50, #2E7D32);
-        color: white;
-    }
+  .mp-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .mp-info-item { text-align: center; padding: 12px 8px; background: #181A20; border-radius: 10px; }
+  .mp-info-value { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .mp-info-label { font-size: 11px; color: #B3B8C4; text-transform: uppercase; letter-spacing: .04em; }
 
-    .status-badge.pending {
-        background: #f59e0b;
-        color: white;
-    }
+  .mp-progress-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .mp-progress-label { font-size: 13px; font-weight: 600; color: #B3B8C4; }
+  .mp-progress-pct { font-size: 12px; color: var(--color-primary-500); font-weight: 700; }
+  .mp-progress-bar { height: 8px; background: #181A20; border-radius: 4px; overflow: hidden; }
+  .mp-progress-fill { height: 100%; background: var(--gradient-primary); border-radius: 4px; transition: width .3s ease; }
+  .mp-meta { margin-top: 14px; font-size: 12px; color: #B3B8C4; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
-    .status-badge.expired {
-        background: #ef4444;
-        color: white;
-    }
-
-    /* Package Content */
-    .package-content {
-        padding: 20px;
-    }
-
-    /* Package Stats */
-    .package-stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-
-    .stat-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .stat-label {
-        color: #6b7280;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .stat-value {
-        color: #1f2937;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .stat-value.success {
-        color: #2E7D32;
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: white;
-    }
-
-    .empty-icon {
-        font-size: 64px;
-        margin-bottom: 20px;
-        opacity: 0.7;
-    }
-
-    .empty-state h3 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-
-    .empty-state p {
-        font-size: 16px;
-        opacity: 0.8;
-        line-height: 1.5;
-        margin-bottom: 30px;
-    }
-
-    /* CTA Button */
-    .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: white;
-        color: #D4AF37;
-        padding: 12px 24px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .cta-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .package-stats {
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .package-header {
-            padding: 15px;
-        }
-
-        .package-content {
-            padding: 15px;
-        }
-    }
+  /* Empty state */
+  .mp-empty { text-align: center; padding: 48px 24px; background: var(--gradient-card); border: 1px dashed var(--color-neutral-700); border-radius: 16px; }
+  .mp-empty-icon { font-size: 44px; color: var(--color-neutral-600); margin-bottom: 16px; }
+  .mp-empty h3 { color: #fff; font-size: 18px; margin-bottom: 8px; }
+  .mp-empty p { color: #B3B8C4; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+  .mp-cta {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--gradient-primary); color: #0F1115;
+    padding: 12px 24px; border-radius: 10px; font-weight: 700; text-decoration: none; transition: all .2s ease;
+  }
+  .mp-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,.3); color: #0F1115; }
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="mp-page">
+  <div class="mp-header">
+    <a href="{{ url_for('dashboard') }}" class="mp-back" aria-label="Back to dashboard"><i data-lucide="arrow-left"></i></a>
+    <div>
+      <div class="mp-title">My Packages</div>
+      <div class="mp-subtitle">Track your investments and earnings</div>
+    </div>
+  </div>
+
+  <div class="mp-filters" role="tablist" aria-label="Filter packages">
+    {% set p = request.path %}
+    <a class="mp-pill {% if p == '/my-packages' or p.endswith('/my-packages') %}active{% endif %}" href="{{ url_for('my_packages') }}">All</a>
+    <a class="mp-pill {% if p.endswith('/active') %}active{% endif %}" href="{{ url_for('my_packages_active') }}">Active</a>
+    <a class="mp-pill {% if p.endswith('/completed') %}active{% endif %}" href="{{ url_for('my_packages_completed') }}">Completed</a>
+    <a class="mp-pill {% if p.endswith('/expired') %}active{% endif %}" href="{{ url_for('my_packages_expired') }}">Expired</a>
+  </div>
+
+  {% if package_details %}
+  <div class="mp-summary">
+    <div class="mp-summary-grid">
+      <div class="mp-summary-item">
+        <div class="mp-summary-value">{{ package_details|length }}</div>
+        <div class="mp-summary-label">Total Packages</div>
+      </div>
+      <div class="mp-summary-item">
+        <div class="mp-summary-value">{{ package_details|selectattr('is_completed', 'equalto', false)|list|length }}</div>
+        <div class="mp-summary-label">Active</div>
+      </div>
+      <div class="mp-summary-item">
+        <div class="mp-summary-value">₦{{ ((package_details|sum(attribute='total_income')) or 0)|format_number }}</div>
+        <div class="mp-summary-label">Total Income</div>
+      </div>
+      <div class="mp-summary-item">
+        <div class="mp-summary-value">₦{{ (package_details|sum(attribute='daily_return'))|format_number }}</div>
+        <div class="mp-summary-label">Daily Returns</div>
+      </div>
+    </div>
+  </div>
+
+  {% for detail in package_details %}
+  <div class="mp-card {% if detail.is_completed %}completed{% endif %}">
+    <div class="mp-card-head">
+      <h3 class="mp-card-name">{{ detail.package.name }}</h3>
+      <span class="mp-status {% if detail.is_completed %}completed{% else %}active{% endif %}">
+        {% if detail.is_completed %}Completed{% else %}Active{% endif %}
+      </span>
+    </div>
+
+    <div class="mp-info">
+      <div class="mp-info-item">
+        <div class="mp-info-value">₦{{ detail.user_package.amount_invested|format_number }}</div>
+        <div class="mp-info-label">Investment</div>
+      </div>
+      <div class="mp-info-item">
+        <div class="mp-info-value">{{ detail.remaining_days }}</div>
+        <div class="mp-info-label">Days Left</div>
+      </div>
+      <div class="mp-info-item">
+        <div class="mp-info-value">₦{{ detail.daily_return|format_number }}</div>
+        <div class="mp-info-label">Daily Return</div>
+      </div>
+      <div class="mp-info-item">
+        <div class="mp-info-value">₦{{ (detail.total_income or 0)|format_number }}</div>
+        <div class="mp-info-label">Total Income</div>
+      </div>
+    </div>
+
+    <div class="mp-progress-head">
+      <span class="mp-progress-label">Progress</span>
+      <span class="mp-progress-pct">{{ "%.1f"|format(detail.progress_percentage) }}%</span>
+    </div>
+    <div class="mp-progress-bar">
+      <div class="mp-progress-fill" style="width: {{ detail.progress_percentage }}%"></div>
+    </div>
+
+    <div class="mp-meta">
+      <i data-lucide="calendar"></i>
+      Started {{ detail.days_since_purchase }} days ago
+      {% if detail.package.daily_return_rate %}&middot; {{ detail.package.daily_return_rate }}% daily{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+
+  {% else %}
+  <div class="mp-empty">
+    <div class="mp-empty-icon"><i data-lucide="package-open"></i></div>
+    <h3>No packages here yet</h3>
+    <p>You don't have any packages in this category. Start investing today to grow your wealth.</p>
+    <a href="{{ url_for('packages') }}" class="mp-cta"><i data-lucide="plus"></i> Browse Plans</a>
+  </div>
+  {% endif %}
+</div>
+
+{% set active = 'packages' %}
+{% include 'partials/bottom_nav.html' %}
 {% endblock %}

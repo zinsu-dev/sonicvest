@@ -78,7 +78,7 @@
             <option value="registration_date">Sort by Registration Date</option>
         </select>
 
-        <form method="POST" action="{{ url_for('admin.delete_all_users') }}" onsubmit="return confirmDeleteAll()">
+        <form method="POST" action="{{ url_for('admin.delete_all_users') }}" onsubmit="confirmDeleteAll(event)">
             <button type="submit" class="btn btn-danger" style="margin-left:10px;">
                 <i class="fas fa-user-times"></i> Delete All Users
             </button>
@@ -457,8 +457,14 @@
 </style>
 
 <script>
-function confirmDeleteAll() {
-    return confirm('This will permanently delete ALL users and their transactions, withdrawals, and packages. This action cannot be undone. Continue?');
+function confirmDeleteAll(e) {
+    e.preventDefault();
+    window.showConfirm('This will permanently delete ALL users and their transactions, withdrawals, and packages. This action cannot be undone. Continue?', {
+        confirmText: 'Delete All',
+        danger: true
+    }).then(function(ok){
+        if(ok) e.target.submit();
+    });
 }
 </script>
 
@@ -583,8 +589,8 @@ function updateUserBalance() {
     const newBalance = document.getElementById('newBalance').value;
     
     // Here you would make an AJAX call to update the balance
-    // For now, just show an alert
-    alert(`Balance update request for user ${userId} to ₦${newBalance} would be sent to server`);
+    // For now, just show a toast
+    if(window.showToast) window.showToast(`Balance update request for user ${userId} to ₦${newBalance} would be sent to server`, 'info');
     
     const modal = bootstrap.Modal.getInstance(document.getElementById('editBalanceModal'));
     modal.hide();
@@ -592,10 +598,13 @@ function updateUserBalance() {
 
 function toggleUserStatus(userId, isActive) {
     const action = isActive ? 'deactivate' : 'activate';
-    if (confirm(`Are you sure you want to ${action} this user?`)) {
-        // Here you would make an AJAX call to toggle status
-        alert(`User ${action} request would be sent to server`);
-    }
+    window.showConfirm(`Are you sure you want to ${action} this user?`, {
+        confirmText: action.charAt(0).toUpperCase() + action.slice(1),
+        danger: isActive
+    }).then(function(ok){
+        if(!ok) return;
+        if(window.showToast) window.showToast(`User ${action} request would be sent to server`, 'info');
+    });
 }
 
 function viewUserDetails(userId) {
@@ -719,11 +728,13 @@ function displayUserDetails(user) {
 
 function toggleUserPackageStatus(packageId, isActive, packageName) {
     const action = isActive ? 'deactivate' : 'activate';
-    if (!confirm(`Are you sure you want to ${action} the package "${packageName}"?`)) {
-        return;
-    }
+    window.showConfirm(`Are you sure you want to ${action} the package "${packageName}"?`, {
+        confirmText: action.charAt(0).toUpperCase() + action.slice(1),
+        danger: isActive
+    }).then(function(ok){
+        if(!ok) return;
     
-    fetch(`/admin/api/user-package/${packageId}/toggle-status`, {
+        fetch(`/admin/api/user-package/${packageId}/toggle-status`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -733,7 +744,7 @@ function toggleUserPackageStatus(packageId, isActive, packageName) {
     .then(data => {
         if (data.success) {
             // Show success message
-            alert(data.message);
+            if(window.showToast) window.showToast(data.message, 'success');
             
             // Get the stored user ID from the modal
             const userId = document.getElementById('userDetailsModal').dataset.currentUserId;
@@ -746,11 +757,12 @@ function toggleUserPackageStatus(packageId, isActive, packageName) {
                 location.reload();
             }
         } else {
-            alert('Error: ' + data.message);
+            if(window.showToast) window.showToast('Error: ' + data.message, 'danger');
         }
     })
     .catch(error => {
-        alert('Error toggling package status. Please try again.');
+        if(window.showToast) window.showToast('Error toggling package status. Please try again.', 'danger');
+    });
     });
 }
 

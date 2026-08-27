@@ -4,381 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deposit - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{
-            --bg: #0F1115;--surface: #181A20;--card: #20232A;--border: #2C313A;--text: #FFFFFF;--muted: #B3B8C4;--gold: #D4AF37;--gold-light: #E5C158;--gold-dark: #C89B3C;--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E5C158 40%, #C89B3C 100%)
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body { padding-bottom: 100px; }
+
+        .dep-page { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+        .dep-header {
+            display: flex; align-items: center; gap: 12px;
+            padding-top: 8px; margin-bottom: 20px;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
-            padding-bottom: 100px;
+        .dep-balance {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-xl); padding: 24px; margin-bottom: 24px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .dep-balance::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: var(--primary);
+        }
+        .dep-balance-label {
+            font-size: 0.6875rem; color: var(--gray-400);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 8px; font-weight: 600;
+        }
+        .dep-balance-amount {
+            font-size: 2rem; font-weight: 800; color: var(--primary);
+            letter-spacing: -0.03em;
         }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
+        .dep-section-title {
+            font-size: 1rem; font-weight: 700; color: var(--white);
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
         }
-
-        .header {
-            background: var(--gradient-gold);
-            padding: 24px 20px 32px;
-            margin: -20px -20px 28px -20px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -80px;
-            right: -60px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .back-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-        }
-
-        .header-title {
-            color: white;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        .balance-card {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-            margin-bottom: 24px;
-            text-align: center;
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .balance-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-gold);
-        }
-
-        .balance-label {
-            font-size: 13px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .balance-amount {
-            font-size: 36px;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: -0.02em;
-        }
-
-        .section-title {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title i {
-            color: var(--gold);
-        }
+        .dep-section-title svg { width: 18px; height: 18px; color: var(--primary); }
 
         .methods-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 24px;
+            display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
         }
 
         .method-item {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 18px 22px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            text-decoration: none;
-            color: var(--text);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            border: 1px solid var(--border);
-            transition: all 0.3s;
+            background: var(--surface); border-radius: var(--r-lg);
+            padding: 14px 16px; display: flex; align-items: center;
+            gap: 12px; text-decoration: none; color: var(--gray-100);
+            border: 1px solid var(--border); transition: all 0.18s var(--ease);
         }
-
         .method-item:hover {
-            transform: translateX(6px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(212,175,55,0.15); transform: translateX(4px);
         }
 
         .method-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: var(--gradient-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 22px;
-            flex-shrink: 0;
+            width: 44px; height: 44px; border-radius: var(--r-md);
+            background: var(--primary); display: flex;
+            align-items: center; justify-content: center;
+            color: var(--gray-950); flex-shrink: 0;
         }
+        .method-icon svg { width: 20px; height: 20px; }
 
-        .method-info {
-            flex: 1;
-        }
-
-        .method-name {
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 4px;
-            color: var(--text);
-        }
-
-        .method-desc {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 500;
-        }
-
-        .method-arrow {
-            color: var(--muted);
-            font-size: 18px;
-        }
+        .method-info { flex: 1; }
+        .method-name { font-size: 0.9375rem; font-weight: 700; margin-bottom: 2px; }
+        .method-desc { font-size: 0.75rem; color: var(--gray-400); }
+        .method-arrow { color: var(--gray-500); }
+        .method-arrow svg { width: 16px; height: 16px; }
 
         .quick-amounts {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-bottom: 24px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 10px; margin-bottom: 24px;
         }
 
         .quick-btn {
-            background: var(--card);
-            border-radius: 18px;
-            padding: 18px 14px;
-            text-align: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid var(--border);
+            background: var(--surface); border-radius: var(--r-lg);
+            padding: 16px 12px; text-align: center; cursor: pointer;
+            transition: all 0.18s var(--ease); border: 1px solid var(--border);
+            text-decoration: none; display: block;
         }
-
         .quick-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(212,175,55,0.15); transform: translateY(-2px);
         }
 
         .quick-amount {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 6px;
-            letter-spacing: -0.02em;
+            font-size: 1.125rem; font-weight: 800; color: var(--primary);
+            margin-bottom: 4px; letter-spacing: -0.02em;
         }
 
         .quick-label {
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            padding: 12px 16px 24px;
-            box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
-            z-index: 1000;
-            border-top: 1px solid var(--border);
-        }
-
-        .nav-items {
-            display: flex;
-            justify-content: space-around;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: var(--muted);
-            padding: 8px 16px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .nav-item.active {
-            color: var(--gold);
-            background: var(--card);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 0.6875rem; color: var(--gray-400); font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <a href="{{ url_for('dashboard') }}" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <h1 class="header-title">Deposit Funds</h1>
-            </div>
+    <div class="dep-page">
+        <div class="dep-header">
+            <a href="{{ url_for('dashboard') }}" class="back-btn">
+                <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
+            </a>
+            <div style="font-size:1.125rem;font-weight:700;color:var(--white);">Deposit Funds</div>
         </div>
 
-        <div class="balance-card">
-            <div class="balance-label">Current Balance</div>
-            <div class="balance-amount">₦{{ (user.balance or 0) | format_number }}</div>
+        <div class="dep-balance">
+            <div class="dep-balance-label">Current Balance</div>
+            <div class="dep-balance-amount">₦{{ (user.balance or 0) | format_number }}</div>
         </div>
 
-        <h2 class="section-title">
-            <i class="fas fa-wallet"></i>
+        <h2 class="dep-section-title">
+            <i data-lucide="wallet"></i>
             Choose Deposit Method
         </h2>
         <div class="methods-grid">
             <a href="{{ url_for('deposit_manual') }}" class="method-item">
                 <div class="method-icon">
-                    <i class="fas fa-university"></i>
+                    <i data-lucide="building-2"></i>
                 </div>
                 <div class="method-info">
                     <div class="method-name">Bank Transfer</div>
                     <div class="method-desc">Transfer to our bank account</div>
                 </div>
-                <i class="fas fa-chevron-right method-arrow"></i>
+                <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
             </a>
             <a href="{{ url_for('deposit_automatic') }}" class="method-item">
                 <div class="method-icon">
-                    <i class="fas fa-credit-card"></i>
+                    <i data-lucide="credit-card"></i>
                 </div>
                 <div class="method-info">
                     <div class="method-name">Automatic Payment</div>
                     <div class="method-desc">Pay instantly through the payment gateway</div>
                 </div>
-                <i class="fas fa-chevron-right method-arrow"></i>
+                <div class="method-arrow"><i data-lucide="chevron-right"></i></div>
             </a>
         </div>
 
-        <h2 class="section-title">
-            <i class="fas fa-bolt"></i>
+        <h2 class="dep-section-title">
+            <i data-lucide="zap"></i>
             Quick Amounts
         </h2>
+        <p style="font-size:0.75rem;color:var(--gray-400);margin:-8px 0 14px;font-weight:500;">Tap an amount to continue with instant payment.</p>
         <div class="quick-amounts">
-            <div class="quick-btn" onclick="selectAmount(5000)">
+            <a href="{{ url_for('deposit_automatic') }}?amount=5000" class="quick-btn">
                 <div class="quick-amount">₦5,000</div>
                 <div class="quick-label">Starter</div>
-            </div>
-            <div class="quick-btn" onclick="selectAmount(10000)">
+            </a>
+            <a href="{{ url_for('deposit_automatic') }}?amount=10000" class="quick-btn">
                 <div class="quick-amount">₦10,000</div>
                 <div class="quick-label">Basic</div>
-            </div>
-            <div class="quick-btn" onclick="selectAmount(25000)">
+            </a>
+            <a href="{{ url_for('deposit_automatic') }}?amount=25000" class="quick-btn">
                 <div class="quick-amount">₦25,000</div>
                 <div class="quick-label">Standard</div>
-            </div>
-            <div class="quick-btn" onclick="selectAmount(50000)">
+            </a>
+            <a href="{{ url_for('deposit_automatic') }}?amount=50000" class="quick-btn">
                 <div class="quick-amount">₦50,000</div>
                 <div class="quick-label">Premium</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
             </a>
         </div>
     </div>
 
-    <script>
-        function selectAmount(amount) {
-            alert('Selected ₦' + amount.toLocaleString() + '. Please choose a deposit method to continue.');
-        }
-    </script>    
-    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+    {% set active = 'deposit' %}
+    {% include 'partials/bottom_nav.html' %}
 
+    <script>lucide.createIcons();</script>
 </body>
 </html>

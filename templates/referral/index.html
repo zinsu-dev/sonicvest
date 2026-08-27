@@ -3,64 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referrals - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Team - Brooklyn</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
-        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);min-height:100vh;padding:20px 12px 94px}
-        .screen{max-width:500px;margin:0 auto}
-        .page-title{text-align:center;margin-bottom:22px}
-        .page-title h1{font-size:28px;line-height:1;margin:0;letter-spacing:-1px;font-weight:900;color:var(--gold)}
-        .page-title p{margin-top:10px;font-size:15px;color:var(--muted);font-weight:500}
-        .card{background:var(--card);border-radius:24px;padding:24px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
-        .ref-link-card h2{text-align:center;font-size:18px;font-weight:800;margin-bottom:6px;color:var(--text)}
-        .ref-link-card p{text-align:center;color:var(--muted);margin-bottom:16px;font-size:14px}
-        .link-box{border:2px dashed var(--gold);background:rgba(212,175,55,0.06);border-radius:14px;padding:18px;font-size:14px;color:var(--text);word-break:break-all;margin-bottom:14px}
-        .copy-btn{border:none;width:100%;border-radius:14px;background:var(--gradient-gold);color:#000;font-size:16px;font-weight:800;padding:16px;cursor:pointer;box-shadow:0 8px 24px rgba(212,175,55,0.2);transition:all 0.3s}
-        .copy-btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(212,175,55,0.3)}
-        .stats-grid{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-        .stat-card{background:var(--card);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.15);padding:24px 12px;text-align:center;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden}
-        .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)}
-        .stat-card:hover{transform:translateY(-4px)}
-        .stat-value{font-size:28px;line-height:1;color:var(--gold);font-weight:900}
-        .stat-label{margin-top:10px;font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.08em}
-        .commission-wrap{margin-top:20px}
-        .commission-wrap .heading{text-align:center;margin-bottom:18px}
-        .commission-wrap .heading h3{font-size:18px;color:var(--text);font-weight:800;margin-bottom:6px}
-        .commission-wrap .heading p{font-size:14px;color:var(--muted)}
-        .commission-item{background:var(--surface);color:var(--text);border-radius:18px;padding:18px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border:1px solid var(--border);transition:all 0.3s}
-        .commission-item:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
-        .commission-item h4{margin:0;font-size:16px;font-weight:700;color:var(--text)}
-        .commission-item p{margin-top:4px;font-size:13px;color:var(--muted)}
-        .badge{background:var(--gradient-gold);border-radius:999px;padding:8px 14px;font-size:15px;font-weight:800;white-space:nowrap;color:#000}
-        .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);padding:12px 16px 24px;box-shadow:0 -8px 32px rgba(0,0,0,0.3);z-index:1000;border-top:1px solid var(--border)}
-        .nav-items{display:flex;flex-direction:row;justify-content:space-around;max-width:500px;margin:0 auto;width:100%}
-        .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--muted);padding:8px 16px;border-radius:14px;transition:all 0.2s}
-        .nav-item.active{color:var(--gold);background:rgba(212,175,55,0.08)}
-        .nav-icon{font-size:22px}
-        .nav-label{font-size:12px;font-weight:700}
-        @media(max-width:420px){.page-title h1{font-size:24px}.stat-value{font-size:24px}.stat-label{font-size:11px}}
+        .team-page { max-width: 480px; margin: 0 auto; padding: 16px; padding-bottom: calc(var(--nav-h, 72px) + 32px); }
+
+        /* Header */
+        .team-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 8px; margin-bottom: 20px;
+        }
+        .team-title { font-size: 1.125rem; font-weight: 700; color: var(--white); }
+
+        /* Referral Link Card */
+        .ref-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-xl); padding: 20px; margin-bottom: 12px;
+        }
+        .ref-card-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+        }
+        .ref-card-icon {
+            width: 40px; height: 40px; border-radius: var(--r-md); background: var(--primary);
+            display: flex; align-items: center; justify-content: center; color: var(--gray-950);
+            flex-shrink: 0;
+        }
+        .ref-card-icon svg { width: 20px; height: 20px; }
+        .ref-card-title { font-size: 1rem; font-weight: 700; color: var(--white); }
+        .ref-card-desc { font-size: 0.75rem; color: var(--gray-400); margin-top: 1px; }
+
+        .ref-link-box {
+            background: var(--bg-raised); border: 1px solid var(--border);
+            border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 12px;
+            font-size: 0.75rem; color: var(--gray-300); word-break: break-all;
+            font-family: var(--font-mono); line-height: 1.5;
+        }
+
+        .ref-actions { display: flex; gap: 8px; }
+        .ref-actions .btn { flex: 1; }
+
+        .ref-code-box {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--bg-raised); border: 1px solid var(--border);
+            border-radius: var(--r-md); padding: 10px 14px; margin-top: 10px;
+        }
+        .ref-code-label { font-size: 0.6875rem; color: var(--gray-400); font-weight: 600; }
+        .ref-code-value {
+            font-size: 1rem; font-weight: 800; color: var(--primary);
+            font-family: var(--font-mono); letter-spacing: 0.05em;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-lg); padding: 16px; text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem; font-weight: 800; color: var(--primary);
+            letter-spacing: -0.02em; line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.625rem; color: var(--gray-400); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px;
+        }
+
+        /* Commission Section */
+        .commission-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-xl); overflow: hidden; margin-bottom: 12px;
+        }
+        .commission-header {
+            padding: 16px 18px; border-bottom: 1px solid var(--border);
+        }
+        .commission-title { font-size: 0.9375rem; font-weight: 700; color: var(--white); }
+        .commission-desc { font-size: 0.75rem; color: var(--gray-400); margin-top: 2px; }
+
+        .level-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+        }
+        .level-row:last-child { border-bottom: none; }
+
+        .level-info { flex: 1; }
+        .level-name { font-size: 0.875rem; font-weight: 700; color: var(--white); }
+        .level-desc { font-size: 0.6875rem; color: var(--gray-400); margin-top: 2px; }
+
+        .level-badge {
+            background: var(--primary-muted); color: var(--primary);
+            padding: 4px 10px; border-radius: var(--r-xs);
+            font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+        }
+
+        /* Invite Section */
+        .invite-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--r-xl); padding: 20px; text-align: center;
+        }
+        .invite-icon {
+            width: 48px; height: 48px; border-radius: var(--r-lg); background: var(--primary-subtle);
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 12px; color: var(--primary);
+        }
+        .invite-icon svg { width: 22px; height: 22px; }
+        .invite-title { font-size: 0.9375rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+        .invite-desc { font-size: 0.75rem; color: var(--gray-400); margin-bottom: 14px; line-height: 1.5; }
     </style>
 </head>
 <body>
     {% set code = (user.referral_code if user else current_user.referral_code) if (user or current_user) else 'SONIC123' %}
     {% set ref_link = request.host_url ~ 'register?ref=' ~ code %}
 
-    <div class="screen">
-        <div class="page-title">
-            <h1>Team Work</h1>
-            <p>Invite friends and earn rewards</p>
+    <div class="team-page">
+        <!-- Header -->
+        <div class="team-header">
+            <span class="team-title">Team Work</span>
+            <a href="{{ url_for('invite_friends') }}" class="icon-btn"><i data-lucide="user-plus" style="width:16px;height:16px;"></i></a>
         </div>
 
-        <div class="card ref-link-card">
-            <h2>Your Referral Link</h2>
-            <p>Share this link with your friends</p>
-            <div class="link-box" id="refLink">{{ ref_link }}</div>
-            <button class="copy-btn" id="copyBtn" type="button">Copy Link</button>
+        <!-- Referral Link Card -->
+        <div class="ref-card">
+            <div class="ref-card-header">
+                <div class="ref-card-icon"><i data-lucide="link"></i></div>
+                <div>
+                    <div class="ref-card-title">Your Referral Link</div>
+                    <div class="ref-card-desc">Share with friends to earn rewards</div>
+                </div>
+            </div>
+
+            <div class="ref-link-box" id="refLink">{{ ref_link }}</div>
+
+            <div class="ref-actions">
+                <button class="btn btn-primary" id="copyBtn" type="button">
+                    <i data-lucide="copy" style="width:16px;height:16px;"></i> Copy Link
+                </button>
+                <a href="{{ url_for('invite_friends') }}" class="btn btn-ghost">
+                    <i data-lucide="share-2" style="width:16px;height:16px;"></i> Share
+                </a>
+            </div>
+
+            <div class="ref-code-box">
+                <span class="ref-code-label">Your referral code</span>
+                <span class="ref-code-value">{{ code }}</span>
+            </div>
         </div>
 
-        <div class="stats-grid">
+        <!-- Stats -->
+        <div class="stats-row">
             <div class="stat-card">
                 <div class="stat-value">{{ total_referrals or 0 }}</div>
                 <div class="stat-label">Total Referrals</div>
@@ -71,59 +165,53 @@
             </div>
         </div>
 
-        <div class="card commission-wrap">
-            <div class="heading">
-                <h3>Commission Structure</h3>
-                <p>Earn from multiple levels</p>
+        <!-- Commission Structure -->
+        <div class="commission-card">
+            <div class="commission-header">
+                <div class="commission-title">Commission Structure</div>
+                <div class="commission-desc">Earn from multiple levels of referrals</div>
             </div>
 
-            <div class="commission-item">
-                <div>
-                    <h4>Level 1 Referrals</h4>
-                    <p>Direct referrals ({{ level1_referrals|length if level1_referrals else 0 }} users)</p>
+            <div class="level-row">
+                <div class="level-info">
+                    <div class="level-name">Level 1</div>
+                    <div class="level-desc">Direct referrals &middot; {{ level1_referrals|length if level1_referrals else 0 }} users</div>
                 </div>
-                <div class="badge">{{ level1_rate_pct }}% Commission</div>
+                <div class="level-badge">{{ level1_rate_pct }}%</div>
             </div>
 
-            <div class="commission-item">
-                <div>
-                    <h4>Level 2 Referrals</h4>
-                    <p>Your team's referrals ({{ level2_referrals|length if level2_referrals else 0 }} users)</p>
+            <div class="level-row">
+                <div class="level-info">
+                    <div class="level-name">Level 2</div>
+                    <div class="level-desc">Your team's referrals &middot; {{ level2_referrals|length if level2_referrals else 0 }} users</div>
                 </div>
-                <div class="badge">{{ level2_rate_pct }}% Commission</div>
+                <div class="level-badge">{{ level2_rate_pct }}%</div>
             </div>
 
-            <div class="commission-item">
-                <div>
-                    <h4>Level 3 Referrals</h4>
-                    <p>Extended team ({{ level3_referrals|length if level3_referrals else 0 }} users)</p>
+            <div class="level-row">
+                <div class="level-info">
+                    <div class="level-name">Level 3</div>
+                    <div class="level-desc">Extended team &middot; {{ level3_referrals|length if level3_referrals else 0 }} users</div>
                 </div>
-                <div class="badge">{{ level3_rate_pct }}% Commission</div>
+                <div class="level-badge">{{ level3_rate_pct }}%</div>
             </div>
         </div>
-    </div>
 
-    <div class="bottom-nav">
-        <div class="nav-items">
-            <a href="{{ url_for('dashboard') }}" class="nav-item">
-                <i class="fas fa-home nav-icon"></i>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="{{ url_for('packages') }}" class="nav-item">
-                <i class="fas fa-box nav-icon"></i>
-                <span class="nav-label">Plans</span>
-            </a>
-            <a href="{{ url_for('referral') }}" class="nav-item active">
-                <i class="fas fa-users nav-icon"></i>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="{{ url_for('profile') }}" class="nav-item">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-label">Profile</span>
+        <!-- Invite Card -->
+        <div class="invite-card">
+            <div class="invite-icon"><i data-lucide="users"></i></div>
+            <div class="invite-title">Grow Your Team</div>
+            <div class="invite-desc">The more friends you invite, the more you earn. Share your referral link and start building your team today.</div>
+            <a href="{{ url_for('invite_friends') }}" class="btn btn-primary btn-block">
+                <i data-lucide="send" style="width:16px;height:16px;"></i> Invite Friends
             </a>
         </div>
     </div>
 
+    {% set active = 'referral' %}
+    {% include 'partials/bottom_nav.html' %}
+
+    <script>lucide.createIcons();</script>
     <script>
         const copyBtn = document.getElementById('copyBtn');
         const refLinkEl = document.getElementById('refLink');
@@ -141,9 +229,10 @@
                 document.execCommand('copy');
                 document.body.removeChild(ta);
             }
-            const original = copyBtn.textContent;
-            copyBtn.textContent = 'Copied!';
-            setTimeout(() => { copyBtn.textContent = original; }, 2000);
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> Copied!';
+            lucide.createIcons();
+            setTimeout(() => { copyBtn.innerHTML = original; lucide.createIcons(); }, 2000);
         }
         if (copyBtn) { copyBtn.addEventListener('click', copyReferralLink); }
     </script>

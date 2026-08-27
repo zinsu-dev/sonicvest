@@ -6,7 +6,7 @@
 <!-- Header -->
 <div style="display: flex; align-items: center; margin-bottom: 30px;">
     <a href="{{ url_for('dashboard') }}" style="background: rgba(255,255,255,0.2); border: none; border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 18px; margin-right: 20px;">
-        <i class="fas fa-arrow-left"></i>
+        <i data-lucide="arrow-left"></i>
     </a>
     <h1 style="color: white; margin: 0; font-size: 24px; font-weight: 600;">Income Records</h1>
 </div>
@@ -48,7 +48,7 @@
     {% else %}
         <div class="empty-state">
             <div class="empty-icon">
-                <i class="fas fa-chart-line"></i>
+                <i data-lucide="trending-up"></i>
             </div>
             <h3>No Income Records</h3>
             <p>You haven't earned any income yet. Start investing in packages to generate daily income!</p>

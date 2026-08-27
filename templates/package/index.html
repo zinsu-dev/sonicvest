@@ -1,260 +1,216 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Products - Brooklyn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        :root{--bg:#0F1115;--surface:#181A20;--card:#20232A;--border:#2C313A;--text:#F8FAFC;--muted:#B3B8C4;--gold:#D4AF37;--gold-light:#E5C158;--gold-dark:#C89B3C;--gradient-gold:linear-gradient(135deg,#D4AF37 0%,#E5C158 40%,#C89B3C 100%)}
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);min-height:100vh;padding-bottom:88px;color:var(--text)}
-        .container{max-width:500px;margin:0 auto;padding:14px}
-        .header{background:var(--gradient-gold);padding:14px 12px;border-radius:0 0 18px 18px;color:#000;text-align:center}
-        .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-        .header-back{color:#000;text-decoration:none;font-size:18px;display:inline-flex;align-items:center;gap:8px}
-        .brand-logo{width:44px;height:44px;border-radius:12px;background:rgba(0,0,0,0.1);display:inline-flex;align-items:center;justify-content:center;color:#000}
-        .header-title{font-size:18px;font-weight:900;margin:6px 0 4px}
-        .header-subtitle{font-size:13px;opacity:0.85}
-        .filter-pills{display:flex;gap:8px;margin:12px 0 14px;overflow:auto;padding-bottom:6px}
-        .filter-pill{flex:0 0 auto;background:var(--surface);color:var(--gold);padding:8px 12px;border-radius:999px;font-weight:800;border:1px solid var(--border);font-size:13px}
-        .filter-pill.active{background:rgba(212,175,55,0.12);border-color:var(--gold)}
-        .section-title{display:flex;align-items:center;gap:10px;margin:8px 0;font-weight:800;color:var(--text)}
-        .section-title i{color:var(--gold)}
-        .packages-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
-        .order-card{background:var(--card);border-radius:16px;padding:14px;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
-        .order-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-        .order-left{display:flex;align-items:center;gap:12px}
-        .order-icon{width:46px;height:46px;border-radius:12px;background:var(--gradient-gold);display:inline-flex;align-items:center;justify-content:center;color:#000;font-size:18px}
-        .order-title{font-weight:900;font-size:15px;color:var(--text)}
-        .order-sub{font-size:12px;color:var(--muted)}
-        .badge{background:rgba(212,175,55,0.12);color:var(--gold);padding:6px 10px;border-radius:12px;font-weight:800;font-size:12px}
-        .stat-chips{display:flex;gap:8px;margin-bottom:10px}
-        .stat-chip{background:var(--surface);border-radius:12px;padding:10px 12px;min-width:84px;border:1px solid var(--border)}
-        .stat-chip .value{display:block;font-weight:900;color:var(--gold);margin-bottom:4px}
-        .stat-chip .label{font-size:11px;color:var(--muted);font-weight:700}
-        .order-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
-        .empty-state{padding:34px 20px;background:var(--card);border-radius:14px;border:1px solid var(--border);text-align:center}
-        .empty-state-icon{width:64px;height:64px;border-radius:14px;background:var(--gradient-gold);display:inline-flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;color:#000}
-        .bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);padding:12px 10px 24px;box-shadow:0 -8px 32px rgba(0,0,0,0.3);z-index:1200;border-top:1px solid var(--border)}
-        .nav-items{display:flex;justify-content:space-around;max-width:500px;margin:0 auto}
-        .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--muted);padding:6px 12px;border-radius:12px}
-        .nav-item.active{color:var(--gold);background:rgba(212,175,55,0.08)}
-        .nav-icon{font-size:20px}
-        .nav-label{font-size:12px;font-weight:700}
-        .invest-btn{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:#fff}
-        .btn.btn-primary.invest-btn{background:var(--gradient-gold);color:#000;border:none}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="header-top">
-                <a href="{{ url_for('dashboard') }}" class="header-back"><i class="fas fa-chevron-left"></i></a>
-                <div class="brand-logo"><i class="fas fa-box"></i></div>
-                <div style="width:28px"></div>
-            </div>
-            <div class="header-title">Plans</div>
-            <div class="header-subtitle">Available investment plans and your purchases</div>
-        </div>
+{% extends "base.html" %}
 
-        <div class="filter-pills" role="tablist" aria-label="Filters">
-            <button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" class="filter-pill" data-filter="active" aria-pressed="false">Active</button>
-            <button type="button" class="filter-pill" data-filter="completed" aria-pressed="false">Completed</button>
-            <button type="button" class="filter-pill" data-filter="expired" aria-pressed="false">Expired</button>
-        </div>
+{% block title %}Investment Plans - Brooklyn{% endblock %}
 
-        <div class="section-title"><i class="fas fa-crown"></i> Available Plans</div>
+{% block styles %}
+<style>
+  .pk-page { width: 100%; max-width: var(--page-max, 480px); margin: 0 auto; padding: var(--page-px, 16px); padding-bottom: calc(var(--nav-h, 72px) + 32px); }
 
-        <div class="packages-grid">
-            {% if user_packages %}
-                {% for user_package in user_packages %}
-                <div class="order-card user-package" data-owner="user" data-status="{{ user_package.status|lower }}">
-                    <div class="order-header">
-                        <div class="order-left">
-                            <div class="order-icon"><i class="fas fa-university"></i></div>
-                            <div>
-                                <div class="order-title">{{ user_package.package.name }}</div>
-                                <div class="order-sub">Purchased • {{ user_package.package.duration_days }} days</div>
-                            </div>
-                        </div>
-                        <div class="badge">{{ user_package.status.title() }}</div>
-                    </div>
+  .pk-balance {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 14px 16px; margin-bottom: 20px;
+  }
+  .pk-balance-label { font-size: 0.6875rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
+  .pk-balance-value { font-size: 1.125rem; font-weight: 800; color: var(--primary); margin-top: 2px; }
+  .pk-balance-add {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 0.8125rem; font-weight: 700;
+    color: var(--gray-950); background: var(--primary); padding: 7px 12px; border-radius: var(--r-sm);
+    text-decoration: none; transition: all 0.18s ease;
+  }
+  .pk-balance-add:hover { transform: translateY(-1px); color: var(--gray-950); box-shadow: var(--shadow-md); }
 
-                    <div class="stat-chips">
-                        <div class="stat-chip">
-                            <span class="value">₦{{ user_package.package.daily_income | format_number }}</span>
-                            <span class="label">Daily</span>
-                        </div>
-                        <div class="stat-chip">
-                            <span class="value">₦{{ user_package.package.total_return | format_number }}</span>
-                            <span class="label">Total</span>
-                        </div>
-                        <div class="stat-chip">
-                            <span class="value">₦{{ user_package.amount_invested | format_number }}</span>
-                            <span class="label">Investment</span>
-                        </div>
-                    </div>
+  .pk-grid { display: flex; flex-direction: column; gap: 10px; }
 
-                    <div class="order-meta">
-                        <div>{{ user_package.purchase_date.strftime('%b %d, %Y %H:%M') if user_package.purchase_date else '' }}</div>
-                        <div>{{ user_package.status.title() }}</div>
-                    </div>
-                </div>
-                {% endfor %}
-            {% endif %}
-            {% if packages %}
-                {% for package in packages %}
-                <div class="order-card" data-owner="market" data-status="available">
-                    <div class="order-header">
-                        <div class="order-left">
-                            <div class="order-icon"><i class="fas fa-gem"></i></div>
-                            <div>
-                                <div class="order-title">{{ package.name }}</div>
-                                <div class="order-sub">{{ package.duration_days }} days • ROI {{ package.get_roi_percentage()|round(1) }}%</div>
-                            </div>
-                        </div>
-                        <div class="badge">₦{{ package.price | format_number }}</div>
-                    </div>
+  .pk-card {
+    background: var(--surface); border-radius: var(--r-lg); padding: 14px;
+    border: 1px solid var(--border); transition: border-color 0.18s ease;
+  }
+  .pk-card:hover { border-color: rgba(212,175,55,0.15); }
+  .pk-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .pk-card-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .pk-icon { width: 40px; height: 40px; border-radius: var(--r-md); background: var(--primary); display: inline-flex; align-items: center; justify-content: center; color: var(--gray-950); font-size: 0.9375rem; flex-shrink: 0; }
+  .pk-name { font-weight: 700; font-size: 0.875rem; color: var(--white); }
+  .pk-sub { font-size: 0.6875rem; color: var(--gray-400); margin-top: 1px; }
+  .pk-badge { background: var(--primary-muted); color: var(--primary); padding: 4px 8px; border-radius: var(--r-xs); font-weight: 700; font-size: 0.75rem; white-space: nowrap; }
+  .pk-badge.status { text-transform: capitalize; }
 
-                    <div class="stat-chips">
-                        <div class="stat-chip">
-                            <span class="value">₦{{ package.daily_income | format_number }}</span>
-                            <span class="label">Daily</span>
-                        </div>
-                        <div class="stat-chip">
-                            <span class="value">₦{{ package.total_income | format_number }}</span>
-                            <span class="label">Total</span>
-                        </div>
-                        <div class="stat-chip">
-                            <span class="value">{{ package.duration_days }}d</span>
-                            <span class="label">Duration</span>
-                        </div>
-                    </div>
+  .pk-chips { display: flex; gap: 6px; margin-bottom: 10px; }
+  .pk-chip { flex: 1; background: var(--bg-raised); border-radius: var(--r-sm); padding: 8px; border: 1px solid var(--border); text-align: center; }
+  .pk-chip .value { display: block; font-weight: 800; color: var(--primary); margin-bottom: 1px; font-size: 0.8125rem; }
+  .pk-chip .label { font-size: 0.625rem; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
 
-                    <div class="order-meta">
-                        <div class="order-sub">{%- if package.subtitle %}{{ package.subtitle }}{%- endif %}</div>
-                        <form action="{{ url_for('buy_package', package_id=package.id) }}" method="POST">
-                            <button type="submit" class="btn btn-primary invest-btn">
-                                <i class="fas fa-rocket"></i>
-                                Invest ₦{{ package.price | format_number }}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                {% endfor %}
-                {% else %}
-                <!-- Fallback to user's purchased packages -->
-                {% if user_packages %}
-                    {% for user_package in user_packages %}
-                    <div class="order-card" data-status="{{ user_package.status|lower }}">
-                        <div class="order-header">
-                            <div class="order-left">
-                                <div class="order-icon"><i class="fas fa-university"></i></div>
-                                <div>
-                                    <div class="order-title">{{ user_package.package.name }}</div>
-                                    <div class="order-sub">{{ user_package.package.duration_days }} days</div>
-                                </div>
-                            </div>
-                            <div class="badge">{{ user_package.status.title() }}</div>
-                        </div>
+  .pk-invest-btn {
+    width: 100%; padding: 11px; border-radius: var(--r-md); font-size: 0.875rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    background: var(--primary); color: var(--gray-950); border: none; cursor: pointer;
+    transition: all 0.18s ease; font-family: var(--font-sans);
+  }
+  .pk-invest-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .pk-invest-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
-                        <div class="stat-chips">
-                            <div class="stat-chip">
-                                <span class="value">₦{{ user_package.package.daily_income | format_number }}</span>
-                                <span class="label">Daily</span>
-                            </div>
-                            <div class="stat-chip">
-                                <span class="value">₦{{ user_package.package.total_return | format_number }}</span>
-                                <span class="label">Total</span>
-                            </div>
-                            <div class="stat-chip">
-                                <span class="value">₦{{ user_package.amount_invested | format_number }}</span>
-                                <span class="label">Investment</span>
-                            </div>
-                        </div>
+  .pk-details-link { display: block; text-align: center; margin-top: 8px; font-size: 0.75rem; font-weight: 600; color: var(--gray-400); text-decoration: none; transition: color 0.18s ease; }
+  .pk-details-link:hover { color: var(--primary); }
+  .pk-details-link svg { width: 12px; height: 12px; margin-left: 3px; vertical-align: middle; }
 
-                        <div class="order-meta">
-                            <div>{{ user_package.purchase_date.strftime('%b %d, %Y %H:%M') if user_package.purchase_date else '' }}</div>
-                            <div>{{ user_package.status.title() }}</div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="empty-state">
-                        <div class="empty-state-icon"><i class="fas fa-box-open"></i></div>
-                        <div class="empty-state-title">No Plans Available</div>
-                        <div class="empty-state-text">There are currently no plans to show.</div>
-                    </div>
-                {% endif %}
-            {% endif %}
-        </div>
+  .pk-owned-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.6875rem; color: var(--gray-400); }
+
+  .pk-empty { padding: 36px 20px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--r-lg); text-align: center; }
+  .pk-empty-icon { width: 48px; height: 48px; border-radius: var(--r-lg); background: var(--primary-subtle); display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: var(--primary); }
+  .pk-empty h3 { color: var(--white); font-size: 0.9375rem; margin-bottom: 4px; }
+  .pk-empty p { color: var(--gray-400); font-size: 0.8125rem; line-height: 1.5; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pk-page">
+  <div class="page-header">
+    <a href="{{ url_for('dashboard') }}" class="back-btn" aria-label="Back to dashboard"><i data-lucide="arrow-left" style="width:18px;height:18px;"></i></a>
+    <div>
+      <div style="font-size:1.125rem;font-weight:700;color:var(--white);letter-spacing:-0.01em;">Investment Plans</div>
+      <div style="font-size:0.75rem;color:var(--gray-400);margin-top:1px;">Choose a plan and start earning daily</div>
     </div>
+  </div>
 
-    <script>
-        (function(){
-            const pills = document.querySelectorAll('.filter-pill');
-            const cards = document.querySelectorAll('.order-card');
+  <div class="pk-balance">
+    <div>
+      <div class="pk-balance-label">Available to invest</div>
+      <div class="pk-balance-value">₦{{ (user.recharge_balance or 0) | format_number if user else '0' }}</div>
+    </div>
+    <a href="{{ url_for('deposit') }}" class="pk-balance-add"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add funds</a>
+  </div>
 
-            function setActivePill(selected){
-                pills.forEach(p=>{
-                    const isActive = p === selected;
-                    p.classList.toggle('active', isActive);
-                    p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-                });
-            }
+  <div class="section-header" style="margin:16px 0 10px;">
+    <span class="section-title" style="display:flex;align-items:center;gap:6px;">
+      <i data-lucide="crown" style="width:16px;height:16px;color:var(--primary);"></i> Available Plans
+    </span>
+  </div>
+  <div class="pk-grid">
+    {% if packages %}
+      {% for package in packages %}
+      <div class="pk-card">
+        <div class="pk-card-head">
+          <div class="pk-card-left">
+            <div class="pk-icon"><i data-lucide="gem" style="width:18px;height:18px;"></i></div>
+            <div>
+              <div class="pk-name">{{ package.name }}</div>
+              <div class="pk-sub">{{ package.duration_days }} days &middot; ROI {{ package.get_roi_percentage()|round(1) }}%</div>
+            </div>
+          </div>
+          <div class="pk-badge">₦{{ package.price | format_number }}</div>
+        </div>
 
-            function applyFilter(filter){
-                cards.forEach(card=>{
-                    const status = (card.getAttribute('data-status')||'').toLowerCase();
-                    if(filter === 'all'){
-                        card.style.display = '';
-                        return;
-                    }
+        <div class="pk-chips">
+          <div class="pk-chip"><span class="value">₦{{ package.daily_income | format_number }}</span><span class="label">Daily</span></div>
+          <div class="pk-chip"><span class="value">₦{{ package.total_income | format_number }}</span><span class="label">Total</span></div>
+          <div class="pk-chip"><span class="value">{{ package.duration_days }}d</span><span class="label">Duration</span></div>
+        </div>
 
-                    // 'active' should show marketplace 'available' items as well as user 'active' packages
-                    if(filter === 'active'){
-                        // show only user's active purchased packages
-                        const owner = (card.getAttribute('data-owner')||'').toLowerCase();
-                        if(owner === 'user' && status === 'active') card.style.display = '';
-                        else card.style.display = 'none';
-                        return;
-                    }
+        <form action="{{ url_for('buy_package', package_id=package.id) }}" method="POST"
+              class="pk-invest-form"
+              data-name="{{ package.name }}"
+              data-price="₦{{ package.price | format_number }}"
+              data-daily="₦{{ package.daily_income | format_number }}">
+          <button type="submit" class="pk-invest-btn">
+            <i data-lucide="rocket" style="width:16px;height:16px;"></i> Invest ₦{{ package.price | format_number }}
+          </button>
+        </form>
+        <a href="{{ url_for('package_details', package_id=package.id) }}" class="pk-details-link">View full details <i data-lucide="arrow-right"></i></a>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="pk-empty">
+        <div class="pk-empty-icon"><i data-lucide="package-open" style="width:22px;height:22px;"></i></div>
+        <h3>No plans available right now</h3>
+        <p>New investment plans are added regularly. Please check back soon.</p>
+      </div>
+    {% endif %}
+  </div>
 
-                    if(filter === 'completed'){
-                        if(status === 'completed') card.style.display = '';
-                        else card.style.display = 'none';
-                        return;
-                    }
+  {% if user_packages %}
+  <div class="section-header" style="margin:20px 0 10px;">
+    <span class="section-title" style="display:flex;align-items:center;gap:6px;">
+      <i data-lucide="briefcase" style="width:16px;height:16px;color:var(--primary);"></i> My Packages
+    </span>
+    <a href="{{ url_for('my_packages') }}" class="section-link">View all</a>
+  </div>
+  <div class="pk-grid">
+    {% for user_package in user_packages %}
+    <div class="pk-card">
+      <div class="pk-card-head">
+        <div class="pk-card-left">
+          <div class="pk-icon"><i data-lucide="building-2" style="width:18px;height:18px;"></i></div>
+          <div>
+            <div class="pk-name">{{ user_package.package.name }}</div>
+            <div class="pk-sub">Purchased &middot; {{ user_package.package.duration_days }} days</div>
+          </div>
+        </div>
+        <div class="pk-badge status">{{ user_package.status.title() }}</div>
+      </div>
 
-                    if(filter === 'expired'){
-                        if(status === 'expired') card.style.display = '';
-                        else card.style.display = 'none';
-                        return;
-                    }
+      <div class="pk-chips">
+        <div class="pk-chip"><span class="value">₦{{ user_package.package.daily_income | format_number }}</span><span class="label">Daily</span></div>
+        <div class="pk-chip"><span class="value">₦{{ user_package.package.total_return | format_number }}</span><span class="label">Total</span></div>
+        <div class="pk-chip"><span class="value">₦{{ user_package.amount_invested | format_number }}</span><span class="label">Invested</span></div>
+      </div>
 
-                    // default fallback
-                    card.style.display = (status === filter) ? '' : 'none';
-                });
-            }
+      <div class="pk-owned-meta">
+        <span>{{ user_package.purchase_date.strftime('%b %d, %Y') if user_package.purchase_date else '' }}</span>
+        <span>{{ user_package.status.title() }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
 
-            pills.forEach(pill=>{
-                pill.addEventListener('click', (e)=>{
-                    // prevent navigation if this is an anchor
-                    if(e && e.preventDefault) e.preventDefault();
-                    setActivePill(pill);
-                    const filter = pill.dataset && pill.dataset.filter ? pill.dataset.filter : pill.getAttribute('data-filter');
-                    applyFilter(filter || 'all');
-                });
-            });
+<div class="modal-overlay" id="pkModal" role="dialog" aria-modal="true" aria-labelledby="pkModalTitle">
+  <div class="modal">
+    <h3 id="pkModalTitle">Confirm investment</h3>
+    <p id="pkModalText">Please confirm your purchase.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="pkModalCancel">Cancel</button>
+      <button type="button" class="btn btn-primary" id="pkModalConfirm">Confirm &amp; Invest</button>
+    </div>
+  </div>
+</div>
 
-            // initial
-            applyFilter('all');
-        })();
-    </script>
+{% set active = 'packages' %}
+{% include 'partials/bottom_nav.html' %}
+{% endblock %}
 
-    {% set active = 'packages' %}
-    {% include 'partials/bottom_nav.html' %}
-</body>
-</html>
+{% block scripts %}
+<script>
+  lucide.createIcons();
+  (function(){
+    var modal = document.getElementById('pkModal');
+    var modalText = document.getElementById('pkModalText');
+    var cancelBtn = document.getElementById('pkModalCancel');
+    var confirmBtn = document.getElementById('pkModalConfirm');
+    var pendingForm = null;
+
+    function closeModal(){ modal.classList.remove('open'); pendingForm = null; }
+
+    document.querySelectorAll('.pk-invest-form').forEach(function(form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        pendingForm = form;
+        modalText.innerHTML = 'You are about to invest <strong>' + form.dataset.price + '</strong> in <strong>' +
+          form.dataset.name + '</strong> and earn <strong>' + form.dataset.daily + '</strong> daily.';
+        modal.classList.add('open');
+      });
+    });
+
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+
+    confirmBtn.addEventListener('click', function(){
+      if(!pendingForm) return;
+      var btn = pendingForm.querySelector('.pk-invest-btn');
+      if(btn){ btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Processing...'; }
+      confirmBtn.disabled = true;
+      pendingForm.submit();
+    });
+  })();
+</script>
+{% endblock %}

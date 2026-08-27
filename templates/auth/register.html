@@ -20,33 +20,36 @@
     <form method="POST" action="{{ url_for('register') }}">
       <div class="form-group">
         <label class="form-label" for="name">Full Name</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" value="{{ request.form.get('name','') }}" autocomplete="name" required>
+        <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" value="{{ request.form.get('name','') }}" autocomplete="name" required>
       </div>
       <div class="form-group">
         <label class="form-label" for="email">Email Address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" value="{{ request.form.get('email','') }}" autocomplete="email" required>
+        <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" value="{{ request.form.get('email','') }}" autocomplete="email" required>
       </div>
       <div class="form-group">
         <label class="form-label" for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" class="form-control" placeholder="08012345678" value="{{ request.form.get('phone','') }}" autocomplete="tel" required>
+        <input type="tel" id="phone" name="phone" class="form-input" placeholder="08012345678" value="{{ request.form.get('phone','') }}" autocomplete="tel" required>
       </div>
       <div class="form-group">
         <label class="form-label" for="referral_code">Referral Code (Optional)</label>
-        <input type="text" id="referral_code" name="referral_code" class="form-control" placeholder="Enter referral code" value="{{ request.form.get('referral_code','') }}">
+        <input type="text" id="referral_code" name="referral_code" class="form-input" placeholder="Enter referral code" value="{{ request.form.get('referral_code','') }}">
       </div>
       <div class="form-group">
         <label class="form-label" for="password">Password</label>
-        <div class="password-input-group">
-          <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" autocomplete="new-password" required>
+        <div class="input-group">
+          <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required>
+          <button type="button" class="input-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+            <i data-lucide="eye"></i>
+          </button>
         </div>
       </div>
 
-      <button type="submit" class="btn-primary">Create Account</button>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
     </form>
 
     <div class="auth-footer">
-      <span style="color:var(--text-muted);font-size:14px;">Already have an account?</span>
-      <a href="{{ url_for('login') }}" class="auth-link" style="margin-left:4px;">Sign in</a>
+      <span>Already have an account?</span>
+      <a href="{{ url_for('login') }}" class="auth-link">Sign in</a>
     </div>
   </div>
 </div>
@@ -54,6 +57,22 @@
 
 {% block scripts %}
 <script>
-  document.addEventListener('DOMContentLoaded', function(){ document.getElementById('name')?.focus(); });
+  lucide.createIcons();
+  (function(){
+    var toggle = document.getElementById('passwordToggle');
+    var input = document.getElementById('password');
+    if(toggle && input){
+      toggle.addEventListener('click',function(){
+        var type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        var icon = toggle.querySelector('[data-lucide]');
+        if(icon){
+          icon.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+          lucide.createIcons();
+        }
+      });
+    }
+    document.getElementById('name')?.focus();
+  })();
 </script>
 {% endblock %}
